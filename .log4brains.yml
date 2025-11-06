@@ -1,5 +1,0 @@
-project:
-  name: Luqma
-  tz: Asia/Amman
-  adrFolder: ./docs/adr
-  packages: []
