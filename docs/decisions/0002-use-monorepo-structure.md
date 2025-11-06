@@ -1,8 +1,9 @@
-# Use Monorepo Structure
+---
+status: accepted
+date: 2025-11-06
+---
 
-- Status: accepted
-- Date: 2025-11-06
-- Tags: architecture, organization, monorepo, workflow
+# Use Monorepo Structure
 
 ## Context and Problem Statement
 
@@ -40,24 +41,21 @@ luqma/
 └── .github/
 ```
 
-### Positive Consequences
+### Consequences
 
-- Single `git clone` operation to start development
-- Atomic commits for API contract changes across frontend and backend
-- Unified versioning and coordinated releases
-- Simplified CI/CD coordination
-- Easier onboarding for new team members and contributors
-- AI tools can reference entire codebase in single context
-- Centralized documentation benefits all components
-- Easier to track and implement cross-cutting features
-
-### Negative Consequences
-
-- Mixed technology stacks (Java and JavaScript) in same repository
-- Larger repository size (mitigated by proper .gitignore configuration)
-- Requires path-based CI triggers to detect which component changed
-- All git operations include both components
-- Potential for accidental cross-component dependencies if not carefully managed
+- Good, because single `git clone` operation to start development
+- Good, because enables atomic commits for API contract changes across frontend and backend
+- Good, because unified versioning and coordinated releases
+- Good, because simplified CI/CD coordination
+- Good, because easier onboarding for new team members and contributors
+- Good, because AI tools can reference entire codebase in single context
+- Good, because centralized documentation benefits all components
+- Good, because easier to track and implement cross-cutting features
+- Bad, because mixed technology stacks (Java and JavaScript) in same repository
+- Bad, because larger repository size (mitigated by proper .gitignore configuration)
+- Bad, because requires path-based CI triggers to detect which component changed
+- Bad, because all git operations include both components
+- Bad, because potential for accidental cross-component dependencies if not carefully managed
 
 ## Pros and Cons of the Options
 
@@ -101,12 +99,13 @@ Main repository with Git submodules for each component
 - Bad, because common source of errors for less experienced Git users
 - Bad, because complicates atomic changes across components
 
-## Links
+## More Information
 
-- [Use Log4brains to manage the ADRs](20251106-use-log4brains-to-manage-the-adrs.md)
-- [Use Markdown Architectural Decision Records](20251106-use-markdown-architectural-decision-records.md)
+### Related Decisions
 
-## Notes
+- [Use Markdown Architectural Decision Records](0001-use-markdown-architectural-decision-records.md)
+
+### Notes
 
 If the project scales significantly or requires separate teams with independent ownership, migration to multi-repo is straightforward using `git filter-branch --subdirectory-filter` to preserve Git history.
 
