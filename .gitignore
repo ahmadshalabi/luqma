@@ -1,0 +1,23 @@
+### Intellij IDEA ###
+
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+### Cursor ###
+
+.cursor/
+
+### VisualStudioCode ###
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
