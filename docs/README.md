@@ -6,7 +6,7 @@ This directory contains project documentation for Luqma.
 
 ### Architecture Decision Records (ADRs)
 
-The `adr/` directory contains architectural decision records documenting key technical decisions made throughout the project lifecycle. These records capture the context, options considered, and rationale behind significant architectural choices.
+The `decisions/` directory contains architectural decision records documenting key technical decisions made throughout the project lifecycle. These records capture the context, options considered, and rationale behind significant architectural choices following the [MADR 4.0.0](https://adr.github.io/madr/) format.
 
 ## Additional Documentation
 
