@@ -1,0 +1,31 @@
+# Development Profile Configuration
+# This profile is used for local development with ./gradlew bootRun
+
+spring:
+  # Docker Compose Configuration
+  # DISABLED for local development - only needed when running via docker compose
+  docker:
+    compose:
+      enabled: false
+
+# Actuator Configuration - Development
+management:
+  endpoint:
+    health:
+      show-details: always  # Show full health details in development
+
+# Development-specific server configuration
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: always  # Show full stack traces in dev
+
+# Development Logging - More verbose
+logging:
+  level:
+    root: INFO
+    app.luqma: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.boot: DEBUG
+
