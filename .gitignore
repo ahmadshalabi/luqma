@@ -1,23 +1,33 @@
-### Intellij IDEA ###
-
+# IDE
 .idea/
+.vscode/*
+!.vscode/settings.json
 *.iml
 *.iws
 *.ipr
+
+# Cursor (but preserve rules directory)
+.cursor/*
+!.cursor/rules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+build/
+dist/
+target/
 out/
 
-### Cursor ###
+# Dependencies
+node_modules/
 
-.cursor/
+# Environment
+.env
+.env.*
+!env.example
 
-### VisualStudioCode ###
-
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
-
-# Local History for Visual Studio Code
-.history/
+# Logs
+*.log
+logs/
