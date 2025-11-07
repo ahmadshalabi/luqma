@@ -1,0 +1,35 @@
+# Production Profile Configuration
+# This profile is used when running in Docker or production environments
+
+spring:
+  # Docker Compose Configuration
+  # DISABLED - Spring Boot's docker-compose integration not needed in production
+  # (This feature auto-starts docker-compose services during development)
+  docker:
+    compose:
+      enabled: false
+
+# Actuator Configuration - Production
+management:
+  endpoint:
+    health:
+      show-details: when-authorized  # Only show details when authorized in prod
+  endpoints:
+    web:
+      exposure:
+        include: health,info  # Limit exposed endpoints in production (no metrics)
+
+# Production server configuration
+server:
+  error:
+    include-message: always
+    include-binding-errors: never  # Don't expose validation errors
+    include-stacktrace: never      # Never show stack traces in production
+
+# Production Logging - Less verbose
+logging:
+  level:
+    root: INFO
+    app.luqma: INFO
+    org.springframework.web: WARN
+
