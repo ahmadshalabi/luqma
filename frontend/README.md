@@ -1,12 +1,20 @@
-# Luqma Frontend
+# Frontend
 
-React frontend application for the Luqma recipe search application.
+React frontend for Luqma.
 
 ## Status
-To be scaffolded
 
-## Technology Stack
-- React 19.2
-- Vite 7.2.0
-- TODO: Picking JavaScript or TypeScript
+🚧 **Not yet scaffolded** - Placeholder for upcoming React application.
 
+## Planned Stack
+
+- React 19
+- Vite 7
+- TypeScript (TBD)
+
+## Planned Features
+
+- Recipe search with filters
+- Recipe details with nutritional information
+- Ingredient exclusion with calorie recalculation
+- Responsive, WCAG-compliant UI
