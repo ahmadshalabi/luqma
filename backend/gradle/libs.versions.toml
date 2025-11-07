@@ -1,0 +1,53 @@
+# Gradle Version Catalog for Luqma Backend
+# Centralized dependency version management
+# https://docs.gradle.org/current/userguide/platforms.html
+
+[versions]
+# Java
+java = "25"
+
+# Spring Boot & Framework
+spring-boot = "3.5.7"
+spring-dependency-management = "1.1.7"
+
+# Code Coverage
+jacoco = "0.8.12"
+
+[libraries]
+# Spring Boot Starters
+spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
+spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
+spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+spring-boot-configuration-processor = { module = "org.springframework.boot:spring-boot-configuration-processor" }
+spring-boot-devtools = { module = "org.springframework.boot:spring-boot-devtools" }
+spring-boot-docker-compose = { module = "org.springframework.boot:spring-boot-docker-compose" }
+
+# Lombok (version managed by Spring Boot)
+lombok = { module = "org.projectlombok:lombok" }
+
+# Testing
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+
+[plugins]
+# Spring Boot plugins
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
+
+[bundles]
+# Spring Boot essentials (commonly used together)
+spring-boot = [
+    "spring-boot-starter-web",
+    "spring-boot-starter-actuator",
+]
+
+# Development tools
+dev-tools = [
+    "spring-boot-devtools",
+    "spring-boot-docker-compose",
+]
+
+# Testing
+testing = [
+    "spring-boot-starter-test",
+]
