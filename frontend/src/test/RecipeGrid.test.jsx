@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { RecipeGrid } from '../components/RecipeGrid'
+import { RecipeGrid } from '@/features/recipe/RecipeGrid'
 
 describe('RecipeGrid', () => {
   const mockRecipes = [

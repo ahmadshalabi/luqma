@@ -96,37 +96,60 @@ Test files should be placed next to the component they test with `.test.jsx` or 
 
 ## Project Structure
 
-### Pages
+The project follows a feature-based architecture for better organization and scalability:
+
+### Pages (`pages/`)
 - `HomePage.jsx` - Landing page with hero section, search bar, and popular recipes grid
-- `SearchResultsPage.jsx` - Search results page with query parameter handling and recipe filtering
+- `SearchResultsPage.jsx` - Search results page with query parameter handling, pagination, and recipe filtering
 - `AboutPage.jsx` - About page with mission statement and feature highlights  
 - `RecipesPage.jsx` - Placeholder page for future recipe browsing (coming soon)
 
-### Components
-- `Header.jsx` - Navigation header with logo and menu
-- `Footer.jsx` - Site footer with links and copyright
-- `SearchBar.jsx` - Recipe search input component
-- `SearchResults.jsx` - Display search results
-- `RecipeCard.jsx` - Individual recipe card component
-- `RecipeGrid.jsx` - Grid layout component for displaying recipe cards
-- `PopularRecipes.jsx` - Grid layout for popular recipes
+### Features (`features/`)
+Feature-based components organized by domain:
 
-### UI Components
-- `Button.jsx` - Reusable button component with variants (primary, secondary, link)
-- `EmptyState.jsx` - Empty state display for no results or content
-- `FeatureCard.jsx` - Feature highlight card component
-- `HeroSection.jsx` - Hero section for landing page
-- `Icon.jsx` - Icon component wrapper for consistent iconography
-- `LoadingSpinner.jsx` - Loading indicator component
-- `PageSection.jsx` - Page section layout wrapper for consistent spacing
+#### Layout (`features/layout/`)
+- `Header.jsx` - Navigation header with responsive mobile menu
+- `Footer.jsx` - Site footer with copyright
+- `HeroSection.jsx` - Hero section layout for landing pages
+- `PageSection.jsx` - Page section wrapper for consistent spacing
 
-### Utilities
+#### Recipe (`features/recipe/`)
+- `RecipeCard.jsx` - Individual recipe card component with image and title
+- `RecipeGrid.jsx` - Grid layout for displaying recipe cards with empty state
+
+#### Search (`features/search/`)
+- `SearchBar.jsx` - Recipe search input with form handling
+
+#### About (`features/about/`)
+- `FeatureCard.jsx` - Feature highlight card for About page
+
+### Primitives (`primitives/`)
+Generic, reusable UI components without business logic:
+- `Button.jsx` - Multi-variant button (primary, secondary, link) supporting internal/external navigation
+- `Icon.jsx` - SVG icon system with configurable sizes
+- `EmptyState.jsx` - Empty state display with icon, title, message, and optional action
+- `LoadingSpinner.jsx` - Loading indicator with configurable size
+- `Pagination.jsx` - Accessible pagination controls with keyboard support
+
+### Custom Hooks (`hooks/`)
+Reusable stateful logic:
+- `useMobileMenu.js` - Mobile menu toggle state management
+- `useSearch.js` - Search form state, validation, and submission
+- `usePagination.js` - Pagination calculations (page slicing, ranges, navigation helpers)
+
+### Utilities (`utils/`)
 - `searchUtils.js` - Recipe filtering utility functions (title-based search)
+
+### Services (`services/`)
+- `apiClient.js` - Centralized API client for backend communication (pending implementation)
 
 ### Path Aliasing
 The project uses Vite path aliasing for cleaner imports:
 - `@/` alias points to `src/` directory
-- Example: `import { Button } from '@/ui/Button'`
+- Examples:
+  - `import { Button } from '@/primitives/Button'`
+  - `import { Header } from '@/features/layout/Header'`
+  - `import { usePagination } from '@/hooks/usePagination'`
 
 ### Development Mode
 Currently using mock data from `src/mocks/` to enable frontend development without backend API. Mock data will be replaced with actual API calls once backend endpoints are implemented.

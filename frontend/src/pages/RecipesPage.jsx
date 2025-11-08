@@ -1,6 +1,6 @@
-import { PageSection } from '@/ui/PageSection'
-import { EmptyState } from '@/ui/EmptyState'
-import { Button } from '@/ui/Button'
+import { PageSection } from '@/features/layout/PageSection'
+import { EmptyState } from '@/primitives/EmptyState'
+import { Button } from '@/primitives/Button'
 
 export const RecipesPage = () => {
   return (

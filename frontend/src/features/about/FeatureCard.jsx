@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { Icon } from '@/ui/Icon'
+import { Icon } from '@/primitives/Icon'
 
 /**
  * FeatureCard Component
