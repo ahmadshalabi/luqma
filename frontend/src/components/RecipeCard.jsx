@@ -17,7 +17,7 @@ const RecipeCardComponent = ({ recipe }) => {
     >
       <button
         type="button"
-        className="flex flex-col w-full text-left focus:outline-none"
+        className="flex flex-col w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-500"
         aria-label={`View recipe: ${recipe.title}`}
       >
         <div className="relative w-full h-48 bg-gray-100">
