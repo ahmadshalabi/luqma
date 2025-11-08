@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { SearchBar } from '../components/SearchBar'
 
 describe('SearchBar', () => {
@@ -9,54 +10,55 @@ describe('SearchBar', () => {
     expect(input).toBeInTheDocument()
   })
 
-  it('should call onSearch with query on submit', () => {
+  it('should call onSearch with query on submit', async () => {
+    const user = userEvent.setup()
     const mockOnSearch = vi.fn()
     render(<SearchBar onSearch={mockOnSearch} />)
     
     const input = screen.getByLabelText(/search for recipes/i)
-    fireEvent.change(input, { target: { value: 'chicken' } })
-    
-    const form = input.closest('form')
-    fireEvent.submit(form)
+    await user.type(input, 'chicken')
+    await user.keyboard('{Enter}')
     
     expect(mockOnSearch).toHaveBeenCalledWith('chicken')
     expect(mockOnSearch).toHaveBeenCalledTimes(1)
   })
 
-  it('should not call onSearch when input is empty', () => {
+  it('should not call onSearch when input is empty', async () => {
+    const user = userEvent.setup()
     const mockOnSearch = vi.fn()
     render(<SearchBar onSearch={mockOnSearch} />)
     
     const input = screen.getByLabelText(/search for recipes/i)
-    const form = input.closest('form')
-    
-    fireEvent.submit(form)
+    await user.click(input)
+    await user.keyboard('{Enter}')
     
     expect(mockOnSearch).not.toHaveBeenCalled()
   })
 
-  it('should not submit when query is empty or whitespace', () => {
+  it('should not submit when query is empty or whitespace', async () => {
+    const user = userEvent.setup()
     const mockOnSearch = vi.fn()
     render(<SearchBar onSearch={mockOnSearch} />)
     
     const input = screen.getByLabelText(/search for recipes/i)
-    const form = input.closest('form')
     
     // Test empty
-    fireEvent.submit(form)
+    await user.click(input)
+    await user.keyboard('{Enter}')
     expect(mockOnSearch).not.toHaveBeenCalled()
     
     // Test whitespace
-    fireEvent.change(input, { target: { value: '   ' } })
-    fireEvent.submit(form)
+    await user.type(input, '   ')
+    await user.keyboard('{Enter}')
     expect(mockOnSearch).not.toHaveBeenCalled()
   })
 
-  it('should update input value on change', () => {
+  it('should update input value on change', async () => {
+    const user = userEvent.setup()
     render(<SearchBar />)
     const input = screen.getByLabelText(/search for recipes/i)
     
-    fireEvent.change(input, { target: { value: 'pasta' } })
+    await user.type(input, 'pasta')
     expect(input.value).toBe('pasta')
   })
 })
