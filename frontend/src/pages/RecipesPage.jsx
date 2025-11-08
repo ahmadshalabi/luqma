@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 export const RecipesPage = () => {
   return (
-    <main className="flex-grow">
+    <main id="main-content" className="flex-grow">
       <section className="container mx-auto px-4 py-12 md:py-16">
         <div className="max-w-4xl mx-auto flex flex-col items-center justify-center text-center space-y-6 min-h-[60vh]">
           <div className="flex items-center justify-center w-20 h-20 bg-blue-100 rounded-full">

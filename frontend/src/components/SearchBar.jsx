@@ -49,7 +49,6 @@ export const SearchBar = ({ onSearch }) => {
           onChange={handleInputChange}
           className="w-full pl-12 pr-4 py-4 text-base md:text-lg text-gray-900 bg-white border border-gray-300 rounded-lg shadow-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
           placeholder="Search for recipes..."
-          aria-label="Search for recipes"
         />
       </div>
       <p className="mt-2 text-sm text-gray-500">
