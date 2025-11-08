@@ -10,4 +10,4 @@ The [`decisions/`](decisions/) directory contains ADRs documenting key technical
 
 - [Project Overview](../README.md)
 - [Backend Setup](../backend/README.md)
-- [Frontend Plans](../frontend/README.md)
+- [Frontend Setup](../frontend/README.md)
