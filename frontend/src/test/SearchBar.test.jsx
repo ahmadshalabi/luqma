@@ -29,5 +29,16 @@ describe('SearchBar', () => {
       expect(mockOnChange).toHaveBeenCalledWith('pasta')
     }, { timeout: 200 })
   })
+
+  it('updates input when initialQuery changes', () => {
+    const { rerender } = render(<SearchBar initialQuery="pasta" />)
+    
+    const input = screen.getByLabelText(/search for recipes/i)
+    expect(input).toHaveValue('pasta')
+    
+    // Simulate URL change (browser navigation)
+    rerender(<SearchBar initialQuery="chicken" />)
+    expect(input).toHaveValue('chicken')
+  })
 })
 

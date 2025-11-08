@@ -67,6 +67,20 @@ describe('useSearch', () => {
     expect(result.current.query).toBe('')
   })
 
+  it('should sync query when initialQuery changes (browser navigation)', () => {
+    const { result, rerender } = renderHook(
+      ({ initialQuery }) => useSearch({ initialQuery }),
+      { initialProps: { initialQuery: 'pasta' } }
+    )
+    
+    expect(result.current.query).toBe('pasta')
+    
+    // Simulate browser back/forward navigation changing URL
+    rerender({ initialQuery: 'chicken' })
+    
+    expect(result.current.query).toBe('chicken')
+  })
+
   it('should use latest onSubmit callback via ref', () => {
     const onSubmit1 = vi.fn()
     const onSubmit2 = vi.fn()
