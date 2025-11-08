@@ -6,7 +6,6 @@ import { LoadingSpinner } from '@/primitives/LoadingSpinner'
 
 // Lazy load page components for code splitting
 const HomePage = lazy(() => import('./pages/HomePage').then(module => ({ default: module.HomePage })))
-const SearchResultsPage = lazy(() => import('./pages/SearchResultsPage').then(module => ({ default: module.SearchResultsPage })))
 const RecipesPage = lazy(() => import('./pages/RecipesPage').then(module => ({ default: module.RecipesPage })))
 const AboutPage = lazy(() => import('./pages/AboutPage').then(module => ({ default: module.AboutPage })))
 
@@ -18,7 +17,6 @@ export const App = () => {
         <Suspense fallback={<LoadingSpinner />}>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/search" element={<SearchResultsPage />} />
           <Route path="/recipes" element={<RecipesPage />} />
           <Route path="/about" element={<AboutPage />} />
         </Routes>
