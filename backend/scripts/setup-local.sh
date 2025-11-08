@@ -13,8 +13,8 @@ echo ""
 if [ ! -f ".env" ]; then
     echo "❌ Error: .env file not found!"
     echo ""
-    echo "Please create a .env file from env.example:"
-    echo "  cp env.example .env"
+    echo "Please create a .env file from .env.example:"
+    echo "  cp .env.example .env"
     echo ""
     echo "Then edit .env and add your Spoonacular API key:"
     echo "  SPOONACULAR_API_KEY=your-actual-api-key-here"
@@ -39,9 +39,11 @@ fi
 echo "✅ Environment file (.env) found"
 echo ""
 
-# Load environment variables
+# Load environment variables securely
 echo "📦 Loading environment variables from .env..."
-export $(cat .env | grep -v '^#' | xargs)
+set -a
+source .env
+set +a
 echo "✅ Environment variables loaded"
 echo ""
 
@@ -50,7 +52,8 @@ echo "☕ Checking Java version..."
 if command -v java &> /dev/null; then
     JAVA_VERSION=$(java -version 2>&1 | head -n 1 | cut -d'"' -f2 | cut -d'.' -f1)
     echo "   Found Java version: $JAVA_VERSION"
-    if [ "$JAVA_VERSION" -lt 25 ]; then
+    # Ensure JAVA_VERSION is numeric before comparison
+    if [[ "$JAVA_VERSION" =~ ^[0-9]+$ ]] && [ "$JAVA_VERSION" -lt 25 ]; then
         echo "⚠️  Warning: Java 25 is required (found $JAVA_VERSION)"
         echo "   Download Java 25 from: https://adoptium.net/"
         read -p "Continue anyway? (y/N) " -n 1 -r
@@ -82,13 +85,13 @@ echo ""
 
 # Download dependencies
 echo "📥 Downloading dependencies (this may take a while)..."
-./gradlew app:dependencies --no-daemon --quiet > /dev/null 2>&1 || true
+./gradlew dependencies --no-daemon --quiet > /dev/null 2>&1 || true
 echo "✅ Dependencies downloaded"
 echo ""
 
 # Build application
 echo "🏗️  Building application..."
-./gradlew app:build --no-daemon --quiet
+./gradlew build --no-daemon --quiet
 if [ $? -eq 0 ]; then
     echo "✅ Build successful"
 else
@@ -102,7 +105,7 @@ echo "✅ Setup Complete!"
 echo "=========================================="
 echo ""
 echo "You can now run the application using:"
-echo "  ./gradlew app:bootRun"
+echo "  ./gradlew bootRun"
 echo ""
 echo "Or use the convenience script:"
 echo "  ./scripts/run-local.sh"
