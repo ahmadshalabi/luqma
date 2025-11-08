@@ -1,12 +1,19 @@
+import { useNavigate } from 'react-router-dom'
 import { SearchBar } from '../components/SearchBar'
 import { PopularRecipes } from '../components/PopularRecipes'
-import { getRecipeSearchResults } from '@/mocks'
+import { getPopularRecipes } from '@/mocks'
 
 export const HomePage = () => {
-  // Get selected recipes from backend (currently using mock data)
-  const { results } = getRecipeSearchResults()
-  // Select first 6 recipes as popular recipes
-  const popularRecipes = results.slice(0, 6)
+  const navigate = useNavigate()
+
+  // Get popular recipes from mock data
+  const popularRecipes = getPopularRecipes()
+
+  const handleSearch = (query) => {
+    if (query.trim()) {
+      navigate(`/search?q=${encodeURIComponent(query)}`)
+    }
+  }
 
   return (
     <main className="flex-grow">
@@ -20,7 +27,7 @@ export const HomePage = () => {
             Discover delicious recipes with nutritional information
           </p>
           <div className="mt-8">
-            <SearchBar />
+            <SearchBar onSearch={handleSearch} />
           </div>
         </div>
       </section>

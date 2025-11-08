@@ -2,7 +2,7 @@
  * Mock Data Helper Module
  * 
  * Provides easy access to Spoonacular API mock data for development and testing.
- * This mock data matches the structure of the actual Spoonacular API responses.
+ * The mock data returned here emulates the format and structure of responses from the planned Luqma backend API endpoints.
  * 
  * Usage:
  * ```javascript
@@ -53,9 +53,20 @@ export function getRecipeById(recipeId) {
   return recipesById[recipeId] || null
 }
 
+/**
+ * Get popular recipes for display on home page
+ * Returns the first 6 recipes from the search results
+ * 
+ * @returns {Array} Array of popular recipe objects
+ */
+export function getPopularRecipes() {
+  return recipeSearchResults.results.slice(0, 6)
+}
+
 // Default export with all functions
 export default {
   getRecipeSearchResults,
-  getRecipeById
+  getRecipeById,
+  getPopularRecipes
 }
 
