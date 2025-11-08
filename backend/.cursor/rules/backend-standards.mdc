@@ -1,0 +1,83 @@
+---
+description: "Spring Boot backend development standards and patterns"
+globs: ["backend/**/*.java"]
+alwaysApply: false
+---
+# Backend Development Standards
+
+## Dependency Injection
+
+You must:
+- Use constructor injection only (never field injection)
+- Make all dependencies final
+- Let Spring auto-wire single-constructor classes
+
+## Controller Layer
+
+You must:
+- Keep controllers thin (delegate to services)
+- Use @RestController + @RequestMapping("/api/v1/")
+- Return ResponseEntity<T> (always typed)
+- Use @Valid to validate request DTOs
+
+## Service Layer
+
+You must:
+- Use @Service annotation
+- Keep business logic only (no HTTP concerns)
+- Follow Single Responsibility Principle
+- Use @Transactional where needed
+
+## DTOs & Records
+
+You must:
+- Use records for immutability
+- Use validation annotations: @NotBlank, @Size, @Min, @Max, @Pattern
+- Keep DTOs free of business logic
+
+## Exception Handling
+
+You must:
+- Use single @ControllerAdvice for global handling
+- Create custom exceptions for domain-specific cases
+- Never expose internals (generic messages to clients)
+- Log full details in logs only
+
+## Configuration
+
+You must:
+- Use @ConfigurationProperties for type-safe binding
+- Store all secrets in environment variables: ${VAR_NAME}
+- Use profile-specific files: application-{profile}.yml
+- Use @Validated on config classes
+
+## Java 25 Features
+
+You must:
+- Drop public modifier from main methods (implicit in Java 25)
+- Use getFirst()/getLast() instead of get(0)/get(size()-1)
+- Use _ for unused variables in catch blocks and pattern matching
+- Use records for DTOs
+- Use pattern matching in switch expressions
+- Use virtual threads for I/O-heavy operations (external API calls)
+
+You must never:
+- Use ThreadLocal with virtual threads
+- Use virtual threads for CPU-intensive work
+
+## Logging
+
+You must:
+- Use @Slf4j (Lombok) for logger
+- Use levels: ERROR, WARN, INFO, DEBUG
+- Never log secrets
+- Use {} placeholders for structured logging
+
+## Testing
+
+You must:
+- Use @ExtendWith(MockitoExtension.class) for unit tests
+- Use @SpringBootTest for integration tests only
+- Name tests: methodName_condition_expectedResult
+- Use Given-When-Then structure
+- Achieve 80%+ coverage for services

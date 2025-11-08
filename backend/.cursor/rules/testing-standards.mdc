@@ -1,0 +1,77 @@
+---
+description: "Backend testing standards with JUnit 5 and Mockito"
+globs: ["backend/**/*.java"]
+alwaysApply: false
+---
+# Backend Testing Standards
+
+## Test Pyramid
+
+You must maintain:
+- Unit tests: 70-80% (fast, isolated service tests)
+- Integration tests: 15-25% (API/controller tests)
+- E2E tests: 5-10% (full flows)
+
+## Unit Tests
+
+You must use:
+- @ExtendWith(MockitoExtension.class): Enable Mockito
+- @Mock: Mock dependencies
+- @InjectMocks: Inject mocks into class under test
+- when().thenReturn(): Stub method behavior
+- verify(): Assert method calls
+- assertThat(): AssertJ fluent assertions
+
+You must name tests: methodName_condition_expectedResult
+
+You must structure (Given-When-Then):
+1. Arrange: Setup test data and mocks
+2. Act: Execute method under test
+3. Assert: Verify results
+
+## Integration Tests
+
+You must use:
+- @SpringBootTest(webEnvironment = RANDOM_PORT): Full Spring context
+- @ActiveProfiles("test"): Use test profile
+- @MockBean: Mock beans in Spring context
+- TestRestTemplate: For HTTP calls
+- @Sql: Execute SQL scripts
+
+You must configure:
+- application-test.yml: Test-specific config
+- In-memory database (H2)
+- Mock external APIs
+
+## Coverage Requirements
+
+You must achieve:
+- Services: 80%+ line coverage
+- Controllers: 70%+ line coverage
+
+You must measure:
+- Run: ./gradlew test jacocoTestReport
+- Report: backend/build/reports/jacoco/test/html/index.html
+
+## Mocking
+
+You must mock:
+- SpoonacularClient (always)
+- Any external HTTP clients
+
+You must use:
+- when().thenReturn() for method stubs
+- any(), anyLong(), etc. for argument matchers
+- verify(mock).method() to verify method called
+- times(n) to verify call count
+- verifyNoMoreInteractions() to ensure no extra calls
+
+## Best Practices
+
+You must ensure:
+- Independent tests (no shared state)
+- Fast execution (< 100ms per unit test)
+- Deterministic (same input = same output)
+- Clear failures (descriptive assertions)
+- Test edge cases (null, empty, boundaries)
+- Test error paths (exceptions, failures)

@@ -1,0 +1,70 @@
+---
+description: "Performance budgets and optimization standards for backend"
+globs: ["backend/**/*.java"]
+alwaysApply: false
+---
+# Backend Performance Standards
+
+## Performance Budgets
+
+You must meet (p95):
+- Search endpoints: < 500ms
+- Simple GET by ID: < 200ms
+- Complex calculations: < 1000ms
+- Health checks: < 50ms
+- Simple queries: < 50ms
+- Complex joins: < 200ms
+- Aggregations: < 500ms
+- External API timeout: 2000ms
+- External API retry: 3 attempts max
+- Circuit breaker: Open after 5 failures
+- Memory: < 512MB baseline
+- CPU: < 50% average
+- DB connections: < 20 active
+
+## Database Optimization
+
+You must:
+- Index frequently queried fields
+- Avoid N+1 queries (use JOIN)
+- Limit result sets with pagination
+- Project only needed columns
+- Use appropriate fetch strategies
+
+## Caching
+
+You must:
+- Implement application cache: Spring @Cacheable
+- Set HTTP cache: ETag, Cache-Control
+- Cache external API responses
+- Use TTL: 5 minutes for recipe data
+- Use max size: 1000 entries
+- Use eviction: LRU
+
+## Connection Pooling
+
+You must:
+- Size connection pool based on load testing
+- Monitor active connections
+- Set appropriate timeouts
+- Validate connections
+
+## Resilience
+
+You must:
+- Use non-blocking operations
+- Use background tasks for long-running processes
+- Implement circuit breaker pattern
+- Use retry with backoff
+- Configure timeouts
+- Provide fallback responses
+
+## Testing
+
+You must:
+- Load test: 100 concurrent users, 10 min sustained
+- Spike test: 10 to 500 users in 1 min
+- Stress test: Increase until failure
+- Run EXPLAIN ANALYZE on queries
+- Profile database queries
+- Analyze index usage
