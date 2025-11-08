@@ -94,6 +94,24 @@ Test files should be placed next to the component they test with `.test.jsx` or 
 - Responsive, mobile-first design
 - WCAG 2.1 AA accessible UI
 
+## Project Structure
+
+### Pages
+- `HomePage.jsx` - Landing page with hero section, search bar, and popular recipes grid
+- `AboutPage.jsx` - About page with mission statement and feature highlights  
+- `RecipesPage.jsx` - Placeholder page for future recipe browsing (coming soon)
+
+### Components
+- `Header.jsx` - Navigation header with logo and menu
+- `Footer.jsx` - Site footer with links and copyright
+- `SearchBar.jsx` - Recipe search input component
+- `SearchResults.jsx` - Display search results
+- `RecipeCard.jsx` - Individual recipe card component
+- `PopularRecipes.jsx` - Grid layout for popular recipes
+
+### Development Mode
+Currently using mock data from `src/mocks/` to enable frontend development without backend API. Mock data will be replaced with actual API calls once backend endpoints are implemented.
+
 ## Related Documentation
 
 - [Backend README](../backend/README.md)
