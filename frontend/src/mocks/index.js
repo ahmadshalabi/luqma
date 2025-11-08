@@ -53,20 +53,9 @@ export function getRecipeById(recipeId) {
   return recipesById[recipeId] || null
 }
 
-/**
- * Get popular recipes for display on home page
- * Returns the first 6 recipes from the search results
- * 
- * @returns {Array} Array of popular recipe objects
- */
-export function getPopularRecipes() {
-  return recipeSearchResults.results.slice(0, 6)
-}
-
 // Default export with all functions
 export default {
   getRecipeSearchResults,
-  getRecipeById,
-  getPopularRecipes
+  getRecipeById
 }
 
