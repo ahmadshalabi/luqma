@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react'
 import { Link } from 'react-router-dom'
+import { Icon } from '@/ui/Icon'
 
 export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -17,7 +18,7 @@ export const Header = () => {
       {/* Skip to main content link for keyboard navigation */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:text-white focus:bg-blue-600 focus:rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         Skip to main content
       </a>
@@ -58,38 +59,16 @@ export const Header = () => {
           {/* Mobile Menu Button */}
           <button
             type="button"
-            className="md:hidden inline-flex items-center justify-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="md:hidden inline-flex items-center justify-center p-2 text-gray-700 bg-transparent rounded-lg transition-colors hover:bg-gray-100 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-menu"
             aria-label="Toggle navigation menu"
             onClick={toggleMobileMenu}
           >
             {isMobileMenuOpen ? (
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <Icon name="close" size="lg" />
             ) : (
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
+              <Icon name="menu" size="lg" />
             )}
           </button>
         </div>
