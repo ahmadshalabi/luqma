@@ -1,0 +1,58 @@
+---
+description: "Documentation standards for backend code, JavaDoc, and API documentation"
+globs: ["backend/**/*.java"]
+alwaysApply: false
+---
+# Backend Documentation Standards
+
+## Code Documentation
+
+You must prioritize self-documenting code (clear naming, well-structured code).
+
+You should document:
+- Why, not what
+- Complex algorithms
+- Business rules
+- Non-obvious decisions
+- Public APIs
+
+You must not document:
+- Obvious code
+- What code does (should be clear from code)
+- Outdated information
+
+## JavaDoc
+
+You must document:
+- Public APIs (controllers, services)
+- Complex business logic
+- Non-obvious behavior
+- Public interfaces
+
+You should skip:
+- Private methods (unless complex)
+- Getters/setters
+- Obvious one-liners
+- Test methods
+
+You must:
+- Write first sentence brief, ending with period
+- Use present tense: "Calculates" not "Calculate"
+- Use third person: "Returns" not "Return"
+- Document @param, @return, @throws
+- Explain why, not what
+
+## API Documentation
+
+You must use OpenAPI/Swagger:
+- @Tag on controllers
+- @Operation on endpoints
+- @ApiResponse for all status codes
+- @Schema on DTOs with examples
+
+You must:
+- Write descriptive summaries (action-oriented)
+- Document success and error cases
+- Provide realistic example values
+- Document constraints (min, max, pattern)
+- Mark deprecated endpoints

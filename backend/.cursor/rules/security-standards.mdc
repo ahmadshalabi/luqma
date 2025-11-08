@@ -1,0 +1,91 @@
+---
+description: "Security standards for backend development"
+globs: ["backend/**/*.java"]
+alwaysApply: false
+---
+# Backend Security Standards
+
+## API Key Protection (CRITICAL)
+
+You must NEVER include API keys in:
+- HTTP responses
+- Logs
+- Git commits
+- Error messages
+
+You must:
+- Store API keys in environment variables only (${SPOONACULAR_API_KEY})
+- Use API keys only in backend service layer
+- Ensure frontend calls backend only, never external APIs directly
+
+Ensure Git protection:
+- .env in .gitignore
+- .env.example committed with placeholders only
+
+## Input Validation
+
+You must validate at multiple layers:
+1. Backend DTOs (Jakarta Bean Validation annotations)
+2. Service layer (business rules)
+
+You must prevent:
+- SQL Injection: Use JPA/parameterized queries only
+- XSS: Escape HTML, validate all input
+- Command Injection: Never execute user input
+- Path Traversal: Use typed IDs (Long, UUID)
+
+## CORS
+
+You must:
+- Whitelist specific origins explicitly
+- Never use wildcards in production
+- Use profile-based configuration per environment
+
+## HTTPS
+
+You must:
+- Use HTTPS in production (mandatory)
+- Set HSTS header to force HTTPS
+- Use TLS 1.2+ minimum
+
+## Error Messages
+
+You must never expose:
+- Stack traces
+- Database errors
+- Internal paths
+- Library versions
+
+You must return:
+- Generic error messages only
+- Appropriate HTTP status codes
+- Request ID for debugging
+
+## Logging
+
+You must never log:
+- API keys
+- Passwords
+- Tokens
+- PII
+- Session IDs
+
+You must:
+- Sanitize data before logging
+- Use {} placeholders for parameters
+- Use appropriate log levels
+
+## Rate Limiting
+
+You must:
+- Implement per IP/endpoint rate limits
+- Return 429 status for Too Many Requests
+- Include Retry-After header
+
+## Dependencies
+
+You must:
+- Enable automated scanning (Dependabot)
+- Check for updates weekly
+- Apply security patches immediately
+- Run: ./gradlew dependencyCheckAnalyze

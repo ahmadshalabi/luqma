@@ -1,0 +1,105 @@
+---
+description: "Gradle Kotlin DSL style guide - Build script structure and conventions"
+globs: ["backend/**/*.gradle.kts", "backend/**/libs.versions.toml"]
+alwaysApply: false
+---
+# Gradle Kotlin DSL Style Guide
+
+## Build Script Structure
+
+You must order sections:
+1. Plugins
+2. Project properties
+3. Java configuration
+4. Repositories
+5. Dependencies (grouped by purpose)
+6. Tasks
+7. Plugin configurations
+
+## Version Catalog (libs.versions.toml)
+
+You must structure:
+```toml
+[versions]
+spring-boot = "3.5.7"
+
+[libraries]
+spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+
+[bundles]
+spring-boot = ["spring-boot-starter-web", "spring-boot-starter-actuator"]
+```
+
+You must use naming:
+- Versions: lowercase with hyphens (spring-boot, jackson-databind)
+- Libraries: dots replace Maven colons (spring.boot.starter.web)
+- Bundles: lowercase with hyphens, descriptive (spring-boot, testing)
+
+## Plugins
+
+You must:
+```kotlin
+plugins {
+    java  // Built-in plugins
+    alias(libs.plugins.spring.boot)  // External with versions
+}
+```
+
+## Dependencies
+
+You must:
+```kotlin
+dependencies {
+    // Always use version catalog
+    implementation(libs.spring.boot.starter.web)
+    
+    // Group by purpose with comments
+    // Testing
+    testImplementation(libs.bundles.testing)
+}
+```
+
+## Tasks
+
+You must:
+```kotlin
+// Use typed task configuration
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
+// Named tasks for existing
+tasks.named("check") {
+    dependsOn("spotlessCheck")
+}
+```
+
+## Properties
+
+You must:
+```kotlin
+// Direct assignment for simple properties
+group = "app.luqma"
+version = "0.0.1-SNAPSHOT"
+
+// .set() for Gradle properties
+reports {
+    xml.required.set(true)
+}
+
+// .get() for version catalog access
+toolVersion = libs.versions.jacoco.get()
+```
+
+## Formatting
+
+You must:
+- Use 4 spaces for indentation
+- Set max line length to 120 characters
+- Add blank lines between major sections
+- Add comments above non-obvious configurations
+- Use version catalog for all dependency versions
+- Never hardcode version strings in build files

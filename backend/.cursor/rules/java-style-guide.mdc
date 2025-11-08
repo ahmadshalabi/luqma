@@ -1,0 +1,58 @@
+---
+description: "Google Java Style Guide - Formatting and naming rules for Java code"
+globs: ["backend/**/*.java"]
+alwaysApply: false
+---
+# Java Style Guide
+
+## File Structure
+
+You must:
+- Create one top-level class per file
+- Name file exactly as class name
+- Order: package statement → imports → class definition
+- Separate static imports from regular imports with blank line
+- Group imports: org.springframework → java/javax
+
+You must never:
+- Use wildcard imports (import java.util.*)
+- Place multiple top-level classes in one file
+
+## Formatting
+
+You must:
+- Use 2 spaces for block indentation
+- Use 4 spaces for line continuation
+- Set max line length to 100 characters
+- Place opening brace on same line (K&R style)
+- Always use braces for if, else, for, while (even single statements)
+- Add space after keywords: if (, for (, catch (
+- Add space around binary operators: a + b, x == y
+- No space inside parentheses: (condition) not ( condition )
+- No space inside brackets: array[0] not array[ 0 ]
+
+## Naming
+
+You must use:
+- Packages: all lowercase, dots separate words (app.luqma.backend.service)
+- Classes/Interfaces: UpperCamelCase (RecipeService, RecipeRepository)
+- Methods: lowerCamelCase, verb phrases (findById, calculateCalories)
+- Constants: UPPER_SNAKE_CASE for static final (MAX_RETRIES, API_URL)
+- Variables/Parameters: lowerCamelCase (recipeList, maxRetries)
+- Type Parameters: Single capital letter or name with T suffix (T, K, V, RequestT)
+
+## Required Practices
+
+You must:
+- Add @Override annotation when overriding methods
+- Write Javadoc for public classes and public methods
+- Handle caught exceptions (never leave empty catch blocks)
+- Access static members via class name, not instance
+
+## Java 25 Features
+
+You must use:
+- Simplified main: static void main(String[] args) (no public)
+- Sequenced collections: recipes.getFirst() not get(0)
+- Unnamed variables: catch (JsonException _) for unused exceptions
+- Records for DTOs: public record RecipeRequest(String query, Integer maxCalories) {}

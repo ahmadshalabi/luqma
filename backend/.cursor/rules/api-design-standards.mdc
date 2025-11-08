@@ -1,0 +1,84 @@
+---
+description: "REST API design standards for consistent endpoint structure"
+globs: ["backend/**/*.java"]
+alwaysApply: false
+---
+# API Design Standards
+
+## URL Structure
+
+You must:
+- Version URLs: /api/v1/
+- Use plural nouns: /recipes, /ingredients
+- Use kebab-case for multi-word resources
+- Use HTTP methods, not verbs in URLs
+
+## HTTP Methods
+
+You must use:
+- GET: Retrieve (idempotent, no body)
+- POST: Create/complex queries (not idempotent)
+- PUT: Replace (idempotent)
+- PATCH: Partial update
+- DELETE: Remove (idempotent)
+
+You should use POST for complex searches with multiple filters.
+
+## Status Codes
+
+You must use:
+- 200: Successful GET/PUT/PATCH
+- 201: Created (include Location header)
+- 204: Successful DELETE
+- 400: Validation errors
+- 404: Not found
+- 422: Semantic errors
+- 500: Server error
+- 502: External service error
+
+## Request Format
+
+You must:
+- Use validation annotations: @NotBlank, @Size, @Min, @Max, @Pattern
+- Use immutable records
+- Use null or Optional<T> for optional fields
+
+## Response Format
+
+You should include in success response:
+- data: Main payload (array or object)
+- count: Item count
+- metadata: Additional context
+
+You must include in error response:
+- status: HTTP status code
+- message: User-friendly error message
+- timestamp: ISO 8601 timestamp
+- fieldErrors: Map of field validation errors (if applicable)
+
+## Error Handling
+
+You must:
+- Use consistent format everywhere
+- Never expose internals (no stack traces)
+- Provide user-friendly messages
+- Return all validation errors (not just first)
+
+## Pagination
+
+You must use cursor-based pagination for large datasets:
+- cursor parameter: Opaque token
+- Response: nextCursor, hasMore
+
+## Versioning
+
+You must:
+- Use URL versioning: /api/v1/, /api/v2/
+- Version only for breaking changes
+
+## Documentation
+
+You must:
+- Use springdoc-openapi for auto-generation
+- Use @Operation to describe endpoints
+- Use @ApiResponse to document status codes
