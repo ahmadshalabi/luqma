@@ -1,0 +1,71 @@
+---
+description: "TailwindCSS style guide - Class ordering and utility conventions"
+globs: ["frontend/src/**/*.{js,jsx,ts,tsx}"]
+alwaysApply: false
+---
+# TailwindCSS Style Guide
+
+## Class Ordering
+
+You must order classes: Layout → Box Model → Typography → Visual → Effects → Transitions
+
+Example:
+```jsx
+<div className="
+  flex items-center justify-between
+  w-full p-4 space-x-2
+  text-lg font-semibold text-gray-900
+  bg-white border border-gray-200 rounded-lg shadow-sm
+  hover:bg-gray-50 transition-colors
+">
+```
+
+## Responsive Modifiers
+
+You must order mobile-first: base (no prefix) → sm: → md: → lg: → xl: → 2xl:
+
+## State Modifiers
+
+You must order: base → hover: → focus: → active: → disabled:
+
+## Common Patterns
+
+You must use:
+- Container: `container mx-auto px-4 py-8`
+- Card: `bg-white border border-gray-200 rounded-lg shadow-sm p-6`
+- Center content: `flex items-center justify-center`
+- Space between: `flex items-center justify-between`
+- Vertical stack: `flex flex-col space-y-4`
+- Horizontal row: `flex items-center space-x-2`
+- Grid: `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4`
+
+## Accessibility
+
+You must:
+- Include focus indicators: `focus:outline-none focus:ring-2 focus:ring-blue-500`
+- Use sr-only for screen reader only content
+- Ensure WCAG AA color contrast (4.5:1 for normal text, 3:1 for large text)
+
+## Component Extraction
+
+You should extract to React component when:
+- Pattern used 3 or more times
+- Complex utility combination that's reusable
+
+## Dynamic Classes
+
+You must always use complete class names (never string interpolation):
+
+Good:
+```jsx
+const colorClasses = {
+  blue: 'text-blue-600',
+  red: 'text-red-600',
+};
+<div className={colorClasses[color]}>Text</div>
+```
+
+Bad:
+```jsx
+<div className={`text-${color}-600`}>Text</div>
+```

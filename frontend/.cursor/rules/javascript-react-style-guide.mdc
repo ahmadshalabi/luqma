@@ -1,0 +1,69 @@
+---
+description: "Airbnb JavaScript/React Style Guide - Code conventions for React"
+globs: ["frontend/src/**/*.{js,jsx,ts,tsx}"]
+alwaysApply: false
+---
+# JavaScript/React Style Guide
+
+## Variables
+
+You must:
+- Use const by default for all declarations
+- Use let only when reassignment is needed
+- Never use var
+- Always destructure objects and arrays when accessing multiple properties
+
+## Functions
+
+You must:
+- Use arrow functions for callbacks and anonymous functions
+- Use template literals for string interpolation (backticks)
+
+## Objects & Arrays
+
+You must:
+- Use object shorthand when property name matches variable name
+- Use spread operator (...) for copying/merging objects and arrays
+
+## React Components
+
+You must:
+- Create functional components only (no class components)
+- Use named exports (export const Component) not default exports
+- Destructure props in function parameters
+
+## Hooks
+
+You must:
+- Call hooks at top level only (not inside conditions/loops)
+- Name custom hooks with "use" prefix (useRecipes, useDebounce)
+- Use useCallback for function memoization
+- Use useMemo for expensive calculations
+
+## JSX
+
+You must:
+- Self-close tags that have no children (<Component />)
+- Omit ={true} for boolean props (<Input required />)
+- Wrap multi-line JSX in parentheses
+- Provide unique key prop for list items (use ID, never array index)
+- Name event handler functions with handle prefix (handleClick)
+- Name event handler props with on prefix (onClick, onSelect)
+- Use && for conditional display: {isLoading && <Spinner />}
+- Use ternary for if-else: {error ? <Error /> : <Content />}
+
+## Naming
+
+You must use:
+- Components: PascalCase for names and files (RecipeCard.jsx)
+- Functions/Variables: camelCase (handleClick, maxRetries)
+- Constants: UPPER_SNAKE_CASE (API_BASE_URL, MAX_RETRIES)
+- Custom Hooks: use + camelCase (useRecipes, useDebounce)
+- Booleans: is/has/should prefix (isLoading, hasError, shouldShow)
+
+## File Organization
+
+You must order imports:
+1. React imports first
+2. Third-party libraries
+3. Local imports (components, hooks, utils)

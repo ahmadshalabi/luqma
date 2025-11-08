@@ -1,0 +1,91 @@
+---
+description: "React frontend development standards with Context API and hooks"
+globs: ["frontend/src/**/*.{js,jsx,ts,tsx}"]
+alwaysApply: false
+---
+# Frontend Development Standards
+
+## Component Architecture
+
+You must:
+- Keep components under 200 lines (break up larger)
+- Extract reusable logic into custom hooks
+
+## React 19 Features
+
+You should use:
+- use(): For reading resources/promises
+- Actions: For form submissions
+- useOptimistic: For better UX
+- useFormStatus: Form state
+
+## State Management
+
+You should use:
+- useState: Simple local state
+- useReducer: Complex state logic with multiple sub-values
+- Context API: Shared state across component tree
+- Custom hooks: Encapsulate and reuse stateful logic
+
+## Context API
+
+You must:
+- Always memoize context values with useMemo
+- Memoize actions with useCallback
+- Split contexts by concern
+- Wrap useContext in custom hooks
+
+## Performance
+
+You must:
+- Debounce search inputs (300ms)
+- Use React.lazy() for code splitting
+- Use virtual scrolling for long lists (100+ items)
+- Use stable keys for lists (not index)
+
+## Vite
+
+You must:
+- Prefix client-side env vars with VITE_
+- Use @/ alias for src/
+- Access env vars via import.meta.env
+
+## TailwindCSS
+
+You must:
+- Use utilities only (never inline styles)
+- Use mobile-first approach: base → sm: → md: → lg:
+- Use sr-only for screen reader only text
+- Use focus:ring for visible focus indicators
+
+## React Router
+
+You must use:
+- useParams(): Route params
+- useNavigate(): Programmatic navigation
+- Link: Internal navigation
+- Lazy routes: Load on demand
+
+## Accessibility
+
+You must ensure:
+- Semantic HTML: nav, main, article, button
+- aria-label for buttons without text
+- Logical keyboard navigation (tab order)
+- Descriptive alt text for images
+
+## API Communication
+
+You must:
+- Use centralized client (one api.js)
+- Never call external APIs (through backend only)
+- Handle loading/error/empty states
+- Use native Fetch API (no axios)
+
+## Testing
+
+You must:
+- Test behavior, not implementation
+- Use query priority: getByRole → getByLabelText → getByText
+- Use userEvent over fireEvent
+- Achieve 70%+ coverage

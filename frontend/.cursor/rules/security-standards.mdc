@@ -1,0 +1,42 @@
+---
+description: "Security standards for frontend development"
+globs: ["frontend/src/**/*.{js,jsx,ts,tsx}"]
+alwaysApply: false
+---
+# Frontend Security Standards
+
+## API Key Protection (CRITICAL)
+
+You must NEVER include API keys in:
+- Frontend code
+- Environment variables (even VITE_ prefixed ones)
+- Git commits
+
+You must:
+- Call backend only, never external APIs directly
+- Never store secrets in frontend
+
+## Input Validation
+
+You must validate at client-side for UX feedback only:
+- Provide immediate feedback to users
+- Never rely solely on client-side validation
+- Always validate on backend
+
+You must prevent:
+- XSS: Escape HTML, validate all input
+- Avoid dangerouslySetInnerHTML unless absolutely necessary
+
+## Content Security Policy
+
+You must:
+- Set CSP headers to restrict resource loading
+- Only load resources from trusted sources
+
+## Dependencies
+
+You must:
+- Enable automated scanning (Dependabot)
+- Check for updates weekly
+- Apply security patches immediately
+- Run: npm audit
