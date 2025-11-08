@@ -14,7 +14,7 @@ import { RecipeCard } from './RecipeCard'
 export const RecipeGrid = ({ recipes = [], emptyTitle, emptyMessage }) => {
   if (!recipes || recipes.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 px-4" role="status">
+      <div className="flex flex-col items-center justify-center py-12 px-4" role="status" aria-live="polite">
         <svg
           className="w-16 h-16 text-gray-300 mb-4"
           fill="none"
