@@ -1,5 +1,4 @@
 import { RecipeGrid } from './RecipeGrid'
-import PropTypes from 'prop-types'
 
 /**
  * SearchResults component displays search results in a grid.
@@ -15,15 +14,5 @@ export const SearchResults = ({ recipes = [] }) => {
       emptyMessage="Try adjusting your search or browse our collection"
     />
   )
-}
-
-SearchResults.propTypes = {
-  recipes: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      image: PropTypes.string,
-    })
-  ),
 }
 

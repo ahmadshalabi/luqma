@@ -1,5 +1,4 @@
 import { useState, useCallback } from 'react'
-import PropTypes from 'prop-types'
 
 /**
  * SearchBar component for recipe search functionality.
@@ -56,9 +55,5 @@ export const SearchBar = ({ onSearch }) => {
       </p>
     </form>
   )
-}
-
-SearchBar.propTypes = {
-  onSearch: PropTypes.func,
 }
 

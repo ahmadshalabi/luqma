@@ -1,5 +1,4 @@
 import { memo } from 'react'
-import PropTypes from 'prop-types'
 
 /**
  * RecipeCard Component
@@ -36,14 +35,6 @@ const RecipeCardComponent = ({ recipe }) => {
       </button>
     </article>
   )
-}
-
-RecipeCardComponent.propTypes = {
-  recipe: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-  }).isRequired,
 }
 
 // Memoize component to prevent unnecessary re-renders
