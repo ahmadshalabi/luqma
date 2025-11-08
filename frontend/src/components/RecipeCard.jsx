@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import PropTypes from 'prop-types'
 
 /**
@@ -9,7 +10,7 @@ import PropTypes from 'prop-types'
  * @param {Object} props
  * @param {Object} props.recipe - Recipe object containing id, title, and image
  */
-export const RecipeCard = ({ recipe }) => {
+const RecipeCardComponent = ({ recipe }) => {
   return (
     <article
       className="flex flex-col overflow-hidden bg-white border border-gray-200 rounded-lg shadow-sm transition-all hover:shadow-md hover:scale-105 focus-within:ring-2 focus-within:ring-blue-500"
@@ -37,11 +38,14 @@ export const RecipeCard = ({ recipe }) => {
   )
 }
 
-RecipeCard.propTypes = {
+RecipeCardComponent.propTypes = {
   recipe: PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
   }).isRequired,
 }
+
+// Memoize component to prevent unnecessary re-renders
+export const RecipeCard = memo(RecipeCardComponent)
 

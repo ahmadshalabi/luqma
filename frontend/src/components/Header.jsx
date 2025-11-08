@@ -1,12 +1,16 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 
 export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen)
-  }
+  const toggleMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen((prev) => !prev)
+  }, [])
+
+  const closeMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false)
+  }, [])
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm">
@@ -94,21 +98,21 @@ export const Header = () => {
               <Link
                 to="/"
                 className="px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={closeMobileMenu}
               >
                 Home
               </Link>
               <Link
                 to="/recipes"
                 className="px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={closeMobileMenu}
               >
                 Recipes
               </Link>
               <Link
                 to="/about"
                 className="px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={closeMobileMenu}
               >
                 About
               </Link>
