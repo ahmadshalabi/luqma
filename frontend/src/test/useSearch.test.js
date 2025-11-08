@@ -39,6 +39,26 @@ describe('useSearch', () => {
     expect(onSubmit).not.toHaveBeenCalled()
   })
 
+  it('should call onChange with debounce', async () => {
+    vi.useFakeTimers()
+    const onChange = vi.fn()
+    const { result } = renderHook(() => useSearch({ onChange, debounceMs: 300 }))
+    
+    act(() => result.current.setQuery('pasta'))
+    
+    // Should not call immediately
+    expect(onChange).not.toHaveBeenCalled()
+    
+    // Advance timers and flush promises
+    await act(async () => {
+      vi.advanceTimersByTime(300)
+    })
+    
+    expect(onChange).toHaveBeenCalledWith('pasta')
+    
+    vi.useRealTimers()
+  })
+
   it('should clear query', () => {
     const { result } = renderHook(() => useSearch({ initialQuery: 'pasta' }))
     
