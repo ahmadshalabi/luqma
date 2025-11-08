@@ -98,6 +98,7 @@ Test files should be placed next to the component they test with `.test.jsx` or 
 
 ### Pages
 - `HomePage.jsx` - Landing page with hero section, search bar, and popular recipes grid
+- `SearchResultsPage.jsx` - Search results page with query parameter handling and recipe filtering
 - `AboutPage.jsx` - About page with mission statement and feature highlights  
 - `RecipesPage.jsx` - Placeholder page for future recipe browsing (coming soon)
 
@@ -107,7 +108,25 @@ Test files should be placed next to the component they test with `.test.jsx` or 
 - `SearchBar.jsx` - Recipe search input component
 - `SearchResults.jsx` - Display search results
 - `RecipeCard.jsx` - Individual recipe card component
+- `RecipeGrid.jsx` - Grid layout component for displaying recipe cards
 - `PopularRecipes.jsx` - Grid layout for popular recipes
+
+### UI Components
+- `Button.jsx` - Reusable button component with variants (primary, secondary, link)
+- `EmptyState.jsx` - Empty state display for no results or content
+- `FeatureCard.jsx` - Feature highlight card component
+- `HeroSection.jsx` - Hero section for landing page
+- `Icon.jsx` - Icon component wrapper for consistent iconography
+- `LoadingSpinner.jsx` - Loading indicator component
+- `PageSection.jsx` - Page section layout wrapper for consistent spacing
+
+### Utilities
+- `searchUtils.js` - Recipe filtering utility functions (title-based search)
+
+### Path Aliasing
+The project uses Vite path aliasing for cleaner imports:
+- `@/` alias points to `src/` directory
+- Example: `import { Button } from '@/ui/Button'`
 
 ### Development Mode
 Currently using mock data from `src/mocks/` to enable frontend development without backend API. Mock data will be replaced with actual API calls once backend endpoints are implemented.
