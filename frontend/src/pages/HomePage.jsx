@@ -1,52 +1,39 @@
-export const HomePage = () => {
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <header className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">
-          Welcome to Luqma
-        </h1>
-        <p className="text-xl text-gray-600">
-          Recipe Search with Nutritional Information
-        </p>
-      </header>
+import { SearchBar } from '../components/SearchBar'
+import { PopularRecipes } from '../components/PopularRecipes'
+import { getRecipeSearchResults } from '@/mocks'
 
-      <main className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Getting Started
-          </h2>
-          <p className="text-gray-600 mb-4">
-            This is a minimal scaffold for the Luqma frontend. The project structure is ready for you to build upon.
+export const HomePage = () => {
+  // Get selected recipes from backend (currently using mock data)
+  const { results } = getRecipeSearchResults()
+  // Select first 6 recipes as popular recipes
+  const popularRecipes = results.slice(0, 6)
+
+  return (
+    <main className="flex-grow">
+      {/* Hero Section */}
+      <section className="container mx-auto px-4 py-12 md:py-16">
+        <div className="max-w-4xl mx-auto text-center space-y-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+            Welcome to Luqma
+          </h1>
+          <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
+            Discover delicious recipes with nutritional information
           </p>
-          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
-            <p className="text-sm text-blue-700">
-              <strong>Next Steps:</strong> Implement recipe search, detail views, and ingredient exclusion features.
-            </p>
+          <div className="mt-8">
+            <SearchBar />
           </div>
-          <ul className="space-y-2 text-gray-700">
-            <li className="flex items-start">
-              <span className="text-green-500 mr-2" aria-hidden="true">✓</span>
-              <span>React 19.2.0 with hooks</span>
-            </li>
-            <li className="flex items-start">
-              <span className="text-green-500 mr-2" aria-hidden="true">✓</span>
-              <span>Vite 7.2.2 for fast development</span>
-            </li>
-            <li className="flex items-start">
-              <span className="text-green-500 mr-2" aria-hidden="true">✓</span>
-              <span>TailwindCSS 4.1.17 for styling</span>
-            </li>
-            <li className="flex items-start">
-              <span className="text-green-500 mr-2" aria-hidden="true">✓</span>
-              <span>React Router 7.9.5 for navigation</span>
-            </li>
-            <li className="flex items-start">
-              <span className="text-green-500 mr-2" aria-hidden="true">✓</span>
-              <span>Folder structure ready for Context API</span>
-            </li>
-          </ul>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Popular Recipes Section */}
+      <section className="container mx-auto px-4 py-8 md:py-12">
+        <div className="space-y-6">
+          <h2 className="text-2xl md:text-3xl font-semibold text-gray-900">
+            Popular Recipes
+          </h2>
+          <PopularRecipes recipes={popularRecipes} />
+        </div>
+      </section>
+    </main>
   )
 }
