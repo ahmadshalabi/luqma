@@ -47,6 +47,11 @@ export function useSearch({ initialQuery = '', onSubmit, onChange, debounceMs = 
     onSubmitRef.current = onSubmit
   }, [onSubmit])
 
+  // Sync local query state with initialQuery prop (for browser back/forward)
+  useEffect(() => {
+    setQuery(initialQuery)
+  }, [initialQuery])
+
   // Debounced onChange effect
   useEffect(() => {
     if (!onChangeRef.current) return
