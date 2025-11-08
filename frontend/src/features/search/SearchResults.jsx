@@ -47,7 +47,7 @@ export const SearchResults = ({ query }) => {
     if (filteredRecipes.length > 0 && currentPage !== validPage) {
       setSearchParams({ q: query, page: validPage.toString() })
     }
-  }, [currentPage, validPage, query, filteredRecipes.length, setSearchParams])
+  }, [currentPage, validPage, query, filteredRecipes.length])
 
   // Scroll to top on page change
   useEffect(() => {
@@ -57,7 +57,7 @@ export const SearchResults = ({ query }) => {
   // Handle page change
   const handlePageChange = useCallback((newPage) => {
     setSearchParams({ q: query, page: newPage.toString() })
-  }, [query, setSearchParams])
+  }, [query])
 
   // Return null if no query
   if (!query) {

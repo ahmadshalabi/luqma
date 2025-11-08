@@ -66,5 +66,26 @@ describe('useSearch', () => {
     
     expect(result.current.query).toBe('')
   })
+
+  it('should use latest onSubmit callback via ref', () => {
+    const onSubmit1 = vi.fn()
+    const onSubmit2 = vi.fn()
+    
+    const { result, rerender } = renderHook(
+      ({ onSubmit }) => useSearch({ onSubmit }),
+      { initialProps: { onSubmit: onSubmit1 } }
+    )
+    
+    act(() => result.current.setQuery('pasta'))
+    
+    // Change the onSubmit callback
+    rerender({ onSubmit: onSubmit2 })
+    
+    // Submit should use the latest callback
+    act(() => result.current.handleSubmit({ preventDefault: vi.fn() }))
+    
+    expect(onSubmit1).not.toHaveBeenCalled()
+    expect(onSubmit2).toHaveBeenCalledWith('pasta')
+  })
 })
 

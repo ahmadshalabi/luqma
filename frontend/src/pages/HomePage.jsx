@@ -15,14 +15,14 @@ export const HomePage = () => {
     } else {
       setSearchParams({})
     }
-  }, [setSearchParams])
+  }, [])
 
   // Handle form submit (Enter key)
   const handleSearchSubmit = useCallback((searchQuery) => {
     if (searchQuery.trim()) {
       setSearchParams({ q: searchQuery, page: '1' })
     }
-  }, [setSearchParams])
+  }, [])
 
   return (
     <main id="main-content" className="flex-grow">
