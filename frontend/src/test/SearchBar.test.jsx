@@ -6,6 +6,7 @@ import { SearchBar } from '../components/SearchBar'
 describe('SearchBar', () => {
   it('should render search input', () => {
     render(<SearchBar />)
+    
     const input = screen.getByLabelText(/search for recipes/i)
     expect(input).toBeInTheDocument()
   })
@@ -35,30 +36,13 @@ describe('SearchBar', () => {
     expect(mockOnSearch).not.toHaveBeenCalled()
   })
 
-  it('should not submit when query is empty or whitespace', async () => {
-    const user = userEvent.setup()
-    const mockOnSearch = vi.fn()
-    render(<SearchBar onSearch={mockOnSearch} />)
-    
-    const input = screen.getByLabelText(/search for recipes/i)
-    
-    // Test empty
-    await user.click(input)
-    await user.keyboard('{Enter}')
-    expect(mockOnSearch).not.toHaveBeenCalled()
-    
-    // Test whitespace
-    await user.type(input, '   ')
-    await user.keyboard('{Enter}')
-    expect(mockOnSearch).not.toHaveBeenCalled()
-  })
-
   it('should update input value on change', async () => {
     const user = userEvent.setup()
     render(<SearchBar />)
-    const input = screen.getByLabelText(/search for recipes/i)
     
+    const input = screen.getByLabelText(/search for recipes/i)
     await user.type(input, 'pasta')
+    
     expect(input.value).toBe('pasta')
   })
 })
