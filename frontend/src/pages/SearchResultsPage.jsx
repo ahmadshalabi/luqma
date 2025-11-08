@@ -31,7 +31,7 @@ export const SearchResultsPage = () => {
         <div className="max-w-4xl mx-auto space-y-4">
           <Link
             to="/"
-            className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors"
+            className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
           >
             <svg
               className="w-5 h-5 mr-2"
