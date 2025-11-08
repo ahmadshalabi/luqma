@@ -1,3 +1,4 @@
+import { useMemo, useCallback } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import { SearchBar } from '../components/SearchBar'
 import { SearchResults } from '../components/SearchResults'
@@ -11,14 +12,17 @@ export const SearchResultsPage = () => {
   // Load mock data
   const { results: allRecipes } = getRecipeSearchResults()
 
-  // Filter recipes based on search query
-  const filteredRecipes = filterRecipes(allRecipes, query)
+  // Memoize filtered recipes to avoid recalculation on every render
+  const filteredRecipes = useMemo(() => {
+    return filterRecipes(allRecipes, query)
+  }, [allRecipes, query])
 
-  const handleSearch = (newQuery) => {
+  // Memoize search handler to prevent unnecessary re-renders
+  const handleSearch = useCallback((newQuery) => {
     if (newQuery.trim()) {
       setSearchParams({ q: newQuery })
     }
-  }
+  }, [setSearchParams])
 
   return (
     <main className="flex-grow">

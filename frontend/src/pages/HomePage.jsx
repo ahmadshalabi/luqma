@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SearchBar } from '../components/SearchBar'
 import { PopularRecipes } from '../components/PopularRecipes'
@@ -9,11 +10,12 @@ export const HomePage = () => {
   // Get popular recipes from mock data
   const popularRecipes = getPopularRecipes()
 
-  const handleSearch = (query) => {
+  // Memoize search handler to prevent unnecessary re-renders
+  const handleSearch = useCallback((query) => {
     if (query.trim()) {
       navigate(`/search?q=${encodeURIComponent(query)}`)
     }
-  }
+  }, [navigate])
 
   return (
     <main className="flex-grow">

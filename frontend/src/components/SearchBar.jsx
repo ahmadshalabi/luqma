@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 
 /**
@@ -10,16 +10,16 @@ import PropTypes from 'prop-types'
 export const SearchBar = ({ onSearch }) => {
   const [query, setQuery] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = useCallback((e) => {
     e.preventDefault()
     if (onSearch && query.trim()) {
       onSearch(query)
     }
-  }
+  }, [onSearch, query])
 
-  const handleInputChange = (e) => {
+  const handleInputChange = useCallback((e) => {
     setQuery(e.target.value)
-  }
+  }, [])
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
