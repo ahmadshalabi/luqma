@@ -34,12 +34,18 @@ export function useSearch({ initialQuery = '', onSubmit, onChange, debounceMs = 
   const [query, setQuery] = useState(initialQuery)
   const debounceTimerRef = useRef(null)
   const onChangeRef = useRef(onChange)
+  const onSubmitRef = useRef(onSubmit)
   const previousQueryRef = useRef(initialQuery)
 
   // Keep onChange ref up to date
   useEffect(() => {
     onChangeRef.current = onChange
   }, [onChange])
+
+  // Keep onSubmit ref up to date
+  useEffect(() => {
+    onSubmitRef.current = onSubmit
+  }, [onSubmit])
 
   // Debounced onChange effect
   useEffect(() => {
@@ -76,10 +82,10 @@ export function useSearch({ initialQuery = '', onSubmit, onChange, debounceMs = 
   const handleSubmit = useCallback((e) => {
     e.preventDefault()
     const trimmedQuery = query.trim()
-    if (onSubmit && trimmedQuery) {
-      onSubmit(trimmedQuery)
+    if (onSubmitRef.current && trimmedQuery) {
+      onSubmitRef.current(trimmedQuery)
     }
-  }, [onSubmit, query])
+  }, [query])
 
   const clear = useCallback(() => {
     setQuery('')
