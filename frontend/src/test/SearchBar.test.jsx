@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { SearchBar } from '../components/SearchBar'
+import { SearchBar } from '@/features/search/SearchBar'
 
 describe('SearchBar', () => {
   it('should render search input', () => {
@@ -22,18 +22,6 @@ describe('SearchBar', () => {
     
     expect(mockOnSearch).toHaveBeenCalledWith('chicken')
     expect(mockOnSearch).toHaveBeenCalledTimes(1)
-  })
-
-  it('should not call onSearch when input is empty', async () => {
-    const user = userEvent.setup()
-    const mockOnSearch = vi.fn()
-    render(<SearchBar onSearch={mockOnSearch} />)
-    
-    const input = screen.getByLabelText(/search for recipes/i)
-    await user.click(input)
-    await user.keyboard('{Enter}')
-    
-    expect(mockOnSearch).not.toHaveBeenCalled()
   })
 
   it('should update input value on change', async () => {

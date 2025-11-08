@@ -1,9 +1,9 @@
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { SearchBar } from '../components/SearchBar'
-import { PopularRecipes } from '../components/PopularRecipes'
-import { HeroSection } from '@/ui/HeroSection'
-import { PageSection } from '@/ui/PageSection'
+import { SearchBar } from '@/features/search/SearchBar'
+import { RecipeGrid } from '@/features/recipe/RecipeGrid'
+import { HeroSection } from '@/features/layout/HeroSection'
+import { PageSection } from '@/features/layout/PageSection'
 import { getPopularRecipes } from '@/mocks'
 
 export const HomePage = () => {
@@ -35,7 +35,11 @@ export const HomePage = () => {
           <h2 className="text-2xl md:text-3xl font-semibold text-gray-900">
             Popular Recipes
           </h2>
-          <PopularRecipes recipes={popularRecipes} />
+          <RecipeGrid 
+            recipes={popularRecipes}
+            emptyTitle="No popular recipes yet"
+            emptyMessage="Check back soon for our curated collection of popular recipes"
+          />
         </div>
       </PageSection>
     </main>

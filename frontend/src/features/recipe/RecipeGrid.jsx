@@ -1,5 +1,5 @@
 import { RecipeCard } from './RecipeCard'
-import { EmptyState } from '@/ui/EmptyState'
+import { EmptyState } from '@/primitives/EmptyState'
 
 /**
  * RecipeGrid Component

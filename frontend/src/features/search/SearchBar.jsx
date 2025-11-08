@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react'
-import { Icon } from '@/ui/Icon'
+import { Icon } from '@/primitives/Icon'
+import { useSearch } from '@/hooks/useSearch'
 
 /**
  * SearchBar component for recipe search functionality.
@@ -8,18 +8,9 @@ import { Icon } from '@/ui/Icon'
  * @param {Function} props.onSearch - Callback function called with search query on submit
  */
 export const SearchBar = ({ onSearch }) => {
-  const [query, setQuery] = useState('')
-
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault()
-    if (onSearch && query.trim()) {
-      onSearch(query)
-    }
-  }, [onSearch, query])
-
-  const handleInputChange = useCallback((e) => {
-    setQuery(e.target.value)
-  }, [])
+  const { query, handleChange, handleSubmit } = useSearch({
+    onSubmit: onSearch
+  })
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
@@ -35,7 +26,7 @@ export const SearchBar = ({ onSearch }) => {
           type="search"
           name="search"
           value={query}
-          onChange={handleInputChange}
+          onChange={handleChange}
           className="w-full pl-12 pr-4 py-4 text-base md:text-lg text-gray-900 placeholder-gray-500 bg-white border border-gray-300 rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           placeholder="Search for recipes..."
         />

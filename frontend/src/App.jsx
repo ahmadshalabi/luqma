@@ -1,8 +1,8 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { Header } from './components/Header'
-import { Footer } from './components/Footer'
-import { LoadingSpinner } from '@/ui/LoadingSpinner'
+import { Header } from '@/features/layout/Header'
+import { Footer } from '@/features/layout/Footer'
+import { LoadingSpinner } from '@/primitives/LoadingSpinner'
 
 // Lazy load page components for code splitting
 const HomePage = lazy(() => import('./pages/HomePage').then(module => ({ default: module.HomePage })))

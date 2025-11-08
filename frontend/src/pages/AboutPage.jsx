@@ -1,6 +1,6 @@
-import { HeroSection } from '@/ui/HeroSection'
-import { PageSection } from '@/ui/PageSection'
-import { FeatureCard } from '@/ui/FeatureCard'
+import { HeroSection } from '@/features/layout/HeroSection'
+import { PageSection } from '@/features/layout/PageSection'
+import { FeatureCard } from '@/features/about/FeatureCard'
 
 export const AboutPage = () => {
   return (

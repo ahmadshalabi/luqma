@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
-import { Pagination } from '../ui/Pagination'
+import { Pagination } from '@/primitives/Pagination'
 
 describe('Pagination', () => {
   it('should not render when totalPages is 1 or less', () => {

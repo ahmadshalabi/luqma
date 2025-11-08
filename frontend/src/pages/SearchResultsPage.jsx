@@ -1,16 +1,17 @@
 import { useMemo, useCallback, useEffect, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { SearchBar } from '../components/SearchBar'
-import { SearchResults } from '../components/SearchResults'
-import { PageSection } from '@/ui/PageSection'
-import { Button } from '@/ui/Button'
-import { Icon } from '@/ui/Icon'
-import { EmptyState } from '@/ui/EmptyState'
-import { Pagination } from '@/ui/Pagination'
+import { SearchBar } from '@/features/search/SearchBar'
+import { RecipeGrid } from '@/features/recipe/RecipeGrid'
+import { PageSection } from '@/features/layout/PageSection'
+import { Button } from '@/primitives/Button'
+import { Icon } from '@/primitives/Icon'
+import { EmptyState } from '@/primitives/EmptyState'
+import { Pagination } from '@/primitives/Pagination'
+import { usePagination } from '@/hooks/usePagination'
 import { getRecipeSearchResults } from '@/mocks'
 import { filterRecipes } from '../utils/searchUtils'
 
-const ITEMS_PER_PAGE = 12
+const ITEMS_PER_PAGE = 9
 
 export const SearchResultsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -29,20 +30,18 @@ export const SearchResultsPage = () => {
     return filterRecipes(allRecipes, query)
   }, [allRecipes, query])
 
-  // Calculate pagination values
-  const totalPages = Math.ceil(filteredRecipes.length / ITEMS_PER_PAGE)
-  const validPage = Math.min(Math.max(1, currentPage), Math.max(1, totalPages))
-  
-  // Slice recipes for current page
-  const paginatedRecipes = useMemo(() => {
-    const startIndex = (validPage - 1) * ITEMS_PER_PAGE
-    const endIndex = startIndex + ITEMS_PER_PAGE
-    return filteredRecipes.slice(startIndex, endIndex)
-  }, [filteredRecipes, validPage])
-
-  // Calculate display range
-  const startItem = filteredRecipes.length > 0 ? (validPage - 1) * ITEMS_PER_PAGE + 1 : 0
-  const endItem = Math.min(validPage * ITEMS_PER_PAGE, filteredRecipes.length)
+  // Use pagination hook for calculations
+  const {
+    paginatedItems: paginatedRecipes,
+    totalPages,
+    validPage,
+    startItem,
+    endItem
+  } = usePagination({
+    items: filteredRecipes,
+    currentPage,
+    itemsPerPage: ITEMS_PER_PAGE
+  })
 
   // Reset to page 1 when query actually changes (not on initial load)
   useEffect(() => {
@@ -110,7 +109,11 @@ export const SearchResultsPage = () => {
                   )}
                 </div>
               </div>
-              <SearchResults recipes={paginatedRecipes} />
+              <RecipeGrid
+                recipes={paginatedRecipes}
+                emptyTitle="No recipes found"
+                emptyMessage="Try adjusting your search or browse our collection"
+              />
               {filteredRecipes.length > ITEMS_PER_PAGE && (
                 <Pagination
                   currentPage={validPage}

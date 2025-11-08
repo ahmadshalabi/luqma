@@ -1,17 +1,9 @@
-import { useState, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { Icon } from '@/ui/Icon'
+import { Icon } from '@/primitives/Icon'
+import { useMobileMenu } from '@/hooks/useMobileMenu'
 
 export const Header = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-
-  const toggleMobileMenu = useCallback(() => {
-    setIsMobileMenuOpen((prev) => !prev)
-  }, [])
-
-  const closeMobileMenu = useCallback(() => {
-    setIsMobileMenuOpen(false)
-  }, [])
+  const { isOpen, toggle, close } = useMobileMenu()
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm">
@@ -60,12 +52,12 @@ export const Header = () => {
           <button
             type="button"
             className="md:hidden inline-flex items-center justify-center p-2 text-gray-700 bg-transparent rounded-lg transition-colors hover:bg-gray-100 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            aria-expanded={isMobileMenuOpen}
+            aria-expanded={isOpen}
             aria-controls="mobile-menu"
             aria-label="Toggle navigation menu"
-            onClick={toggleMobileMenu}
+            onClick={toggle}
           >
-            {isMobileMenuOpen ? (
+            {isOpen ? (
               <Icon name="close" size="lg" />
             ) : (
               <Icon name="menu" size="lg" />
@@ -74,7 +66,7 @@ export const Header = () => {
         </div>
 
         {/* Mobile Navigation Menu */}
-        {isMobileMenuOpen && (
+        {isOpen && (
           <nav
             id="mobile-menu"
             className="md:hidden border-t border-gray-200 py-4"
@@ -84,21 +76,21 @@ export const Header = () => {
               <Link
                 to="/"
                 className="px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onClick={closeMobileMenu}
+                onClick={close}
               >
                 Home
               </Link>
               <Link
                 to="/recipes"
                 className="px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onClick={closeMobileMenu}
+                onClick={close}
               >
                 Recipes
               </Link>
               <Link
                 to="/about"
                 className="px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onClick={closeMobileMenu}
+                onClick={close}
               >
                 About
               </Link>
