@@ -43,6 +43,7 @@ export default [
       ...reactHooks.configs.recommended.rules,
       ...jsxA11y.configs.recommended.rules,
       'react/jsx-no-target-blank': 'off',
+      'react/prop-types': 'off', // Not needed in React 19 with modern approach
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },

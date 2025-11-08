@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import { RecipeGrid } from './RecipeGrid'
 
 /**
@@ -17,15 +16,5 @@ export const PopularRecipes = ({ recipes }) => {
       emptyMessage="Check back soon for our curated collection of popular recipes"
     />
   )
-}
-
-PopularRecipes.propTypes = {
-  recipes: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      image: PropTypes.string,
-    })
-  ),
 }
 
