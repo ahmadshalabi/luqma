@@ -2,3 +2,8 @@
 @import "tailwindcss/preflight" layer(base);
 @import "tailwindcss/utilities" layer(utilities);
 
+/* Prevent layout shift from scrollbar appearing/disappearing */
+html {
+  overflow-y: scroll;
+}
+
