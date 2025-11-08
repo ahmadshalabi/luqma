@@ -25,6 +25,8 @@ const RecipeCardComponent = ({ recipe }) => {
             alt={recipe.title}
             className="w-full h-full object-cover"
             loading="lazy"
+            width="312"
+            height="192"
           />
         </div>
         <div className="p-4">

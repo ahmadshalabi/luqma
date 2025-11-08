@@ -1,7 +1,11 @@
 import { useMemo, useCallback } from 'react'
-import { useSearchParams, Link } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { SearchBar } from '../components/SearchBar'
 import { SearchResults } from '../components/SearchResults'
+import { PageSection } from '@/ui/PageSection'
+import { Button } from '@/ui/Button'
+import { Icon } from '@/ui/Icon'
+import { EmptyState } from '@/ui/EmptyState'
 import { getRecipeSearchResults } from '@/mocks'
 import { filterRecipes } from '../utils/searchUtils'
 
@@ -27,32 +31,18 @@ export const SearchResultsPage = () => {
   return (
     <main id="main-content" className="flex-grow">
       {/* Search Section */}
-      <section className="container mx-auto px-4 py-8 md:py-12">
-        <div className="max-w-4xl mx-auto space-y-4">
-          <Link
-            to="/"
-            className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
-          >
-            <svg
-              className="w-5 h-5 mr-2"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden="true"
-            >
-              <path d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
+      <PageSection>
+        <div className="space-y-4">
+          <Button to="/" variant="link" className="inline-flex items-center">
+            <Icon name="arrowLeft" className="mr-2" />
             Back to Home
-          </Link>
+          </Button>
           <SearchBar onSearch={handleSearch} />
         </div>
-      </section>
+      </PageSection>
 
       {/* Results Section */}
-      <section className="container mx-auto px-4 py-8">
+      <PageSection as="div">
         <div className="space-y-6">
           {query ? (
             <>
@@ -67,17 +57,14 @@ export const SearchResultsPage = () => {
               <SearchResults recipes={filteredRecipes} />
             </>
           ) : (
-            <div className="flex flex-col items-center justify-center py-12 px-4">
-              <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-4">
-                Search for Recipes
-              </h1>
-              <p className="text-base text-gray-600 text-center">
-                Enter a search term above to find recipes
-              </p>
-            </div>
+            <EmptyState
+              icon="search"
+              title="Search for Recipes"
+              message="Enter a search term above to find recipes"
+            />
           )}
         </div>
-      </section>
+      </PageSection>
     </main>
   )
 }
