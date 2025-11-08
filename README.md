@@ -11,7 +11,7 @@
 - Exclude ingredients and recalculate calories dynamically
 - Responsive, accessible design (WCAG-compliant)
 
-**Status:** Backend scaffolded with Spring Boot, health checks operational, business logic endpoints pending implementation. Frontend scaffolded with React/Vite/TailwindCSS, API integration pending.
+**Status:** Backend scaffolded with Spring Boot, health checks operational, business logic endpoints pending implementation. Frontend UI implemented with routing, components, and pages using mock data for development until backend API is ready.
 
 ## Tech Stack
 

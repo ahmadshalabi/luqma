@@ -33,12 +33,18 @@ Recipe search application with nutritional information and dynamic ingredient ex
 - exception/: 🚧 Custom exceptions + @ControllerAdvice - PENDING IMPLEMENTATION
 
 **Frontend Structure** (`frontend/src/`):
-- components/: Reusable UI
-- pages/: Route pages
-- contexts/: React Context
-- hooks/: Custom hooks
-- services/: API client
-- utils/: Helper functions
+- components/: Reusable UI (Header, Footer, SearchBar, SearchResults, RecipeCard, PopularRecipes)
+- pages/: Route pages (HomePage, AboutPage, RecipesPage)
+- contexts/: React Context (pending)
+- hooks/: Custom hooks (pending)
+- services/: API client (apiClient.js - pending backend integration)
+- utils/: Helper functions (pending)
+- mocks/: Mock Spoonacular API data for development
+
+**Development Approach:**
+- Frontend currently uses mock data (`frontend/src/mocks/`, `backend/src/main/resources/mocks/`)
+- Mock data replicates Spoonacular API responses for offline development
+- Will be replaced with actual API integration once backend endpoints are implemented
 
 ## API Endpoints
 
