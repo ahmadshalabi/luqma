@@ -18,9 +18,11 @@ if [ ! -f ".env" ]; then
     exit 1
 fi
 
-# Load environment variables
+# Load environment variables securely
 echo "📦 Loading environment variables from .env..."
-export $(cat .env | grep -v '^#' | xargs)
+set -a
+source .env
+set +a
 echo "✅ Environment variables loaded"
 echo ""
 
@@ -40,5 +42,5 @@ echo "=========================================="
 echo ""
 
 # Run the application
-./gradlew app:bootRun
+./gradlew bootRun
 

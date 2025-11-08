@@ -13,8 +13,8 @@ echo ""
 if [ ! -f ".env" ]; then
     echo "❌ Error: .env file not found!"
     echo ""
-    echo "Please create a .env file from env.example:"
-    echo "  cp env.example .env"
+    echo "Please create a .env file from .env.example:"
+    echo "  cp .env.example .env"
     echo ""
     exit 1
 fi

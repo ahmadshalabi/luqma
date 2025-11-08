@@ -72,7 +72,7 @@ if [ -f ".env" ]; then
     fi
 else
     echo "❌ .env file not found"
-    echo "   Create from template: cp env.example .env"
+    echo "   Create from template: cp .env.example .env"
     exit 1
 fi
 echo ""

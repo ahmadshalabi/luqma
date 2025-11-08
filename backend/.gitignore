@@ -10,10 +10,14 @@ build/
 *.ipr
 *.iws
 
+# Cursor (but preserve rules directory)
+.cursor/*
+!.cursor/rules/
+
 # Environment
 .env
 .env.*
-!env.example
+!.env.example
 
 # Logs
 *.log

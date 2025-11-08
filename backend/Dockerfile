@@ -9,14 +9,14 @@ COPY gradlew .
 COPY settings.gradle.kts .
 COPY gradle.properties .
 COPY gradle/libs.versions.toml gradle/
-COPY app/build.gradle.kts app/
+COPY build.gradle.kts .
 
 # Download dependencies (cached layer)
-RUN ./gradlew app:dependencies --no-daemon
+RUN ./gradlew dependencies --no-daemon
 
 # Copy source and build
-COPY app/src app/src
-RUN ./gradlew app:bootJar --no-daemon
+COPY src src
+RUN ./gradlew bootJar --no-daemon
 
 # Runtime stage
 FROM eclipse-temurin:25-jre-alpine
@@ -31,7 +31,7 @@ RUN addgroup -g 1001 appgroup && \
     adduser -u 1001 -S appuser -G appgroup
 
 # Copy JAR from builder
-COPY --from=builder --chown=appuser:appgroup /app/app/build/libs/*.jar app.jar
+COPY --from=builder --chown=appuser:appgroup /app/build/libs/*.jar app.jar
 
 USER appuser
 
