@@ -1,0 +1,190 @@
+---
+description: "Git commit conventions, branching strategy, and pull request workflow"
+alwaysApply: true
+---
+# Git Standards
+
+## Commit Conventions
+
+You must follow [Conventional Commits](https://www.conventionalcommits.org/) specification.
+
+### Format
+
+```
+<type>(<scope>): <subject>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+### Type
+
+You must use one of:
+- feat: New feature
+- fix: Bug fix
+- docs: Documentation only
+- style: Formatting changes (no code meaning change)
+- refactor: Code change (no bug fix or feature)
+- perf: Performance improvement
+- test: Adding/correcting tests
+- build: Build system or dependency changes
+- ci: CI configuration changes
+- chore: Other changes (no src/test modification)
+- revert: Revert previous commit
+
+### Scope
+
+You should use (optional but recommended):
+- backend: Backend changes
+- frontend: Frontend changes
+- api: API changes
+- ui: UI component changes
+- config: Configuration changes
+- deps: Dependency updates
+
+### Subject
+
+You must:
+- Use imperative, present tense: "add" not "added" or "adds"
+- Use lowercase (no capitalization)
+- Omit period at end
+- Keep under 50 characters
+
+### Body (Optional)
+
+You should:
+- Use imperative, present tense
+- Include motivation for change
+- Contrast with previous behavior
+- Wrap at 72 characters
+
+### Footer (Optional)
+
+You should:
+- Reference issues: Closes #123, Fixes #456, Refs #789
+- Note breaking changes: BREAKING CHANGE: <description>
+
+### Examples
+
+```
+feat(backend): implement recipe search endpoint
+fix(frontend): resolve mobile navigation overflow
+docs(readme): update installation instructions
+refactor(backend): extract calorie calculation to utility class
+```
+
+You must never:
+- Start subject with uppercase
+- End subject with period
+- Use past tense ("added", "fixed")
+- Write vague messages ("update stuff", "fix bug")
+- Commit without running lints/tests first
+
+## Branch Naming
+
+You must use format: `<type>/<short-description>`
+
+Types:
+- feature/: New features
+- fix/: Bug fixes
+- hotfix/: Urgent production fixes
+- refactor/: Code improvements
+- docs/: Documentation
+- test/: Tests
+- chore/: Maintenance
+
+You must:
+- Use lowercase only
+- Separate words with hyphens
+- Keep description under 50 characters
+
+Examples: `feature/recipe-search`, `fix/mobile-navigation`, `hotfix/api-timeout`
+
+## Branching Rules
+
+**Main Branch:**
+You must:
+- Keep main always production-ready and stable
+- Never commit directly to main
+- Require pull request + reviews for all merges
+- Tag main for releases
+
+**Feature Development:**
+```bash
+git checkout main
+git pull origin main
+git checkout -b feature/recipe-search
+# Work on feature
+git push origin feature/recipe-search
+# Create PR to main
+```
+
+**Hotfix Process:**
+```bash
+git checkout main
+git checkout -b hotfix/critical-issue
+# Fix immediately
+git push origin hotfix/critical-issue
+# Create URGENT PR
+```
+
+## Pull Request Rules
+
+**Before Creating PR:**
+You must:
+1. Update branch: `git rebase main`
+2. Ensure all tests pass
+3. Ensure linters pass
+4. Self-review all changes
+
+**PR Title:**
+You must use same format as commit message or descriptive summary.
+
+**PR Labels:**
+You should use:
+- Priority: critical, high, medium, low
+- Type: feature, bug, refactor, docs
+- Status: ready-for-review, wip, blocked
+- Size: xs, s, m, l, xl
+
+## Merge Rules
+
+You must use Squash and Merge:
+- Creates clean, linear history on main
+- Each PR becomes one commit
+- Easy to revert entire feature
+
+**Required Before Merge:**
+You must verify:
+- All reviews approved
+- All tests passing
+- No merge conflicts
+- CI/CD pipeline passing
+
+## Releases & Tags
+
+You must use Semantic Versioning: `MAJOR.MINOR.PATCH`
+
+```bash
+git tag -a v1.0.0 -m "Release v1.0.0"
+git push origin v1.0.0
+```
+
+- MAJOR: Breaking changes (v1.0.0 → v2.0.0)
+- MINOR: New features (v1.0.0 → v1.1.0)
+- PATCH: Bug fixes (v1.0.0 → v1.0.1)
+
+## Best Practices
+
+You must always:
+- Keep branches short-lived (under 1 week)
+- Rebase with main regularly to avoid conflicts
+- Test code before pushing
+- Write descriptive PR descriptions
+
+You must never:
+- Commit directly to main branch
+- Force push without --force-with-lease
+- Merge without approved reviews
+- Create PRs larger than 500 lines (split if needed)

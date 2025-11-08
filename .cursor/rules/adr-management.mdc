@@ -1,0 +1,87 @@
+---
+description: "ADR management standards using MADR 4.0.0 format"
+alwaysApply: false
+---
+# ADR Management Standards
+
+## Format
+
+You must:
+- Store ADRs in `docs/decisions/`
+- Use MADR 4.0.0 format
+- Name files: `NNNN-title-with-dashes.md`
+- Use `docs/decisions/adr-template.md` as template
+
+## Workflow
+
+When creating ADR, you must:
+1. Find next sequential number
+2. Create file with descriptive title
+3. Set status: "accepted", date: YYYY-MM-DD
+4. Update `docs/decisions/README.md` with link
+
+## Required Sections
+
+You must include:
+- YAML frontmatter (status, date)
+- Title (short, representative)
+- Context and Problem Statement (2-3 sentences)
+- Considered Options (2-3 alternatives minimum)
+- Decision Outcome (chosen option with consequences)
+
+## Optional Sections
+
+You may include:
+- Decision Drivers
+- Pros and Cons of Options
+- More Information
+
+## Rules
+
+You must:
+- Use concise language
+- Document why alternatives were not chosen
+- Keep ADRs immutable (only status changes)
+- Link related ADRs in "More Information"
+- Reference ADRs in code comments when relevant
+- Use tables for comparing multiple options
+
+You should create ADRs for:
+- Technology selection
+- Architectural patterns
+- API design decisions
+- Security decisions
+- Major refactoring
+
+You should not create ADRs for:
+- Bug fixes
+- Styling tweaks
+- Routine tasks
+
+## Status Changes
+
+**New decision:** status: "accepted"
+
+**Supersede old decision:**
+1. Create new ADR with next number
+2. Update old ADR status: "superseded by ADR-XXXX"
+3. Reference old ADR in new one: "Supersedes ADR-YYYY"
+4. Explain why original decision changed
+
+**Minor updates only:**
+1. Make content changes
+2. Keep original date
+3. Add note at bottom: "Updated: YYYY-MM-DD - Brief reason"
+
+You should update (not supersede) for:
+- Fix typos or grammar
+- Add clarifications
+- Add links to related ADRs
+- Add implementation references
+- Improve formatting
+
+You must supersede (not update) for:
+- Changing the decision
+- Different approach chosen
+- Technology replacement
+- Architectural shift

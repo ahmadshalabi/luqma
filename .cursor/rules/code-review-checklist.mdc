@@ -1,0 +1,61 @@
+---
+description: "Code review checklist for pull requests"
+alwaysApply: false
+---
+# Code Review Checklist
+
+## Review Principles
+
+You must:
+- Be constructive and specific
+- Praise good code
+- Focus on significant issues first
+- Ask questions to understand intent
+
+## Functionality
+
+You must verify:
+- Meets requirements
+- Edge cases handled
+- Error cases handled
+- No obvious bugs
+
+## Design
+
+You must verify:
+- Single Responsibility Principle followed
+- Correct layer (controller/service/component)
+- Follows project patterns
+- Appropriate abstraction level
+
+## Code Quality
+
+You must verify:
+- Self-documenting code (clear names)
+- No magic numbers
+- Complex logic has comments
+- No commented-out code
+
+## Git
+
+You must verify:
+- Conventional Commits format used
+- Logical, atomic commits
+- No merge conflicts
+
+## Approval Criteria
+
+**You must block merge for:**
+- Security vulnerabilities
+- Failing tests
+- Breaking changes
+
+**You should request changes for:**
+- Significant code quality issues
+- Missing critical tests
+- Architectural violations
+
+**You may suggest for:**
+- Minor improvements
+- Additional test coverage
+- Style preferences

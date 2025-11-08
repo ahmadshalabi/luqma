@@ -16,6 +16,7 @@ target/
 # Environment and configuration (may contain secrets)
 .env
 .env.*
+!.env.example
 *-local.properties
 secret.properties
 

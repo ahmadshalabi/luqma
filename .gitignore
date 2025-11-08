@@ -9,6 +9,7 @@
 # Cursor (but preserve rules directory)
 .cursor/*
 !.cursor/rules/
+!.cursor/rules/*
 
 # OS
 .DS_Store
@@ -26,8 +27,11 @@ node_modules/
 # Environment
 .env
 .env.*
-!env.example
+!.env.example
 
 # Logs
 *.log
 logs/
+
+# Test Coverage
+coverage/
