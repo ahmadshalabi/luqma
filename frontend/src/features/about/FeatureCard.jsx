@@ -1,5 +1,6 @@
 import { memo } from 'react'
 import { Icon } from '@/primitives/Icon'
+import { Card } from '@/primitives/Card'
 
 /**
  * FeatureCard Component
@@ -26,7 +27,7 @@ const FeatureCardComponent = ({ icon, iconColor = 'blue', title, description, cl
   const iconClass = colorClasses[iconColor] || colorClasses.blue
 
   return (
-    <div className={`flex flex-col p-6 space-y-3 bg-white border border-gray-200 rounded-lg shadow-sm ${className}`}>
+    <Card className={`flex flex-col space-y-3 ${className}`}>
       <div className="flex items-center space-x-3">
         <div className={`flex flex-shrink-0 items-center justify-center w-10 h-10 rounded-lg ${iconClass}`}>
           <Icon name={icon} size="lg" />
@@ -38,7 +39,7 @@ const FeatureCardComponent = ({ icon, iconColor = 'blue', title, description, cl
       <p className="text-base text-gray-700 leading-relaxed">
         {description}
       </p>
-    </div>
+    </Card>
   )
 }
 

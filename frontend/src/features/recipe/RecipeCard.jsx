@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import { Card } from '@/primitives/Card'
 
 /**
  * RecipeCard Component
@@ -11,8 +12,12 @@ import { memo } from 'react'
  */
 const RecipeCardComponent = ({ recipe }) => {
   return (
-    <article
-      className="flex flex-col overflow-hidden bg-white border border-gray-200 rounded-lg shadow-sm transition-all hover:shadow-md hover:scale-105 focus-within:ring-2 focus-within:ring-blue-500"
+    <Card
+      as="article"
+      padding="none"
+      hover={true}
+      interactive={true}
+      className="flex flex-col overflow-hidden"
     >
       <button
         type="button"
@@ -35,7 +40,7 @@ const RecipeCardComponent = ({ recipe }) => {
           </h3>
         </div>
       </button>
-    </article>
+    </Card>
   )
 }
 
