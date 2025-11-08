@@ -1,0 +1,111 @@
+---
+description: Guidelines for creating and managing project rules in .cursor/rules
+alwaysApply: false
+---
+# Rule Creation Guidelines
+
+## File Format
+
+You must:
+- Store rules in `.cursor/rules/`
+- Use `.mdc` extension (Markdown with YAML frontmatter)
+
+## Metadata
+
+```yaml
+---
+description: "Brief summary for Agent to understand rule"
+globs: ["**/*.ext"]  # Optional: file patterns
+alwaysApply: true    # Optional: true/false (default false)
+---
+```
+
+### alwaysApply: true
+
+You should use for:
+- Project context
+- Critical security standards
+- Git conventions
+
+### alwaysApply: false (with globs)
+
+You should use for:
+- Language-specific standards
+- Directory-specific rules
+
+Glob patterns:
+- `"**/*.java"`: All Java files
+- `"backend/**/*.java"`: Java files in backend
+- `"frontend/src/**/*.{js,jsx,ts,tsx}"`: Frontend source files
+
+### alwaysApply: false (no globs)
+
+You should use for:
+- General standards (Agent decides relevance)
+- Specialized rules used occasionally
+
+## Writing Style
+
+You must write rules that target AI agents (like Cursor Agent):
+- Use direct commands: "You must...", "You should...", "You must never..."
+- Use second-person imperative (not instructional style)
+- Write actionable rules, not explanations
+- Be concise and specific
+
+Examples:
+- ✅ Good: "You must use constructor injection only"
+- ❌ Bad: "Constructor injection is preferred because..."
+
+## Quality Standards
+
+You must:
+- Keep under 500 lines
+- Focus on one topic per file
+- Use bullet points and clear headings
+- Avoid redundancy
+- Write clear descriptions for intelligent application
+- Use conventions over implementation (what, not how)
+- Include minimal examples (only for structure/context)
+
+You must simplify to essentials:
+- Remove detailed explanations
+- Remove tutorials and step-by-step guides
+- Remove redundant checklists (rules already state requirements)
+- Remove "philosophy" and "when to use" sections
+- Keep only core principles and actionable rules
+
+## When to Create
+
+You should create when:
+- Repeating same guidance multiple times
+- ADR decisions require enforcement
+- Tech stack-specific conventions needed
+- Project-specific standards needed
+
+You should not create for:
+- One-off situations
+- General software principles
+- Implementation tutorials
+- Well-known best practices
+
+## Content
+
+You must include:
+- Conventions and standards
+- Tech stack-specific patterns
+- Brief examples for structure only
+
+You must exclude:
+- Step-by-step implementations
+- Verbose explanations
+- Duplicate information
+- General programming advice
+- Multiple similar examples
+
+## Maintenance
+
+You must:
+- Review periodically
+- Remove outdated info
+- Avoid duplication (reference other rules)
+- Keep minimal

@@ -1,0 +1,134 @@
+---
+description: "WCAG 2.1 AA accessibility compliance standards"
+globs: ["frontend/src/**/*.{js,jsx,ts,tsx}"]
+alwaysApply: false
+---
+# Accessibility Standards
+
+You must target WCAG 2.1 Level AA compliance.
+
+## Semantic HTML
+
+You must use:
+- Landmarks: `<header>`, `<nav>`, `<main>`, `<article>`, `<section>`, `<aside>`, `<footer>`
+- `<button>` for actions, `<a>` for navigation
+- `<input>`, `<select>`, `<textarea>` for forms
+- Proper heading hierarchy (h1 → h2 → h3)
+- Lists: `<ul>`, `<ol>`, `<li>`
+- Tables for tabular data only
+
+You must never use `<div>` with onClick for buttons.
+
+## ARIA (Use Sparingly)
+
+You must use ARIA only when semantic HTML is insufficient.
+
+You should use:
+- `aria-label`: Label without visible text
+- `aria-labelledby`: Reference visible label
+- `aria-describedby`: Additional description
+- `aria-expanded`: Collapsible content state
+- `aria-selected`: Selection state
+- `aria-live="polite"`: Announce when convenient
+- `aria-live="assertive"`: Announce immediately
+- `role="alert"`: Important messages
+- `role="status"`: Status updates
+- `aria-hidden="true"`: Hide from screen readers
+- `aria-invalid`: Invalid form input
+- `aria-required`: Required field
+
+## Keyboard Navigation
+
+You must ensure:
+- All interactive elements are focusable
+- Logical tab order
+- Visible focus indicators (minimum 2px outline)
+- No keyboard traps
+- Skip navigation link first
+
+You must use TailwindCSS focus classes: `focus:ring-2 focus:ring-blue-500`
+
+You must implement for modals:
+- Trap focus when open
+- Return focus when closed
+- Focus first element on open
+
+You must support:
+- Enter/Space: Activate button
+- Escape: Close modal/dropdown
+- Arrow keys: Navigate menu/list
+- Tab: Next element
+- Shift+Tab: Previous element
+
+## Visual Accessibility
+
+You must meet WCAG AA color contrast:
+- Normal text (< 24px): 4.5:1
+- Large text (≥ 24px or ≥ 19px bold): 3:1
+- UI components: 3:1
+
+You must never rely on color alone (use icons + text, patterns, labels).
+
+You must:
+- Use 16px minimum base font
+- Allow zoom to 200%
+- Use relative units (rem, em)
+- Use line-height: 1.5 for body, 1.2 for headings
+
+## Forms
+
+You must:
+- Provide labels for all inputs (`<label>` with `htmlFor`)
+- Indicate required fields visually and with `required` attribute
+- Use `aria-required="true"` on required fields
+- Associate errors with fields using `aria-describedby`
+- Use `aria-invalid` on invalid fields
+- Use `role="alert"` for error messages
+- Show all validation errors, not just first
+- Group related inputs with `<fieldset>` and `<legend>`
+
+## Images and Media
+
+You must:
+- Provide alt text for informative images (describe content)
+- Use empty alt (`alt=""`) for decorative images
+- Describe action for functional images
+- Provide detailed description for complex images
+- Keep alt text concise (< 125 characters)
+- Never say "image of" in alt text
+
+## Dynamic Content
+
+You must:
+- Use `aria-live="polite"` for non-urgent updates
+- Use `aria-live="assertive"` for urgent updates
+- Use `role="alert"` for errors
+- Use `role="status"` for status updates
+- Use `aria-busy` attribute for loading states
+- Hide loading spinners from screen readers: `aria-hidden="true"`
+- Manage focus after updates (move to new content or announce with live regions)
+
+## Common Patterns
+
+**Modal Dialog:**
+- `role="dialog"`
+- `aria-modal="true"`
+- `aria-labelledby` for title
+- Focus trap inside
+- Escape to close
+- Return focus on close
+
+**Accordion:**
+- `aria-expanded` on button
+- `aria-controls` references panel
+- `role="region"` on panel
+
+**Dropdown Menu:**
+- `aria-expanded` on trigger
+- Arrow key navigation
+- Escape to close
+
+**Toast Notification:**
+- `role="alert"` for errors
+- `role="status"` for info
+- `aria-live` for announcements

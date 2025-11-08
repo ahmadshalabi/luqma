@@ -1,0 +1,86 @@
+---
+description: "Luqma project context: Recipe search application with Spring Boot backend and React frontend"
+alwaysApply: true
+---
+# Luqma Project Context
+
+## Overview
+
+Recipe search application with nutritional information and dynamic ingredient exclusion.
+
+## Tech Stack
+
+**Backend:** Spring Boot 3.5.7, Java 25, Gradle, Spoonacular API, JaCoCo
+
+**Frontend:** React 19.2.0, Vite 7.2.2, TailwindCSS 4.1.17, React Router 7.9.5, Context API, Vitest
+
+## Architecture
+
+**Security (Critical):**
+- Backend proxies all Spoonacular API calls
+- Frontend calls backend only, never external APIs
+- API keys never in frontend or version control
+
+**Data Flow:** User → React UI → Backend API → Spoonacular
+
+**Backend Structure** (`backend/src/main/java/app/luqma/backend/`):
+- controller/: 🚧 REST endpoints (thin layer) - PENDING IMPLEMENTATION
+- service/: 🚧 Business logic - PENDING IMPLEMENTATION
+- client/: 🚧 Spoonacular API client - PENDING IMPLEMENTATION
+- model/dto/: 🚧 API request/response - PENDING IMPLEMENTATION
+- model/domain/: 🚧 Internal models - PENDING IMPLEMENTATION
+- config/: Spring configuration (actuator configured)
+- exception/: 🚧 Custom exceptions + @ControllerAdvice - PENDING IMPLEMENTATION
+
+**Frontend Structure** (`frontend/src/`):
+- components/: Reusable UI
+- pages/: Route pages
+- contexts/: React Context
+- hooks/: Custom hooks
+- services/: API client
+- utils/: Helper functions
+
+## API Endpoints
+
+**Backend REST API (🚧 PLANNED - NOT YET IMPLEMENTED):**
+- POST /api/v1/recipes/search - 🚧 PLANNED
+- GET /api/v1/recipes/{id} - 🚧 PLANNED
+- POST /api/v1/recipes/{id}/exclude-ingredients - 🚧 PLANNED
+
+**Currently Available:**
+- GET /actuator/health - Health check
+- GET /actuator/health/liveness - Liveness probe
+- GET /actuator/health/readiness - Readiness probe
+- GET /actuator/info - Application info
+
+**Spoonacular API (external API used in backend only):**
+- GET /recipes/complexSearch
+- GET /recipes/{id}/information
+- GET /food/ingredients/{id}/information
+
+## Environment Variables
+
+**Backend:** SPOONACULAR_API_KEY (required), SPRING_PROFILES_ACTIVE
+
+**Frontend:** VITE_API_URL (default: http://localhost:8080/api/v1)
+
+## Commands
+
+**Backend:**
+- ./scripts/run-local.sh (run with dev profile)
+- ./gradlew test
+- docker compose up
+
+**Frontend:**
+- npm run dev (localhost:3000)
+- npm run build
+- npm test
+- npm run lint:fix
+
+## Documentation
+
+**ADRs:** docs/decisions/ (MADR format)
+
+**Standards:** .cursor/rules/ (root), backend/.cursor/rules/, frontend/.cursor/rules/
+
+**Key Principle:** Backend protects secrets and handles business logic. Frontend focuses on user experience. Both prioritize accessibility and security.

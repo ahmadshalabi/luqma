@@ -1,0 +1,43 @@
+---
+description: "General documentation standards for README files and code comments"
+alwaysApply: false
+---
+# General Documentation Standards
+
+## README Structure
+
+You must include:
+- Project/module purpose
+- Key components
+- Usage examples (minimal)
+- Dependencies (why needed)
+- Testing commands
+- Links to related docs
+
+You must keep updated:
+- Installation steps
+- Configuration
+- Development commands
+- Breaking changes
+
+## Code Comments
+
+You should comment:
+- Why, not what
+- Business rules
+- Workarounds (with TODO)
+- Complex algorithms (approach)
+- Non-obvious decisions
+
+You must not comment:
+- Obvious code
+- What code does
+- Commented-out code (delete it)
+- Outdated information (update or remove)
+
+## TODO Format
+
+You must use:
+- `// TODO: Description`
+- `// TODO(username): Description`
+- `// FIXME: Description`

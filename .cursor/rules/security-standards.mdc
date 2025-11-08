@@ -1,0 +1,31 @@
+---
+description: "Critical security standards for API key protection"
+alwaysApply: true
+---
+# Security Standards
+
+## API Key Protection (CRITICAL)
+
+You must NEVER include API keys in:
+- Frontend code
+- HTTP responses
+- Logs
+- Git commits
+- Error messages
+
+You must:
+- Store API keys in environment variables only (${SPOONACULAR_API_KEY})
+- Use API keys only in backend service layer
+- Ensure frontend calls backend only, never external APIs directly
+
+Ensure Git protection:
+- .env in .gitignore
+- .env.example committed with placeholders only
+
+## Dependencies
+
+You must:
+- Enable automated scanning (Dependabot)
+- Check for updates weekly
+- Apply security patches immediately
+- Run: ./gradlew dependencyCheckAnalyze (backend), npm audit (frontend)
