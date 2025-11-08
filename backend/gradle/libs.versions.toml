@@ -10,8 +10,11 @@ java = "25"
 spring-boot = "3.5.7"
 spring-dependency-management = "1.1.7"
 
+# OpenAPI Documentation
+springdoc-openapi = "2.8.14"
+
 # Code Coverage
-jacoco = "0.8.12"
+jacoco = "0.8.13"
 
 [libraries]
 # Spring Boot Starters
@@ -22,6 +25,9 @@ spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-star
 spring-boot-configuration-processor = { module = "org.springframework.boot:spring-boot-configuration-processor" }
 spring-boot-devtools = { module = "org.springframework.boot:spring-boot-devtools" }
 spring-boot-docker-compose = { module = "org.springframework.boot:spring-boot-docker-compose" }
+
+# OpenAPI Documentation
+springdoc-openapi-starter-webmvc-ui = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc-openapi" }
 
 # Lombok (version managed by Spring Boot)
 lombok = { module = "org.projectlombok:lombok" }
@@ -39,6 +45,7 @@ spring-dependency-management = { id = "io.spring.dependency-management", version
 spring-boot = [
     "spring-boot-starter-web",
     "spring-boot-starter-actuator",
+    "spring-boot-starter-validation",
 ]
 
 # Development tools

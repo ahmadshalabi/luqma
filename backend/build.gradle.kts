@@ -1,0 +1,86 @@
+plugins {
+	java
+	jacoco
+	alias(libs.plugins.spring.boot)
+	alias(libs.plugins.spring.dependency.management)
+}
+
+group = "app.luqma"
+version = "0.0.1-SNAPSHOT"
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(25)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom(configurations.annotationProcessor.get())
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// Spring Boot
+	implementation(libs.bundles.spring.boot)
+	annotationProcessor(libs.spring.boot.configuration.processor)
+
+	// OpenAPI Documentation
+	implementation(libs.springdoc.openapi.starter.webmvc.ui)
+
+	// Lombok
+	compileOnly(libs.lombok)
+	annotationProcessor(libs.lombok)
+
+	// Development Tools
+	developmentOnly(libs.bundles.dev.tools)
+	
+	// Testing
+	testImplementation(libs.bundles.testing)
+	testRuntimeOnly(libs.junit.platform.launcher)
+}
+
+tasks.withType<Test> {
+	useJUnitPlatform()
+}
+
+// JaCoCo Configuration
+jacoco {
+	toolVersion = libs.versions.jacoco.get()
+}
+
+tasks.jacocoTestReport {
+	dependsOn(tasks.test)
+	reports {
+		xml.required.set(true)
+		html.required.set(true)
+		html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco"))
+	}
+}
+
+tasks.jacocoTestCoverageVerification {
+	violationRules {
+		// Services: 80% coverage requirement
+		rule {
+			element = "PACKAGE"
+			includes = listOf("app.luqma.backend.service")
+			limit {
+				counter = "LINE"
+				minimum = "0.80".toBigDecimal()
+			}
+		}
+		// Controllers: 70% coverage requirement
+		rule {
+			element = "PACKAGE"
+			includes = listOf("app.luqma.backend.controller")
+			limit {
+				counter = "LINE"
+				minimum = "0.70".toBigDecimal()
+			}
+		}
+	}
+}

@@ -4,4 +4,3 @@ plugins {
 }
 
 rootProject.name = "luqma-backend"
-include("app")
