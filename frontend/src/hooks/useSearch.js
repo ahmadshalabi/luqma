@@ -33,10 +33,23 @@ import { useState, useCallback, useEffect, useRef } from 'react'
 export function useSearch({ initialQuery = '', onSubmit, onChange, debounceMs = 300 } = {}) {
   const [query, setQuery] = useState(initialQuery)
   const debounceTimerRef = useRef(null)
+  const onChangeRef = useRef(onChange)
+  const previousQueryRef = useRef(initialQuery)
+
+  // Keep onChange ref up to date
+  useEffect(() => {
+    onChangeRef.current = onChange
+  }, [onChange])
 
   // Debounced onChange effect
   useEffect(() => {
-    if (!onChange) return
+    if (!onChangeRef.current) return
+
+    // Only trigger onChange if query actually changed
+    if (query === previousQueryRef.current) return
+
+    // Update previous query
+    previousQueryRef.current = query
 
     // Clear existing timer
     if (debounceTimerRef.current) {
@@ -45,7 +58,7 @@ export function useSearch({ initialQuery = '', onSubmit, onChange, debounceMs = 
 
     // Set new timer
     debounceTimerRef.current = setTimeout(() => {
-      onChange(query)
+      onChangeRef.current(query)
     }, debounceMs)
 
     // Cleanup
@@ -54,7 +67,7 @@ export function useSearch({ initialQuery = '', onSubmit, onChange, debounceMs = 
         clearTimeout(debounceTimerRef.current)
       }
     }
-  }, [query, onChange, debounceMs])
+  }, [query, debounceMs])
 
   const handleChange = useCallback((e) => {
     setQuery(e.target.value)
