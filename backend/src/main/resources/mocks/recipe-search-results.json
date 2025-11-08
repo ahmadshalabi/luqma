@@ -1,0 +1,67 @@
+{
+  "results": [
+    {
+      "id": 654812,
+      "title": "Pasta and Seafood",
+      "image": "https://img.spoonacular.com/recipes/654812-556x370.jpg",
+      "imageType": "jpg"
+    },
+    {
+      "id": 715497,
+      "title": "Chicken Pasta Alfredo",
+      "image": "https://spoonacular.com/recipeImages/715497-312x231.jpg",
+      "imageType": "jpg"
+    },
+    {
+      "id": 782601,
+      "title": "Red Kidney Bean Jambalaya",
+      "image": "https://img.spoonacular.com/recipes/782601-556x370.jpg",
+      "imageType": "jpg"
+    },
+    {
+      "id": 642539,
+      "title": "Falafel Burger",
+      "image": "https://img.spoonacular.com/recipes/642539-556x370.png",
+      "imageType": "jpg"
+    },
+    {
+      "id": 511728,
+      "title": "Classic Beef Tacos",
+      "image": "https://spoonacular.com/recipeImages/511728-312x231.jpg",
+      "imageType": "jpg"
+    },
+    {
+      "id": 798400,
+      "title": "Vegan Buddha Bowl",
+      "image": "https://spoonacular.com/recipeImages/798400-312x231.jpg",
+      "imageType": "jpg"
+    },
+    {
+      "id": 633942,
+      "title": "Baked Salmon with Asparagus",
+      "image": "https://spoonacular.com/recipeImages/633942-312x231.jpg",
+      "imageType": "jpg"
+    },
+    {
+      "id": 716429,
+      "title": "Margherita Pizza",
+      "image": "https://spoonacular.com/recipeImages/716429-312x231.jpg",
+      "imageType": "jpg"
+    },
+    {
+      "id": 652423,
+      "title": "Vegetarian Stir-Fry",
+      "image": "https://spoonacular.com/recipeImages/652423-312x231.jpg",
+      "imageType": "jpg"
+    },
+    {
+      "id": 794538,
+      "title": "Gluten-Free Chocolate Brownies",
+      "image": "https://spoonacular.com/recipeImages/794538-312x231.jpg",
+      "imageType": "jpg"
+    }
+  ],
+  "offset": 0,
+  "number": 10,
+  "totalResults": 47
+}
