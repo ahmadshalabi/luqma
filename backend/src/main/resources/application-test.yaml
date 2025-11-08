@@ -1,0 +1,50 @@
+# Test Profile Configuration
+# This profile is used for integration tests
+
+spring:
+  # Docker Compose Configuration
+  docker:
+    compose:
+      enabled: false
+
+# Actuator Configuration - Test
+management:
+  endpoint:
+    health:
+      show-details: always
+
+# Test server configuration
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: always
+
+# Test Logging
+logging:
+  level:
+    root: WARN
+    app.luqma: DEBUG
+    org.springframework.test: DEBUG
+
+# Spoonacular API Configuration - Test (use mock values)
+spoonacular:
+  api-key: test-api-key
+  connection-timeout: 5000
+  read-timeout: 5000
+
+# CORS Configuration - Test
+cors:
+  allowed-origins:
+    - http://localhost:3000
+  allowed-methods:
+    - GET
+    - POST
+    - PUT
+    - PATCH
+    - DELETE
+  allowed-headers:
+    - "*"
+  allow-credentials: true
+  max-age: 3600
+
