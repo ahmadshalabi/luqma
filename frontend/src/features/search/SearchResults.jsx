@@ -18,8 +18,7 @@ const ITEMS_PER_PAGE = 9
  */
 export const SearchResults = ({ query }) => {
   const [searchParams, setSearchParams] = useSearchParams()
-  const pageParam = searchParams.get('page')
-  const currentPage = pageParam ? Math.max(1, parseInt(pageParam, 10) || 1) : 1
+  const currentPage = parseInt(searchParams.get('page') || '1', 10)
 
   // Load mock data
   const { results: allRecipes } = getRecipeSearchResults()
