@@ -77,30 +77,32 @@ npm run test:coverage
 
 View coverage report: `frontend/coverage/index.html`
 
-## Test Coverage
+## Testing Philosophy
 
-The project uses Vitest for testing with the following requirements:
+The project uses Vitest for testing with a focus on **minimal, behavior-driven tests**:
 
-- **Components**: 70%+ line coverage
-- **Custom hooks**: 80%+ line coverage
+- **Test what matters**: User interactions, rendered output, accessibility
+- **Avoid over-testing**: Don't test implementation details or edge cases that never occur
+- **Keep tests simple**: Each test should be clear and focused on one behavior
+- **Target coverage**: 70%+ components, 80%+ custom hooks
 
-Test files should be placed next to the component they test with `.test.jsx` or `.spec.jsx` extension.
+Test files are located in `src/test/` directory for better organization.
 
 ## Features
 
-- Recipe search with filters (cuisine, diet, ingredients)
-- Recipe detail view with nutritional information
-- Ingredient exclusion with dynamic calorie recalculation
+- Live search with debouncing (300ms) on homepage
+- Recipe search with pagination
+- Recipe cards with images and titles
 - Responsive, mobile-first design
 - WCAG 2.1 AA accessible UI
+- Component-based architecture with reusable primitives
 
 ## Project Structure
 
 The project follows a feature-based architecture for better organization and scalability:
 
 ### Pages (`pages/`)
-- `HomePage.jsx` - Landing page with hero section, search bar, and popular recipes grid
-- `SearchResultsPage.jsx` - Search results page with query parameter handling, pagination, and recipe filtering
+- `HomePage.jsx` - Landing page with hero section, live search bar, and search results
 - `AboutPage.jsx` - About page with mission statement and feature highlights  
 - `RecipesPage.jsx` - Placeholder page for future recipe browsing (coming soon)
 
@@ -118,7 +120,9 @@ Feature-based components organized by domain:
 - `RecipeGrid.jsx` - Grid layout for displaying recipe cards with empty state
 
 #### Search (`features/search/`)
-- `SearchBar.jsx` - Recipe search input with form handling
+- `SearchBar.jsx` - Recipe search input with debounced live search and form handling
+- `SearchResults.jsx` - Search results display with filtering, pagination, and empty states
+- `ResultsHeader.jsx` - Results header showing count and pagination info
 
 #### About (`features/about/`)
 - `FeatureCard.jsx` - Feature highlight card for About page
@@ -126,6 +130,7 @@ Feature-based components organized by domain:
 ### Primitives (`primitives/`)
 Generic, reusable UI components without business logic:
 - `Button.jsx` - Multi-variant button (primary, secondary, link) supporting internal/external navigation
+- `Card.jsx` - Base card component with configurable padding, hover effects, and interactive states
 - `Icon.jsx` - SVG icon system with configurable sizes
 - `EmptyState.jsx` - Empty state display with icon, title, message, and optional action
 - `LoadingSpinner.jsx` - Loading indicator with configurable size
@@ -134,7 +139,7 @@ Generic, reusable UI components without business logic:
 ### Custom Hooks (`hooks/`)
 Reusable stateful logic:
 - `useMobileMenu.js` - Mobile menu toggle state management
-- `useSearch.js` - Search form state, validation, and submission
+- `useSearch.js` - Search form state with debouncing (300ms) and submission handling
 - `usePagination.js` - Pagination calculations (page slicing, ranges, navigation helpers)
 
 ### Utilities (`utils/`)

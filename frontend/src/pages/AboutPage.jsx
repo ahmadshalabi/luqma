@@ -35,8 +35,8 @@ export const AboutPage = () => {
               <FeatureCard
                 icon="search"
                 iconColor="blue"
-                title="Recipe Search"
-                description="Search through thousands of recipes by dish names to find exactly what you're craving."
+                title="Live Search"
+                description="Search recipes with instant feedback. Results update as you type with smart debouncing for optimal performance."
               />
               <FeatureCard
                 icon="checkCircle"

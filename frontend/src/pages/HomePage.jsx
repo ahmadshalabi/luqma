@@ -1,23 +1,28 @@
 import { useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { SearchBar } from '@/features/search/SearchBar'
-import { RecipeGrid } from '@/features/recipe/RecipeGrid'
+import { SearchResults } from '@/features/search/SearchResults'
 import { HeroSection } from '@/features/layout/HeroSection'
-import { PageSection } from '@/features/layout/PageSection'
-import { getPopularRecipes } from '@/mocks'
 
 export const HomePage = () => {
-  const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const query = searchParams.get('q') || ''
 
-  // Get popular recipes from mock data
-  const popularRecipes = getPopularRecipes()
-
-  // Memoize search handler to prevent unnecessary re-renders
-  const handleSearch = useCallback((query) => {
-    if (query.trim()) {
-      navigate(`/search?q=${encodeURIComponent(query)}`)
+  // Handle live search (debounced)
+  const handleSearchChange = useCallback((searchQuery) => {
+    if (searchQuery.trim()) {
+      setSearchParams({ q: searchQuery, page: '1' })
+    } else {
+      setSearchParams({})
     }
-  }, [navigate])
+  }, [setSearchParams])
+
+  // Handle form submit (Enter key)
+  const handleSearchSubmit = useCallback((searchQuery) => {
+    if (searchQuery.trim()) {
+      setSearchParams({ q: searchQuery, page: '1' })
+    }
+  }, [setSearchParams])
 
   return (
     <main id="main-content" className="flex-grow">
@@ -26,22 +31,15 @@ export const HomePage = () => {
         title="Welcome to Luqma"
         description="Discover delicious recipes with nutritional information"
       >
-        <SearchBar onSearch={handleSearch} />
+        <SearchBar 
+          initialQuery={query}
+          onSearch={handleSearchSubmit}
+          onChange={handleSearchChange}
+        />
       </HeroSection>
 
-      {/* Popular Recipes Section */}
-      <PageSection>
-        <div className="space-y-6">
-          <h2 className="text-2xl md:text-3xl font-semibold text-gray-900">
-            Popular Recipes
-          </h2>
-          <RecipeGrid 
-            recipes={popularRecipes}
-            emptyTitle="No popular recipes yet"
-            emptyMessage="Check back soon for our curated collection of popular recipes"
-          />
-        </div>
-      </PageSection>
+      {/* Search Results Section */}
+      <SearchResults query={query} />
     </main>
   )
 }

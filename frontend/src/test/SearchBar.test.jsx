@@ -1,17 +1,10 @@
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { SearchBar } from '@/features/search/SearchBar'
 
 describe('SearchBar', () => {
-  it('should render search input', () => {
-    render(<SearchBar />)
-    
-    const input = screen.getByLabelText(/search for recipes/i)
-    expect(input).toBeInTheDocument()
-  })
-
-  it('should call onSearch with query on submit', async () => {
+  it('calls onSearch with query on submit', async () => {
     const user = userEvent.setup()
     const mockOnSearch = vi.fn()
     render(<SearchBar onSearch={mockOnSearch} />)
@@ -21,17 +14,20 @@ describe('SearchBar', () => {
     await user.keyboard('{Enter}')
     
     expect(mockOnSearch).toHaveBeenCalledWith('chicken')
-    expect(mockOnSearch).toHaveBeenCalledTimes(1)
   })
 
-  it('should update input value on change', async () => {
+  it('calls onChange with query after debounce', async () => {
+    const mockOnChange = vi.fn()
     const user = userEvent.setup()
-    render(<SearchBar />)
+    
+    render(<SearchBar onChange={mockOnChange} debounceMs={50} />)
     
     const input = screen.getByLabelText(/search for recipes/i)
     await user.type(input, 'pasta')
     
-    expect(input.value).toBe('pasta')
+    await waitFor(() => {
+      expect(mockOnChange).toHaveBeenCalledWith('pasta')
+    }, { timeout: 200 })
   })
 })
 

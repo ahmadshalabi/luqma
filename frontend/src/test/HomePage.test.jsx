@@ -1,48 +1,40 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { BrowserRouter } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
 import { HomePage } from '../pages/HomePage'
 
-const mockNavigate = vi.fn()
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual('react-router-dom')
-  return {
-    ...actual,
-    useNavigate: () => mockNavigate,
-  }
-})
-
 vi.mock('@/mocks', () => ({
-  getPopularRecipes: () => [
-    { id: 1, title: 'Pasta Carbonara', image: 'pasta.jpg' },
-  ],
+  getRecipeSearchResults: () => ({
+    results: [
+      { id: 1, title: 'Pasta Carbonara', image: 'pasta.jpg' },
+      { id: 2, title: 'Chicken Pasta', image: 'chicken.jpg' },
+    ],
+  }),
 }))
 
 describe('HomePage', () => {
   it('should render heading and search bar', () => {
-    render(<BrowserRouter><HomePage /></BrowserRouter>)
+    render(<MemoryRouter><HomePage /></MemoryRouter>)
     
     expect(screen.getByRole('heading', { name: 'Welcome to Luqma' })).toBeInTheDocument()
     expect(screen.getByLabelText(/search for recipes/i)).toBeInTheDocument()
   })
 
-  it('should navigate to search on submit', async () => {
-    const user = userEvent.setup()
-    render(<BrowserRouter><HomePage /></BrowserRouter>)
+  it('should show search results with query param', () => {
+    render(
+      <MemoryRouter initialEntries={['/?q=pasta']}>
+        <HomePage />
+      </MemoryRouter>
+    )
     
-    const searchInput = screen.getByLabelText(/search for recipes/i)
-    await user.type(searchInput, 'pasta')
-    await user.keyboard('{Enter}')
-    
-    expect(mockNavigate).toHaveBeenCalledWith('/search?q=pasta')
+    expect(screen.getByText(/search results for/i)).toBeInTheDocument()
+    expect(screen.getByText('Pasta Carbonara')).toBeInTheDocument()
   })
 
-  it('should show popular recipes', () => {
-    render(<BrowserRouter><HomePage /></BrowserRouter>)
+  it('should not show results when no search query', () => {
+    render(<MemoryRouter><HomePage /></MemoryRouter>)
     
-    expect(screen.getByText('Popular Recipes')).toBeInTheDocument()
-    expect(screen.getByText('Pasta Carbonara')).toBeInTheDocument()
+    expect(screen.queryByText(/search results for/i)).not.toBeInTheDocument()
   })
 })
 

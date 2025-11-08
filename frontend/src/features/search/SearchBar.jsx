@@ -3,13 +3,20 @@ import { useSearch } from '@/hooks/useSearch'
 
 /**
  * SearchBar component for recipe search functionality.
+ * Supports both live search (via onChange) and form submission (via onSearch).
  *
  * @param {Object} props
- * @param {Function} props.onSearch - Callback function called with search query on submit
+ * @param {Function} props.onSearch - Callback function called with search query on form submit
+ * @param {Function} props.onChange - Callback function called with search query on input change (debounced)
+ * @param {string} props.initialQuery - Initial search query value
+ * @param {number} props.debounceMs - Debounce delay in milliseconds (default: 300)
  */
-export const SearchBar = ({ onSearch }) => {
+export const SearchBar = ({ onSearch, onChange, initialQuery = '', debounceMs = 300 }) => {
   const { query, handleChange, handleSubmit } = useSearch({
-    onSubmit: onSearch
+    initialQuery,
+    onSubmit: onSearch,
+    onChange,
+    debounceMs
   })
 
   return (

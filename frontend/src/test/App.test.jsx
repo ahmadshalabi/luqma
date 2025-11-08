@@ -3,9 +3,6 @@ import { render, screen } from '@testing-library/react'
 import { App } from '../App'
 
 vi.mock('@/mocks', () => ({
-  getPopularRecipes: () => [
-    { id: 1, title: 'Pasta Carbonara', image: 'pasta.jpg' },
-  ],
   getRecipeSearchResults: () => ({
     results: [],
   }),
