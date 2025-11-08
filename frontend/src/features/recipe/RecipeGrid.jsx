@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { RecipeCard } from './RecipeCard'
 import { EmptyState } from '@/primitives/EmptyState'
 
@@ -11,7 +12,7 @@ import { EmptyState } from '@/primitives/EmptyState'
  * @param {string} props.emptyTitle - Title for empty state
  * @param {string} props.emptyMessage - Message for empty state
  */
-export const RecipeGrid = ({ recipes = [], emptyTitle, emptyMessage }) => {
+const RecipeGridComponent = ({ recipes = [], emptyTitle, emptyMessage }) => {
   if (!recipes || recipes.length === 0) {
     return (
       <EmptyState
@@ -30,4 +31,6 @@ export const RecipeGrid = ({ recipes = [], emptyTitle, emptyMessage }) => {
     </div>
   )
 }
+
+export const RecipeGrid = memo(RecipeGridComponent)
 

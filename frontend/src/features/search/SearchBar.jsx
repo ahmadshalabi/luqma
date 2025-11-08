@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Icon } from '@/primitives/Icon'
 import { useSearch } from '@/hooks/useSearch'
 
@@ -11,7 +12,7 @@ import { useSearch } from '@/hooks/useSearch'
  * @param {string} props.initialQuery - Initial search query value
  * @param {number} props.debounceMs - Debounce delay in milliseconds (default: 300)
  */
-export const SearchBar = ({ onSearch, onChange, initialQuery = '', debounceMs = 300 }) => {
+const SearchBarComponent = ({ onSearch, onChange, initialQuery = '', debounceMs = 300 }) => {
   const { query, handleChange, handleSubmit } = useSearch({
     initialQuery,
     onSubmit: onSearch,
@@ -44,4 +45,6 @@ export const SearchBar = ({ onSearch, onChange, initialQuery = '', debounceMs = 
     </form>
   )
 }
+
+export const SearchBar = memo(SearchBarComponent)
 
