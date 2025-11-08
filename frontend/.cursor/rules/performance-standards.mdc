@@ -1,0 +1,63 @@
+---
+description: "Performance budgets and optimization standards for frontend"
+globs: ["frontend/src/**/*.{js,jsx,ts,tsx}"]
+alwaysApply: false
+---
+# Frontend Performance Standards
+
+## Performance Budgets
+
+You must meet:
+- First Contentful Paint: < 1.5s
+- Largest Contentful Paint: < 2.5s
+- Time to Interactive: < 3.0s
+- Total Blocking Time: < 300ms
+- Initial JS: < 200KB gzipped
+- Initial CSS: < 50KB gzipped
+- Total initial: < 300KB gzipped
+- Code-split chunks: < 100KB each
+- Images: < 200KB, WebP preferred
+- Fonts: < 100KB total, WOFF2
+- Component render: < 16ms (60fps)
+- API response handling: < 100ms
+- User input response: < 100ms
+
+## React Optimization
+
+You must:
+- Use route-based code splitting (React.lazy)
+- Use useMemo for expensive calculations
+- Use useCallback for function identity
+- Use React.memo for pure components
+- Memoize context values
+- Avoid inline object/array in props
+
+## Image Optimization
+
+You must:
+- Lazy load images: loading="lazy"
+- Use responsive images: srcset and sizes
+- Use WebP with fallback
+- Set proper image dimensions: width/height
+
+## List Optimization
+
+You must:
+- Use virtual scrolling for lists with 100+ items
+- Use stable keys for lists (not index)
+
+## Input Handling
+
+You must:
+- Debounce search inputs: 300ms
+- Throttle resize handlers: 150ms
+- Throttle scroll handlers: 100ms
+
+## Testing
+
+You must:
+- Run Lighthouse (target score > 90)
+- Monitor Core Web Vitals (LCP, FID, CLS)
+- Monitor bundle sizes
+- Profile render times
+- Measure API call times

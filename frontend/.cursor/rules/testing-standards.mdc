@@ -1,0 +1,107 @@
+---
+description: "Frontend testing standards with React Testing Library"
+globs: ["frontend/src/**/*.{test,spec}.{js,jsx,ts,tsx}"]
+alwaysApply: false
+---
+# Frontend Testing Standards
+
+## Test Pyramid
+
+You must maintain:
+- Unit tests: 70-80% (component and hook tests)
+- Integration tests: 15-25% (multi-component flows)
+- E2E tests: 5-10% (full user journeys)
+
+## React Testing Library
+
+You must use:
+- render(): Render component
+- screen: Query rendered output
+- userEvent: Simulate user interactions (preferred over fireEvent)
+- waitFor(): Wait for async updates
+- findBy: Combined query + wait
+
+## Query Priority
+
+You must use in order:
+1. getByRole: Semantic HTML roles (BEST)
+2. getByLabelText: Form inputs with labels
+3. getByPlaceholderText: Input placeholders
+4. getByText: Non-interactive content
+5. getByTestId: Last resort (data-testid)
+
+You must never use:
+- getByClassName
+- Direct DOM queries
+
+## Testing Patterns
+
+You must test:
+- User interactions (clicks, typing, navigation)
+- What user sees (rendered text, elements)
+- Accessibility (keyboard nav, screen readers)
+
+You must not test:
+- Implementation details (state, props directly)
+- Component internals
+- Library code (React, hooks)
+
+## Component Testing
+
+You must test:
+- Loading states: Render with isLoading=true, verify LoadingSpinner
+- Error states: Render with error prop, verify ErrorMessage
+- Empty states: Render with empty data, verify EmptyState
+
+## Hook Testing
+
+You must use:
+- renderHook(): Extract result and rerender
+- Access hook return value via result.current
+- Use rerender to update hook props
+- Wrap state updates in act()
+
+## Context Testing
+
+You must:
+- Create wrapper component with provider
+- Pass wrapper to renderHook options
+- Test context consumer behavior
+
+## Async Testing
+
+You must use:
+- waitFor(): Wait for condition to become true
+- findBy queries: Built-in waiting (preferred)
+- jest.useFakeTimers(): Enable fake timers
+- jest.advanceTimersByTime(ms): Fast-forward time
+- jest.useRealTimers(): Restore after test
+
+## Coverage Requirements
+
+You must achieve:
+- Components: 70%+ line coverage
+- Custom hooks: 80%+ line coverage
+
+You must measure:
+- Run: npm run test:coverage
+- Report: frontend/coverage/lcov-report/index.html
+
+## Mocking
+
+You must:
+- Mock API calls: jest.mock() at module level
+- Use mockResolvedValue() for async returns
+- Use mockRejectedValue() for errors
+- Create mock context object for Context testing
+- Enable fake timers for debounce/throttle testing
+
+## Best Practices
+
+You must ensure:
+- Test behavior, not implementation
+- User-centric testing (what user experiences)
+- Use getByRole for accessibility
+- Independent tests (no interdependencies)
+- Fast execution (quick feedback loop)
+- Clear failures (descriptive expectations)

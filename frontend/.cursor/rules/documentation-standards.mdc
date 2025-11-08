@@ -1,0 +1,41 @@
+---
+description: "Documentation standards for frontend code and JSDoc"
+globs: ["frontend/src/**/*.{js,jsx,ts,tsx}"]
+alwaysApply: false
+---
+# Frontend Documentation Standards
+
+## Code Documentation
+
+You must prioritize self-documenting code (clear naming, well-structured code).
+
+You should document:
+- Why, not what
+- Complex algorithms
+- Business rules
+- Non-obvious decisions
+- Public APIs
+
+You must not document:
+- Obvious code
+- What code does (should be clear from code)
+- Outdated information
+
+## JSDoc
+
+You must document:
+- Custom hooks
+- Complex utility functions
+- Context providers
+- Shared components with props
+
+You should skip:
+- Simple components
+- Inline functions
+- Obvious utilities
+
+You must:
+- Include type information with @param and @returns
+- Mark optional params in square brackets [param]
+- Document default values
+- Document object shapes for destructured params
