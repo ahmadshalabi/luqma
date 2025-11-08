@@ -1,0 +1,101 @@
+{
+  "id": 642539,
+  "title": "Falafel Burger",
+  "image": "https://img.spoonacular.com/recipes/642539-556x370.png",
+  "ingredients": [
+    {
+      "id": 16058,
+      "name": "chickpeas",
+      "quantity": {
+        "amount": 540.0,
+        "unit": "ml"
+      }
+    },
+    {
+      "id": 12698,
+      "name": "tahini",
+      "quantity": {
+        "amount": 2.0,
+        "unit": "tsp"
+      }
+    },
+    {
+      "id": 1016168,
+      "name": "sriracha sauce",
+      "quantity": {
+        "amount": 0.5,
+        "unit": "tsp"
+      }
+    },
+    {
+      "id": 11215,
+      "name": "garlic",
+      "quantity": {
+        "amount": 3.0,
+        "unit": "cloves"
+      }
+    },
+    {
+      "id": 10511297,
+      "name": "parsley",
+      "quantity": {
+        "amount": 3.0,
+        "unit": "tbsp"
+      }
+    },
+    {
+      "id": 10011282,
+      "name": "onion",
+      "quantity": {
+        "amount": 0.25,
+        "unit": "large"
+      }
+    },
+    {
+      "id": 4042,
+      "name": "peanut oil",
+      "quantity": {
+        "amount": 4.0,
+        "unit": "tbsp"
+      }
+    },
+    {
+      "id": 11206,
+      "name": "cucumber",
+      "quantity": {
+        "amount": 8.0,
+        "unit": "slices"
+      }
+    },
+    {
+      "id": 11529,
+      "name": "tomato",
+      "quantity": {
+        "amount": 8.0,
+        "unit": "slices"
+      }
+    },
+    {
+      "id": 18350,
+      "name": "hamburger buns",
+      "quantity": {
+        "amount": 4.0,
+        "unit": ""
+      }
+    },
+    {
+      "id": 93777,
+      "name": "tzatziki",
+      "quantity": {
+        "amount": 4.0,
+        "unit": "servings"
+      }
+    }
+  ],
+  "nutrients": {
+    "calories": {
+      "amount": 400.06,
+      "unit": "kcal"
+    }
+  }
+}

@@ -1,0 +1,515 @@
+{
+  "id": 715497,
+  "title": "Chicken Pasta Alfredo",
+  "image": "https://spoonacular.com/recipeImages/715497-312x231.jpg",
+  "imageType": "jpg",
+  "servings": 4,
+  "readyInMinutes": 35,
+  "license": "CC BY 3.0",
+  "sourceName": "All Recipes",
+  "sourceUrl": "https://www.allrecipes.com/recipe/chicken-alfredo/",
+  "spoonacularSourceUrl": "https://spoonacular.com/chicken-pasta-alfredo-715497",
+  "aggregateLikes": 156,
+  "healthScore": 42,
+  "spoonacularScore": 79.2,
+  "pricePerServing": 594.2,
+  "cheap": false,
+  "creditsText": "All Recipes",
+  "cuisines": [
+    "Italian"
+  ],
+  "dairyFree": false,
+  "diets": [],
+  "gaps": "no",
+  "glutenFree": false,
+  "instructions": "Cook fettuccine according to package directions. Season chicken breast with salt, pepper, and paprika. Heat 2 tablespoons of butter in a large skillet over medium-high heat. Cook chicken for 6-7 minutes per side until golden and cooked through. Remove and slice. In the same skillet, add remaining butter and garlic. Cook for 1 minute. Add heavy cream and bring to a simmer. Add parmesan cheese and stir until melted and smooth. Drain pasta and add to sauce. Toss to coat. Top with sliced chicken and fresh parsley. Serve immediately.",
+  "ketogenic": false,
+  "lowFodmap": false,
+  "occasions": [
+    "dinner"
+  ],
+  "sustainable": false,
+  "vegan": false,
+  "vegetarian": false,
+  "veryHealthy": false,
+  "veryPopular": true,
+  "whole30": false,
+  "weightWatcherSmartPoints": 24,
+  "dishTypes": [
+    "lunch",
+    "main course",
+    "main dish",
+    "dinner"
+  ],
+  "extendedIngredients": [
+    {
+      "id": 20409,
+      "aisle": "Pasta and Rice",
+      "image": "https://spoonacular.com/cdn/ingredients_100x100/fettuccine.jpg",
+      "consistency": "solid",
+      "name": "fettuccine pasta",
+      "nameClean": "fettuccine pasta",
+      "original": "16 oz fettuccine pasta",
+      "originalName": "fettuccine pasta",
+      "amount": 16,
+      "unit": "oz",
+      "meta": [],
+      "measures": {
+        "us": {
+          "amount": 16,
+          "unitShort": "oz",
+          "unitLong": "ounces"
+        },
+        "metric": {
+          "amount": 453.592,
+          "unitShort": "g",
+          "unitLong": "grams"
+        }
+      },
+      "nutrition": {
+        "nutrients": [
+          {
+            "name": "Calories",
+            "amount": 528,
+            "unit": "kcal"
+          },
+          {
+            "name": "Fat",
+            "amount": 2.26,
+            "unit": "g"
+          },
+          {
+            "name": "Carbohydrates",
+            "amount": 104.5,
+            "unit": "g"
+          },
+          {
+            "name": "Protein",
+            "amount": 18.14,
+            "unit": "g"
+          }
+        ]
+      }
+    },
+    {
+      "id": 5006,
+      "aisle": "Meat",
+      "image": "https://spoonacular.com/cdn/ingredients_100x100/chicken-breasts.png",
+      "consistency": "solid",
+      "name": "chicken breast",
+      "nameClean": "chicken breast",
+      "original": "1 lb chicken breast, boneless skinless",
+      "originalName": "chicken breast, boneless skinless",
+      "amount": 1,
+      "unit": "lb",
+      "meta": [
+        "boneless",
+        "skinless"
+      ],
+      "measures": {
+        "us": {
+          "amount": 1,
+          "unitShort": "lb",
+          "unitLong": "pound"
+        },
+        "metric": {
+          "amount": 453.592,
+          "unitShort": "g",
+          "unitLong": "grams"
+        }
+      },
+      "nutrition": {
+        "nutrients": [
+          {
+            "name": "Calories",
+            "amount": 374,
+            "unit": "kcal"
+          },
+          {
+            "name": "Fat",
+            "amount": 4.08,
+            "unit": "g"
+          },
+          {
+            "name": "Carbohydrates",
+            "amount": 0,
+            "unit": "g"
+          },
+          {
+            "name": "Protein",
+            "amount": 79.16,
+            "unit": "g"
+          }
+        ]
+      }
+    },
+    {
+      "id": 1001,
+      "aisle": "Milk, Eggs, Other Dairy",
+      "image": "https://spoonacular.com/cdn/ingredients_100x100/butter.jpg",
+      "consistency": "solid",
+      "name": "butter",
+      "nameClean": "butter",
+      "original": "4 tbsp butter",
+      "originalName": "butter",
+      "amount": 4,
+      "unit": "tbsp",
+      "meta": [],
+      "measures": {
+        "us": {
+          "amount": 4,
+          "unitShort": "Tbsp",
+          "unitLong": "Tbsps"
+        },
+        "metric": {
+          "amount": 4,
+          "unitShort": "Tbsp",
+          "unitLong": "Tbsps"
+        }
+      },
+      "nutrition": {
+        "nutrients": [
+          {
+            "name": "Calories",
+            "amount": 407,
+            "unit": "kcal"
+          },
+          {
+            "name": "Fat",
+            "amount": 46.04,
+            "unit": "g"
+          },
+          {
+            "name": "Carbohydrates",
+            "amount": 0.03,
+            "unit": "g"
+          },
+          {
+            "name": "Protein",
+            "amount": 0.48,
+            "unit": "g"
+          }
+        ]
+      }
+    },
+    {
+      "id": 1077,
+      "aisle": "Milk, Eggs, Other Dairy",
+      "image": "https://spoonacular.com/cdn/ingredients_100x100/milk.jpg",
+      "consistency": "liquid",
+      "name": "heavy cream",
+      "nameClean": "heavy cream",
+      "original": "1 1/2 cups heavy cream",
+      "originalName": "heavy cream",
+      "amount": 1.5,
+      "unit": "cups",
+      "meta": [],
+      "measures": {
+        "us": {
+          "amount": 1.5,
+          "unitShort": "cups",
+          "unitLong": "cups"
+        },
+        "metric": {
+          "amount": 357,
+          "unitShort": "ml",
+          "unitLong": "milliliters"
+        }
+      },
+      "nutrition": {
+        "nutrients": [
+          {
+            "name": "Calories",
+            "amount": 607,
+            "unit": "kcal"
+          },
+          {
+            "name": "Fat",
+            "amount": 64.35,
+            "unit": "g"
+          },
+          {
+            "name": "Carbohydrates",
+            "amount": 4.41,
+            "unit": "g"
+          },
+          {
+            "name": "Protein",
+            "amount": 3.57,
+            "unit": "g"
+          }
+        ]
+      }
+    },
+    {
+      "id": 1033,
+      "aisle": "Cheese",
+      "image": "https://spoonacular.com/cdn/ingredients_100x100/parmesan.jpg",
+      "consistency": "solid",
+      "name": "parmesan cheese",
+      "nameClean": "parmesan cheese",
+      "original": "1 cup grated parmesan cheese",
+      "originalName": "grated parmesan cheese",
+      "amount": 1,
+      "unit": "cup",
+      "meta": [
+        "grated"
+      ],
+      "measures": {
+        "us": {
+          "amount": 1,
+          "unitShort": "cup",
+          "unitLong": "cup"
+        },
+        "metric": {
+          "amount": 100,
+          "unitShort": "g",
+          "unitLong": "grams"
+        }
+      },
+      "nutrition": {
+        "nutrients": [
+          {
+            "name": "Calories",
+            "amount": 431,
+            "unit": "kcal"
+          },
+          {
+            "name": "Fat",
+            "amount": 28.61,
+            "unit": "g"
+          },
+          {
+            "name": "Carbohydrates",
+            "amount": 3.74,
+            "unit": "g"
+          },
+          {
+            "name": "Protein",
+            "amount": 38.46,
+            "unit": "g"
+          }
+        ]
+      }
+    },
+    {
+      "id": 11215,
+      "aisle": "Produce",
+      "image": "https://spoonacular.com/cdn/ingredients_100x100/garlic.png",
+      "consistency": "solid",
+      "name": "garlic",
+      "nameClean": "garlic",
+      "original": "4 cloves garlic, minced",
+      "originalName": "garlic, minced",
+      "amount": 4,
+      "unit": "cloves",
+      "meta": [
+        "minced"
+      ],
+      "measures": {
+        "us": {
+          "amount": 4,
+          "unitShort": "cloves",
+          "unitLong": "cloves"
+        },
+        "metric": {
+          "amount": 4,
+          "unitShort": "cloves",
+          "unitLong": "cloves"
+        }
+      },
+      "nutrition": {
+        "nutrients": [
+          {
+            "name": "Calories",
+            "amount": 18,
+            "unit": "kcal"
+          },
+          {
+            "name": "Fat",
+            "amount": 0.06,
+            "unit": "g"
+          },
+          {
+            "name": "Carbohydrates",
+            "amount": 3.97,
+            "unit": "g"
+          },
+          {
+            "name": "Protein",
+            "amount": 0.76,
+            "unit": "g"
+          }
+        ]
+      }
+    },
+    {
+      "id": 2028,
+      "aisle": "Spices and Seasonings",
+      "image": "https://spoonacular.com/cdn/ingredients_100x100/paprika.jpg",
+      "consistency": "solid",
+      "name": "paprika",
+      "nameClean": "paprika",
+      "original": "1 tsp paprika",
+      "originalName": "paprika",
+      "amount": 1,
+      "unit": "tsp",
+      "meta": [],
+      "measures": {
+        "us": {
+          "amount": 1,
+          "unitShort": "tsp",
+          "unitLong": "teaspoon"
+        },
+        "metric": {
+          "amount": 1,
+          "unitShort": "tsp",
+          "unitLong": "teaspoon"
+        }
+      },
+      "nutrition": {
+        "nutrients": [
+          {
+            "name": "Calories",
+            "amount": 6,
+            "unit": "kcal"
+          },
+          {
+            "name": "Fat",
+            "amount": 0.3,
+            "unit": "g"
+          },
+          {
+            "name": "Carbohydrates",
+            "amount": 1.2,
+            "unit": "g"
+          },
+          {
+            "name": "Protein",
+            "amount": 0.3,
+            "unit": "g"
+          }
+        ]
+      }
+    },
+    {
+      "id": 1102,
+      "aisle": "Produce",
+      "image": "https://spoonacular.com/cdn/ingredients_100x100/parsley.jpg",
+      "consistency": "solid",
+      "name": "fresh parsley",
+      "nameClean": "fresh parsley",
+      "original": "1/4 cup fresh parsley, chopped",
+      "originalName": "fresh parsley, chopped",
+      "amount": 0.25,
+      "unit": "cup",
+      "meta": [
+        "fresh",
+        "chopped"
+      ],
+      "measures": {
+        "us": {
+          "amount": 0.25,
+          "unitShort": "cups",
+          "unitLong": "cups"
+        },
+        "metric": {
+          "amount": 15,
+          "unitShort": "g",
+          "unitLong": "grams"
+        }
+      },
+      "nutrition": {
+        "nutrients": [
+          {
+            "name": "Calories",
+            "amount": 5,
+            "unit": "kcal"
+          },
+          {
+            "name": "Fat",
+            "amount": 0.11,
+            "unit": "g"
+          },
+          {
+            "name": "Carbohydrates",
+            "amount": 0.96,
+            "unit": "g"
+          },
+          {
+            "name": "Protein",
+            "amount": 0.45,
+            "unit": "g"
+          }
+        ]
+      }
+    }
+  ],
+  "nutrition": {
+    "nutrients": [
+      {
+        "name": "Calories",
+        "amount": 2376,
+        "unit": "kcal",
+        "percentOfDailyNeeds": 118.8
+      },
+      {
+        "name": "Fat",
+        "amount": 145.81,
+        "unit": "g",
+        "percentOfDailyNeeds": 224.32
+      },
+      {
+        "name": "Saturated Fat",
+        "amount": 87.72,
+        "unit": "g",
+        "percentOfDailyNeeds": 548.25
+      },
+      {
+        "name": "Carbohydrates",
+        "amount": 118.81,
+        "unit": "g",
+        "percentOfDailyNeeds": 39.6
+      },
+      {
+        "name": "Sugar",
+        "amount": 5.4,
+        "unit": "g",
+        "percentOfDailyNeeds": 6
+      },
+      {
+        "name": "Cholesterol",
+        "amount": 789,
+        "unit": "mg",
+        "percentOfDailyNeeds": 263
+      },
+      {
+        "name": "Sodium",
+        "amount": 1876,
+        "unit": "mg",
+        "percentOfDailyNeeds": 81.57
+      },
+      {
+        "name": "Protein",
+        "amount": 141.32,
+        "unit": "g",
+        "percentOfDailyNeeds": 282.64
+      },
+      {
+        "name": "Fiber",
+        "amount": 4.8,
+        "unit": "g",
+        "percentOfDailyNeeds": 19.2
+      }
+    ],
+    "caloricBreakdown": {
+      "percentProtein": 23.79,
+      "percentFat": 55.29,
+      "percentCarbs": 20.92
+    },
+    "weightPerServing": {
+      "amount": 623,
+      "unit": "g"
+    }
+  }
+}
