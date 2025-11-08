@@ -33,11 +33,15 @@ Recipe search application with nutritional information and dynamic ingredient ex
 - exception/: 🚧 Custom exceptions + @ControllerAdvice - PENDING IMPLEMENTATION
 
 **Frontend Structure** (`frontend/src/`):
-- components/: Reusable UI (Header, Footer, SearchBar, SearchResults, RecipeCard, RecipeGrid, PopularRecipes)
+- features/: Feature-based components organized by domain
+  - layout/: Header, Footer, HeroSection, PageSection
+  - recipe/: RecipeCard, RecipeGrid
+  - search/: SearchBar
+  - about/: FeatureCard
 - pages/: Route pages (HomePage, SearchResultsPage, AboutPage, RecipesPage)
-- ui/: UI primitives (Button, EmptyState, FeatureCard, HeroSection, Icon, LoadingSpinner, PageSection)
-- contexts/: React Context (pending)
-- hooks/: Custom hooks (pending)
+- primitives/: UI primitives (Button, EmptyState, Icon, LoadingSpinner, Pagination)
+- contexts/: React Context (empty - awaiting implementation)
+- hooks/: Custom hooks (useMobileMenu, usePagination, useSearch)
 - services/: API client (apiClient.js - pending backend integration)
 - utils/: Helper functions (searchUtils.js)
 - mocks/: Mock Spoonacular API data for development
