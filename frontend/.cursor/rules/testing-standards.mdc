@@ -105,3 +105,18 @@ You must ensure:
 - Independent tests (no interdependencies)
 - Fast execution (quick feedback loop)
 - Clear failures (descriptive expectations)
+
+## Minimal Testing Philosophy
+
+You must follow:
+- Test what matters: Focus on user interactions, rendered output, and accessibility
+- Avoid over-testing: Skip implementation details, internal state, and unlikely edge cases
+- Keep tests simple: One focused behavior per test
+- Avoid redundancy: If one test verifies rendering, don't add a separate "renders correctly" test
+- Remove obsolete tests: Delete tests for removed features immediately
+
+You must avoid:
+- Testing every prop variation (test meaningful combinations only)
+- Testing library code (React, hooks, third-party libraries)
+- Testing multiple behaviors in one test (split them)
+- Testing that something renders AND does something (separate concerns)

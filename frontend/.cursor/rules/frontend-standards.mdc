@@ -10,6 +10,30 @@ alwaysApply: false
 You must:
 - Keep components under 200 lines (break up larger)
 - Extract reusable logic into custom hooks
+- Extract reusable UI patterns into primitives or shared components
+- Use memoization (React.memo) for components that render frequently
+
+### Component Organization
+
+You must organize by:
+- **Primitives** (`primitives/`): Generic, reusable UI components (Button, Card, Icon, etc.)
+- **Features** (`features/`): Domain-specific components organized by feature area
+- **Pages** (`pages/`): Route-level components that compose features
+- **Hooks** (`hooks/`): Custom reusable hooks for stateful logic
+- **Utils** (`utils/`): Pure utility functions
+
+### Component Extraction
+
+You should extract when:
+- Same UI pattern appears 2+ times (DRY principle)
+- Component exceeds 200 lines
+- Clear, reusable abstraction emerges
+- Styling patterns repeat across components
+
+You should NOT extract when:
+- Used only once
+- Abstraction adds complexity without benefit
+- Pattern is still evolving
 
 ## React 19 Features
 

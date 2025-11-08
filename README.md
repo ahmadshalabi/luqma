@@ -2,16 +2,22 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> Recipe search application with nutritional information and ingredient exclusion. Built with React and Spring Boot.
+> Recipe search application with nutritional information and ingredient exclusion.
 
 ## Features
 
+### Current
+- Live search with debouncing (300ms)
+- Recipe search with pagination
+- Responsive, accessible design (WCAG 2.1 AA compliant)
+- Component-based architecture with reusable primitives
+
+### Planned
 - Search recipes with filters (cuisine, diet, ingredients)
 - View nutritional information and calorie counts
 - Exclude ingredients and recalculate calories dynamically
-- Responsive, accessible design (WCAG-compliant)
 
-**Status:** Backend scaffolded with Spring Boot, health checks operational, business logic endpoints pending implementation. Frontend UI implemented with routing, components, and pages using mock data for development until backend API is ready.
+**Status:** Backend scaffolded with Spring Boot, health checks operational, business logic endpoints pending implementation. Frontend UI implemented with live search, routing, and components using mock data for development until backend API is ready.
 
 ## Tech Stack
 
