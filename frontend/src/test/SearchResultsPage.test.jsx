@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { SearchResultsPage } from '../pages/SearchResultsPage'
 
-// Mock the mocks module
 vi.mock('@/mocks', () => ({
   getRecipeSearchResults: () => ({
     results: [
@@ -16,42 +15,63 @@ vi.mock('@/mocks', () => ({
 }))
 
 describe('SearchResultsPage', () => {
-  const renderWithRouter = (initialRoute = '/search') => {
-    return render(
-      <MemoryRouter initialEntries={[initialRoute]}>
+  it('should display search prompt when no query', () => {
+    render(
+      <MemoryRouter initialEntries={['/search']}>
         <Routes>
           <Route path="/search" element={<SearchResultsPage />} />
-          <Route path="/" element={<div>Home Page</div>} />
         </Routes>
       </MemoryRouter>
     )
-  }
-
-  it('should display search prompt when no query', () => {
-    renderWithRouter('/search')
+    
     expect(screen.getByText(/enter a search term above/i)).toBeInTheDocument()
   })
 
   it('should display search results with query', () => {
-    renderWithRouter('/search?q=pasta')
+    render(
+      <MemoryRouter initialEntries={['/search?q=pasta']}>
+        <Routes>
+          <Route path="/search" element={<SearchResultsPage />} />
+        </Routes>
+      </MemoryRouter>
+    )
+    
     expect(screen.getByText(/search results for/i)).toBeInTheDocument()
   })
 
   it('should filter recipes by query', () => {
-    renderWithRouter('/search?q=pasta')
+    render(
+      <MemoryRouter initialEntries={['/search?q=pasta']}>
+        <Routes>
+          <Route path="/search" element={<SearchResultsPage />} />
+        </Routes>
+      </MemoryRouter>
+    )
     
     expect(screen.getByText('Pasta Carbonara')).toBeInTheDocument()
     expect(screen.queryByText('Chicken Alfredo')).not.toBeInTheDocument()
   })
 
   it('should show empty state when no results', () => {
-    renderWithRouter('/search?q=pizza')
+    render(
+      <MemoryRouter initialEntries={['/search?q=pizza']}>
+        <Routes>
+          <Route path="/search" element={<SearchResultsPage />} />
+        </Routes>
+      </MemoryRouter>
+    )
     
     expect(screen.getByText(/no recipes found/i)).toBeInTheDocument()
   })
 
   it('should handle case-insensitive search', () => {
-    renderWithRouter('/search?q=PASTA')
+    render(
+      <MemoryRouter initialEntries={['/search?q=PASTA']}>
+        <Routes>
+          <Route path="/search" element={<SearchResultsPage />} />
+        </Routes>
+      </MemoryRouter>
+    )
     
     expect(screen.getByText('Pasta Carbonara')).toBeInTheDocument()
   })
