@@ -29,3 +29,20 @@ logging:
     org.springframework.web: DEBUG
     org.springframework.boot: DEBUG
 
+# CORS Configuration - Development
+# Allow frontend development server
+cors:
+  allowed-origins:
+    - http://localhost:3000
+    - http://localhost:5173
+  allowed-methods:
+    - GET
+    - POST
+    - PUT
+    - PATCH
+    - DELETE
+    - OPTIONS
+  allowed-headers:
+    - "*"
+  allow-credentials: true
+  max-age: 3600

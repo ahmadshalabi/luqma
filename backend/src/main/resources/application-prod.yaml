@@ -33,3 +33,20 @@ logging:
     app.luqma: INFO
     org.springframework.web: WARN
 
+# CORS Configuration - Production
+# Specify allowed origins explicitly (NEVER use wildcards in production)
+cors:
+  allowed-origins:
+    - https://luqma.app
+    - https://www.luqma.app
+  allowed-methods:
+    - GET
+    - POST
+    - PUT
+    - PATCH
+    - DELETE
+  allowed-headers:
+    - Content-Type
+    - Authorization
+  allow-credentials: true
+  max-age: 3600
