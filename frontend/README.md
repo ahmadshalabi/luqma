@@ -56,24 +56,29 @@ Feature-based architecture with path aliasing (`@/`):
 
 ```
 src/
-├── pages/         # Route pages (HomePage, AboutPage, RecipesPage)
+├── pages/         # Route pages (HomePage, AboutPage, RecipePage)
 ├── features/      # Domain components (layout, recipe, search, about)
-├── primitives/    # UI primitives (Button, Card, Icon, etc.)
-├── hooks/         # Custom hooks (useMobileMenu, useSearch, usePagination)
-├── services/      # API client
+│   ├── layout/   # Header, Footer, HeroSection, PageSection
+│   ├── recipe/   # RecipeCard, RecipeGrid, RecipeDetail
+│   ├── search/   # SearchBar, SearchResults, ResultsHeader
+│   └── about/    # FeatureCard
+├── primitives/    # UI primitives (Card, MessageState, LoadingSpinner, etc.)
+├── hooks/         # Custom hooks (useMobileMenu, useSearch, useSearchState, useRecipeDetail)
+├── services/      # API client (searchRecipes, getRecipeById)
 ├── utils/         # Helpers
 └── mocks/         # Mock data
 ```
 
 **Example imports:**
 ```javascript
-import { Button } from '@/primitives/Button'
-import { usePagination } from '@/hooks/usePagination'
+import { MessageState } from '@/primitives/MessageState'
+import { useSearch } from '@/hooks/useSearch'
 ```
 
 ## Features
 
 - Live search with debouncing (300ms)
+- Recipe details page with full nutrition information
 - Pagination support
 - Responsive, mobile-first design
 - WCAG 2.1 AA accessibility
@@ -92,15 +97,15 @@ cp .env.example .env
 
 Set these variables in `frontend/.env`:
 
-- **`VITE_API_URL`**: Backend API endpoint (default: `http://localhost:8080/api/v1`)
+- **`LUQMA_API_URL`**: Backend API endpoint (default: `http://localhost:8080/api/v1`)
 
 ### Custom Configuration
 
-If your backend runs on a different port, update `VITE_API_URL` in `frontend/.env`:
+If your backend runs on a different port, update `LUQMA_API_URL` in `frontend/.env`:
 
 ```bash
 # frontend/.env
-VITE_API_URL=http://localhost:9090/api/v1
+LUQMA_API_URL=http://localhost:9090/api/v1
 ```
 
 To change the frontend port, edit `server.port` in `frontend/vite.config.js`.

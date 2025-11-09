@@ -71,7 +71,7 @@ lsof -ti:3000 | xargs kill -9    # Frontend (default port)
 
 **Backend:** Edit `backend/src/main/resources/application.yaml` and change `server.port`
 
-**Frontend:** Edit `frontend/vite.config.js` and change `server.port`, then update `VITE_API_URL` in `frontend/.env`
+**Frontend:** Edit `frontend/vite.config.js` and change `server.port`, then update `LUQMA_API_URL` in `frontend/.env`
 
 ### Frontend Can't Connect to Backend
 
@@ -94,10 +94,10 @@ npm run dev                                  # Ensure both running
 2. **Verify frontend API URL:**
    ```bash
    # Check frontend/.env
-   cat frontend/.env | grep VITE_API_URL
+   cat frontend/.env | grep LUQMA_API_URL
    ```
    
-   Should be: `VITE_API_URL=http://localhost:8080/api/v1` (or your custom backend URL)
+   Should be: `LUQMA_API_URL=http://localhost:8080/api/v1` (or your custom backend URL)
 
 3. **Check CORS configuration:**
    - Backend CORS is configured in `backend/src/main/resources/application.yaml`
@@ -114,7 +114,7 @@ server:
   port: 9090
 
 # 2. Frontend API URL - edit frontend/.env
-VITE_API_URL=http://localhost:9090/api/v1
+LUQMA_API_URL=http://localhost:9090/api/v1
 
 # 3. Frontend port - edit frontend/vite.config.js
 server: {
@@ -183,7 +183,7 @@ cat backend/.env | grep SPOONACULAR_API_KEY  # Verify key
 - Free tier: 150 requests/day
 - Usage dashboard: https://spoonacular.com/food-api/console#Dashboard
 
-**Note:** Currently using mock data from `backend/src/main/resources/mocks/`. Spoonacular API integration is pending.
+**Note:** Currently using mock data from `backend/src/main/resources/mocks/` for both recipe search and recipe details. Spoonacular API integration is planned for future implementation.
 
 ---
 
@@ -198,7 +198,7 @@ cat backend/.env | grep SPOONACULAR_API_KEY  # Verify key
    - Change `server.port` value
 
 2. **Update frontend configuration:**
-   - Edit `frontend/.env` and update `VITE_API_URL` to match backend
+   - Edit `frontend/.env` and update `LUQMA_API_URL` to match backend
    - Edit `frontend/vite.config.js` to change frontend port if needed
 
 3. **Restart all services:**

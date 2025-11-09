@@ -14,12 +14,13 @@
 
 - ✅ Recipe search with pagination
 - ✅ Live search with debouncing
+- ✅ Recipe details page with full nutrition breakdown
+- ✅ Interactive nutrition facts (collapsible, with calorie indicators)
 - ✅ Comprehensive error handling and validation
 - ✅ Rate limiting and security controls
 - ✅ Responsive, accessible design (WCAG 2.1 AA)
-- 🚧 Recipe details with nutrition info
-- 🚧 Ingredient exclusion and calorie recalculation
-- 🚧 Spoonacular API integration (currently using mock data)
+- ✅ Clean OpenAPI documentation (domain models hidden)
+- 🚧 Spoonacular API integration (search and details currently using mock data)
 
 ## Prerequisites
 
@@ -90,7 +91,7 @@ cp .env.example .env
 ```
 
 **Default configuration:**
-- `VITE_API_URL` - Backend API endpoint (default: `http://localhost:8080/api/v1`)
+- `LUQMA_API_URL` - Backend API endpoint (default: `http://localhost:8080/api/v1`)
 
 ### Custom Ports
 
@@ -98,7 +99,7 @@ To use different ports:
 
 **Backend:** Edit `backend/src/main/resources/application.yaml` and change the `server.port` value.
 
-**Frontend:** Edit `frontend/vite.config.js` and change the `server.port` value, then update `VITE_API_URL` in `frontend/.env` to match your backend port.
+**Frontend:** Edit `frontend/vite.config.js` and change the `server.port` value, then update `LUQMA_API_URL` in `frontend/.env` to match your backend port.
 
 ## Building for Production
 
