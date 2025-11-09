@@ -18,6 +18,7 @@ springdoc-openapi = "2.8.14"
 
 # Code Quality & Testing
 jacoco = "0.8.13"
+owasp-dependencycheck = "11.1.1"
 
 # =============================================================================
 # LIBRARIES
@@ -65,6 +66,7 @@ junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher
 [plugins]
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
+owasp-dependencycheck = { id = "org.owasp.dependencycheck", version.ref = "owasp-dependencycheck" }
 
 # =============================================================================
 # BUNDLES

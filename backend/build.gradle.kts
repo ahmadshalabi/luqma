@@ -3,7 +3,7 @@ plugins {
 	jacoco
 	alias(libs.plugins.spring.boot)
 	alias(libs.plugins.spring.dependency.management)
-	id("org.owasp.dependencycheck") version "11.1.1"
+	alias(libs.plugins.owasp.dependencycheck)
 }
 
 group = "app.luqma"
