@@ -24,45 +24,51 @@ Recipe search application with nutritional information and dynamic ingredient ex
 **Data Flow:** User → React UI → Backend API → Spoonacular
 
 **Backend Structure** (`backend/src/main/java/app/luqma/backend/`):
-- controller/: 🚧 REST endpoints (thin layer) - PENDING IMPLEMENTATION
-- service/: 🚧 Business logic - PENDING IMPLEMENTATION
-- client/: 🚧 Spoonacular API client - PENDING IMPLEMENTATION
-- model/dto/: 🚧 API request/response - PENDING IMPLEMENTATION
-- model/domain/: 🚧 Internal models - PENDING IMPLEMENTATION
-- config/: Spring configuration (actuator configured)
-- exception/: 🚧 Custom exceptions + @ControllerAdvice - PENDING IMPLEMENTATION
+- controller/: ✅ REST endpoints (RecipeController with /search endpoint)
+- service/: ✅ Business logic (RecipeSearchService with mock data integration)
+- filter/: ✅ Servlet filters (RateLimitFilter)
+- client/: 🚧 Spoonacular API client - PENDING (currently using mock data)
+- model/dto/: ✅ API request/response (RecipeSearchResponse, RecipeSummary)
+- model/domain/: 🚧 Internal models - PENDING
+- config/: ✅ Spring configuration (CORS, Security, Rate Limiting, RecipeSearch properties)
+- exception/: ✅ Custom exceptions + GlobalExceptionHandler with comprehensive error handling
+- util/: ✅ Utility classes (StringSanitizer for input validation)
 
 **Frontend Structure** (`frontend/src/`):
 - features/: Feature-based components organized by domain
   - layout/: Header, Footer, HeroSection, PageSection
   - recipe/: RecipeCard, RecipeGrid
-  - search/: SearchBar
+  - search/: SearchBar, SearchResults, ResultsHeader
   - about/: FeatureCard
-- pages/: Route pages (HomePage, SearchResultsPage, AboutPage, RecipesPage)
-- primitives/: UI primitives (Button, EmptyState, Icon, LoadingSpinner, Pagination)
-- contexts/: React Context (empty - awaiting implementation)
+- pages/: Route pages (HomePage, AboutPage)
+- primitives/: UI primitives (Button, Card, EmptyState, ErrorState, Icon, LoadingSpinner, Pagination)
 - hooks/: Custom hooks (useMobileMenu, usePagination, useSearch)
-- services/: API client (apiClient.js - pending backend integration)
-- utils/: Helper functions (searchUtils.js)
-- mocks/: Mock Spoonacular API data for development
+- services/: ✅ API client (apiClient.js with searchRecipes implementation)
+- utils/: Helper functions (searchUtils.js, colorUtils.js)
+- mocks/: Mock Spoonacular API data for development and testing
 
 **Development Approach:**
-- Frontend currently uses mock data (`frontend/src/mocks/`, `backend/src/main/resources/mocks/`)
+- Backend uses mock data from `backend/src/main/resources/mocks/recipe-search-results.json`
 - Mock data replicates Spoonacular API responses for offline development
-- Will be replaced with actual API integration once backend endpoints are implemented
+- Backend search endpoint (/api/v1/recipes/search) is functional with mock data
+- Frontend connects to backend API for all data
+- Spoonacular API integration will replace mock data when implemented
 
 ## API Endpoints
 
-**Backend REST API (🚧 PLANNED - NOT YET IMPLEMENTED):**
-- POST /api/v1/recipes/search - 🚧 PLANNED
-- GET /api/v1/recipes/{id} - 🚧 PLANNED
-- POST /api/v1/recipes/{id}/exclude-ingredients - 🚧 PLANNED
+**Backend REST API:**
+- ✅ GET /api/v1/recipes/search - Search recipes with pagination (query, page, pageSize params)
+- 🚧 GET /api/v1/recipes/{id} - Get recipe details - PLANNED
+- 🚧 POST /api/v1/recipes/{id}/exclude-ingredients - Exclude ingredients and recalculate - PLANNED
 
-**Currently Available:**
+**Health & Monitoring:**
 - GET /actuator/health - Health check
 - GET /actuator/health/liveness - Liveness probe
 - GET /actuator/health/readiness - Readiness probe
 - GET /actuator/info - Application info
+
+**API Documentation:**
+- Swagger UI: ${BACKEND_URL}/swagger-ui.html (when running)
 
 **Spoonacular API (external API used in backend only):**
 - GET /recipes/complexSearch
@@ -71,19 +77,24 @@ Recipe search application with nutritional information and dynamic ingredient ex
 
 ## Environment Variables
 
-**Backend:** SPOONACULAR_API_KEY (required), SPRING_PROFILES_ACTIVE
+**Backend (`backend/.env`):**
+- SPOONACULAR_API_KEY (required)
+- SPRING_PROFILES_ACTIVE (optional, defaults to `dev`)
 
-**Frontend:** VITE_API_URL (default: http://localhost:8080/api/v1)
+**Frontend (`frontend/.env`):**
+- VITE_API_URL (Backend API endpoint, default: `http://localhost:8080/api/v1`)
 
 ## Commands
 
 **Backend:**
-- ./scripts/run-local.sh (run with dev profile)
+- ./gradlew bootRun (run with dev profile)
+- npm run dev:backend (from root)
 - ./gradlew test
-- docker compose up
 
 **Frontend:**
-- npm run dev (localhost:3000)
+- npm run dev (from root, starts at http://localhost:3000)
+- npm run dev:frontend (from root)
+- cd frontend && npm run dev
 - npm run build
 - npm test
 - npm run lint:fix

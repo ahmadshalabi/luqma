@@ -33,5 +33,10 @@ node_modules/
 *.log
 logs/
 
+# Process IDs
+*.pid
+.backend.pid
+.frontend.pid
+
 # Test Coverage
 coverage/

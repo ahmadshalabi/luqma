@@ -7,8 +7,7 @@ Project-wide development standards for code quality, consistency, and security.
 1. **[Security Standards](./security-standards.mdc)** ⚠️ **CRITICAL** - API key protection and dependency management
 2. **[Git Standards](./git-standards.mdc)** - Branching, commits, PRs, code review, releases
 3. **[Code Review Checklist](./code-review-checklist.mdc)** - PR review guidelines
-4. **[Documentation Standards](./documentation-standards.mdc)** - README, code comments, TODO format
-5. **[Accessibility Standards](./accessibility-standards.mdc)** - WCAG 2.1 AA compliance
+4. **[Accessibility Standards](./accessibility-standards.mdc)** - WCAG 2.1 AA compliance
 
 ## Scoped Rules
 
