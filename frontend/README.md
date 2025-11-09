@@ -4,163 +4,110 @@ React frontend for Luqma - a recipe search application with nutritional informat
 
 ## Tech Stack
 
-- **React** 19.2.0 - UI library with hooks for state management
-- **Vite** 7.2.2 - Fast build tool and dev server
-- **TailwindCSS** 4.1.17 - Utility-first CSS framework
-- **React Router** 7.9.5 - Client-side routing
-- **JavaScript** 
+React 19.2.0 • Vite 7.2.2 • TailwindCSS 4.1.17 • React Router 7.9.5 • Vitest
 
-## Getting Started
+## Prerequisites
 
-### Prerequisites
+- **Node.js 24+** - [Download](https://nodejs.org/)
 
-- Node.js 24+ (LTS) and npm
+## Quick Start
 
-### Installation
-
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-2. Create environment configuration:
-   ```bash
-   cp .env.example .env
-   ```
-
-3. Update `.env` with your backend API URL
-
-### Development
-
-Start the development server:
 ```bash
+cd frontend
+
+# Install dependencies
+npm install
+
+# IMPORTANT: Configure URLs in root .env file first
+# See Configuration section below
+
+# Run the application
 npm run dev
 ```
 
-The application will open at `http://localhost:3000`
+The application will be available at http://localhost:3000 (default port)
 
-### Build
+## Development Commands
 
-Create a production build:
 ```bash
-npm run build
+# Development
+npm run dev                # Start dev server
+npm run build              # Production build
+npm run preview            # Preview production build
+
+# Testing
+npm test                   # Run tests (watch mode)
+npm run test:ui            # Tests with UI
+npm run test:coverage      # Generate coverage report
+
+# Linting
+npm run lint               # Run ESLint
+npm run lint:fix           # Auto-fix issues
 ```
 
-Preview the production build:
-```bash
-npm run preview
-```
-
-### Linting
-
-Run ESLint:
-```bash
-npm run lint
-
-# Auto-fix issues
-npm run lint:fix
-```
-
-### Testing
-
-Run tests with Vitest:
-```bash
-# Run tests in watch mode
-npm test
-
-# Run tests with UI
-npm run test:ui
-
-# Generate coverage report
-npm run test:coverage
-```
-
-View coverage report: `frontend/coverage/index.html`
-
-## Testing Philosophy
-
-The project uses Vitest for testing with a focus on **minimal, behavior-driven tests**:
-
-- **Test what matters**: User interactions, rendered output, accessibility
-- **Avoid over-testing**: Don't test implementation details or edge cases that never occur
-- **Keep tests simple**: Each test should be clear and focused on one behavior
-- **Target coverage**: 70%+ components, 80%+ custom hooks
-
-Test files are located in `src/test/` directory for better organization.
-
-## Features
-
-- Live search with debouncing (300ms) on homepage
-- Recipe search with pagination
-- Recipe cards with images and titles
-- Responsive, mobile-first design
-- WCAG 2.1 AA accessible UI
-- Component-based architecture with reusable primitives
+**Test Coverage:**
+- Components: 70%+ (recommended)
+- Custom hooks: 80%+ (recommended)
+- Reports: `coverage/index.html`
 
 ## Project Structure
 
-The project follows a feature-based architecture for better organization and scalability:
+Feature-based architecture with path aliasing (`@/`):
 
-### Pages (`pages/`)
-- `HomePage.jsx` - Landing page with hero section, live search bar, and search results
-- `AboutPage.jsx` - About page with mission statement and feature highlights  
-- `RecipesPage.jsx` - Placeholder page for future recipe browsing (coming soon)
+```
+src/
+├── pages/         # Route pages (HomePage, AboutPage, RecipesPage)
+├── features/      # Domain components (layout, recipe, search, about)
+├── primitives/    # UI primitives (Button, Card, Icon, etc.)
+├── hooks/         # Custom hooks (useMobileMenu, useSearch, usePagination)
+├── services/      # API client
+├── utils/         # Helpers
+└── mocks/         # Mock data
+```
 
-### Features (`features/`)
-Feature-based components organized by domain:
+**Example imports:**
+```javascript
+import { Button } from '@/primitives/Button'
+import { usePagination } from '@/hooks/usePagination'
+```
 
-#### Layout (`features/layout/`)
-- `Header.jsx` - Navigation header with responsive mobile menu
-- `Footer.jsx` - Site footer with copyright
-- `HeroSection.jsx` - Hero section layout for landing pages
-- `PageSection.jsx` - Page section wrapper for consistent spacing
+## Features
 
-#### Recipe (`features/recipe/`)
-- `RecipeCard.jsx` - Individual recipe card component with image and title
-- `RecipeGrid.jsx` - Grid layout for displaying recipe cards with empty state
+- Live search with debouncing (300ms)
+- Pagination support
+- Responsive, mobile-first design
+- WCAG 2.1 AA accessibility
 
-#### Search (`features/search/`)
-- `SearchBar.jsx` - Recipe search input with debounced live search and form handling
-- `SearchResults.jsx` - Search results display with filtering, pagination, and empty states
-- `ResultsHeader.jsx` - Results header showing count and pagination info
+## Configuration
 
-#### About (`features/about/`)
-- `FeatureCard.jsx` - Feature highlight card for About page
+The frontend requires a `.env` file in the `frontend/` directory for API configuration:
 
-### Primitives (`primitives/`)
-Generic, reusable UI components without business logic:
-- `Button.jsx` - Multi-variant button (primary, secondary, link) supporting internal/external navigation
-- `Card.jsx` - Base card component with configurable padding, hover effects, and interactive states
-- `Icon.jsx` - SVG icon system with configurable sizes
-- `EmptyState.jsx` - Empty state display with icon, title, message, and optional action
-- `LoadingSpinner.jsx` - Loading indicator with configurable size
-- `Pagination.jsx` - Accessible pagination controls with keyboard support
+```bash
+cd frontend
+cp .env.example .env
+# Edit frontend/.env to configure backend API URL if needed
+```
 
-### Custom Hooks (`hooks/`)
-Reusable stateful logic:
-- `useMobileMenu.js` - Mobile menu toggle state management
-- `useSearch.js` - Search form state with debouncing (300ms) and submission handling
-- `usePagination.js` - Pagination calculations (page slicing, ranges, navigation helpers)
+### Configuration Variables
 
-### Utilities (`utils/`)
-- `searchUtils.js` - Recipe filtering utility functions (title-based search)
+Set these variables in `frontend/.env`:
 
-### Services (`services/`)
-- `apiClient.js` - Centralized API client for backend communication (pending implementation)
+- **`VITE_API_URL`**: Backend API endpoint (default: `http://localhost:8080/api/v1`)
 
-### Path Aliasing
-The project uses Vite path aliasing for cleaner imports:
-- `@/` alias points to `src/` directory
-- Examples:
-  - `import { Button } from '@/primitives/Button'`
-  - `import { Header } from '@/features/layout/Header'`
-  - `import { usePagination } from '@/hooks/usePagination'`
+### Custom Configuration
 
-### Development Mode
-Currently using mock data from `src/mocks/` to enable frontend development without backend API. Mock data will be replaced with actual API calls once backend endpoints are implemented.
+If your backend runs on a different port, update `VITE_API_URL` in `frontend/.env`:
 
-## Related Documentation
+```bash
+# frontend/.env
+VITE_API_URL=http://localhost:9090/api/v1
+```
 
-- [Backend README](../backend/README.md)
-- [Project Architecture Decisions](../docs/decisions/)
-- [Main Project README](../README.md)
+To change the frontend port, edit `server.port` in `frontend/vite.config.js`.
+
+## Documentation
+
+- [Main README](../README.md) - Project overview
+- [Backend README](../backend/README.md) - Backend setup
+- [Troubleshooting Guide](../docs/TROUBLESHOOTING.md) - Common issues
+- [Architecture Decisions](../docs/decisions/) - ADRs
