@@ -111,8 +111,59 @@ export async function getRecipeById(id) {
   }
 }
 
+/**
+ * Exclude ingredients from a recipe and recalculate nutrition.
+ * 
+ * @param {number|string} recipeId - Recipe ID
+ * @param {Array<number>} ingredientIds - Array of ingredient IDs to exclude
+ * @returns {Promise<Object>} Updated recipe details with recalculated nutrition
+ * @throws {Error} If the API request fails or returns an error
+ * 
+ * @example
+ * const updatedRecipe = await excludeIngredients(715497, [20409, 5006])
+ * // returns: { id: 715497, title: "...", ingredients: [...], nutrition: {...} }
+ */
+export async function excludeIngredients(recipeId, ingredientIds) {
+  const numId = Number(recipeId)
+  if (!numId || numId <= 0) {
+    throw new Error('Invalid recipe ID')
+  }
+
+  if (!Array.isArray(ingredientIds) || ingredientIds.length === 0) {
+    throw new Error('At least one ingredient ID must be provided')
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/recipes/${numId}/exclude-ingredients`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({ ingredientIds })
+    })
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error('Recipe not found. Please try another recipe.')
+      }
+      const errorData = await response.json().catch(() => ({}))
+      const errorMessage = errorData.message || 'Failed to exclude ingredients. Please try again.'
+      throw new Error(errorMessage)
+    }
+
+    return await response.json()
+  } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error('Unable to connect to the server. Please check your connection.')
+    }
+    throw error
+  }
+}
+
 export default {
   searchRecipes,
-  getRecipeById
+  getRecipeById,
+  excludeIngredients
 }
 
