@@ -7,7 +7,7 @@ import { memo } from 'react'
  * Icons are decorative by default (aria-hidden="true").
  * 
  * @param {Object} props
- * @param {string} props.name - Icon name (search, menu, close, arrowLeft, chevronLeft, chevronRight, lightbulb, clock, checkCircle, xMark)
+ * @param {string} props.name - Icon name (search, menu, close, arrowLeft, chevronLeft, chevronRight, lightbulb, clock, checkCircle)
  * @param {string} props.size - Size variant (sm, md, lg, xl, 2xl)
  * @param {string} props.className - Additional CSS classes
  */
@@ -84,13 +84,6 @@ const IconComponent = ({ name, size = 'md', className = '' }) => {
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-      />
-    ),
-    xMark: (
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M6 18L18 6M6 6l12 12"
       />
     )
   }

@@ -1,17 +1,18 @@
-import { useMemo, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { RecipeGrid } from '@/features/recipe/RecipeGrid'
 import { PageSection } from '@/features/layout/PageSection'
 import { Pagination } from '@/primitives/Pagination'
 import { ResultsHeader } from './ResultsHeader'
-import { usePagination } from '@/hooks/usePagination'
-import { getRecipeSearchResults } from '@/mocks'
-import { filterRecipes } from '@/utils/searchUtils'
+import { LoadingSpinner } from '@/primitives/LoadingSpinner'
+import { ErrorState } from '@/primitives/ErrorState'
+import { searchRecipes } from '@/services/apiClient'
 
 const ITEMS_PER_PAGE = 9
 
 /**
- * SearchResults component for displaying filtered and paginated recipe search results.
+ * SearchResults component for displaying recipe search results from the backend API.
+ * Supports pagination and real-time search with loading and error states.
  *
  * @param {Object} props
  * @param {string} props.query - The search query to filter recipes
@@ -20,47 +21,98 @@ export const SearchResults = ({ query }) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const currentPage = parseInt(searchParams.get('page') || '1', 10)
 
-  // Load mock data
-  const { results: allRecipes } = getRecipeSearchResults()
+  // API state management
+  const [recipes, setRecipes] = useState([])
+  const [totalResults, setTotalResults] = useState(0)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
 
-  // Memoize filtered recipes to avoid recalculation on every render
-  const filteredRecipes = useMemo(() => {
-    return filterRecipes(allRecipes, query)
-  }, [allRecipes, query])
+  // Calculate pagination values
+  const totalPages = Math.ceil(totalResults / ITEMS_PER_PAGE)
+  const startItem = totalResults > 0 ? (currentPage - 1) * ITEMS_PER_PAGE + 1 : 0
+  const endItem = Math.min(currentPage * ITEMS_PER_PAGE, totalResults)
 
-  // Use pagination hook for calculations
-  const {
-    paginatedItems: paginatedRecipes,
-    totalPages,
-    validPage,
-    startItem,
-    endItem
-  } = usePagination({
-    items: filteredRecipes,
-    currentPage,
-    itemsPerPage: ITEMS_PER_PAGE
-  })
-
-  // Redirect to valid page if current page is invalid
+  // Fetch recipes from API
   useEffect(() => {
-    if (filteredRecipes.length > 0 && currentPage !== validPage) {
-      setSearchParams({ q: query, page: validPage.toString() })
+    if (!query || query.trim().length === 0) {
+      return
     }
-  }, [currentPage, validPage, query, filteredRecipes.length])
+
+    const fetchRecipes = async () => {
+      setLoading(true)
+      setError(null)
+
+      try {
+        const data = await searchRecipes({
+          query: query.trim(),
+          page: currentPage,
+          pageSize: ITEMS_PER_PAGE
+        })
+
+        setRecipes(data.results || [])
+        setTotalResults(data.totalResults || 0)
+
+        // If current page is beyond available results and there are results, redirect to page 1
+        if (data.totalResults > 0 && data.results.length === 0 && currentPage > 1) {
+          setSearchParams({ q: query, page: '1' })
+        }
+      } catch (err) {
+        setError(err.message || 'Failed to load recipes')
+        setRecipes([])
+        setTotalResults(0)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchRecipes()
+  }, [query, currentPage, setSearchParams])
 
   // Scroll to top on page change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [validPage])
+  }, [currentPage])
 
   // Handle page change
   const handlePageChange = useCallback((newPage) => {
     setSearchParams({ q: query, page: newPage.toString() })
-  }, [query])
+  }, [query, setSearchParams])
 
   // Return null if no query
   if (!query) {
     return null
+  }
+
+  // Show loading state
+  if (loading) {
+    return (
+      <PageSection as="div">
+        <div className="flex justify-center items-center min-h-[400px]">
+          <LoadingSpinner size="lg" centered={false} text="Loading recipes..." />
+        </div>
+      </PageSection>
+    )
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <PageSection as="div">
+        <div className="space-y-6">
+          <ResultsHeader
+            title={`Search Results for "${query}"`}
+            totalCount={0}
+            startItem={0}
+            endItem={0}
+            itemLabel="recipe"
+          />
+          <ErrorState
+            title="Error Loading Results"
+            message={error}
+          />
+        </div>
+      </PageSection>
+    )
   }
 
   return (
@@ -68,19 +120,19 @@ export const SearchResults = ({ query }) => {
       <div className="space-y-6">
         <ResultsHeader
           title={`Search Results for "${query}"`}
-          totalCount={filteredRecipes.length}
+          totalCount={totalResults}
           startItem={startItem}
           endItem={endItem}
           itemLabel="recipe"
         />
         <RecipeGrid
-          recipes={paginatedRecipes}
+          recipes={recipes}
           emptyTitle="No recipes found"
           emptyMessage="Try adjusting your search or browse our collection"
         />
-        {filteredRecipes.length > ITEMS_PER_PAGE && (
+        {totalResults > ITEMS_PER_PAGE && (
           <Pagination
-            currentPage={validPage}
+            currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={handlePageChange}
           />

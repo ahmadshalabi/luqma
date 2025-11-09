@@ -1,3 +1,5 @@
+import { memo } from 'react'
+
 /**
  * HeroSection Component
  * 
@@ -9,7 +11,7 @@
  * @param {React.ReactNode} props.children - Optional additional content (e.g., SearchBar)
  * @param {string} props.className - Additional CSS classes
  */
-export const HeroSection = ({ title, description, children, className = '' }) => {
+const HeroSectionComponent = ({ title, description, children, className = '' }) => {
   return (
     <section className={`container mx-auto px-4 py-12 md:py-16 ${className}`}>
       <div className="max-w-4xl mx-auto text-center space-y-6">
@@ -28,4 +30,6 @@ export const HeroSection = ({ title, description, children, className = '' }) =>
     </section>
   )
 }
+
+export const HeroSection = memo(HeroSectionComponent)
 
