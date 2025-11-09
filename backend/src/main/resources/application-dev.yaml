@@ -23,6 +23,14 @@ logging:
     org.springframework.web: DEBUG
     org.springframework.boot: DEBUG
 
+# SpringDoc/OpenAPI Configuration - Development
+# Enable API documentation endpoints for development convenience
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
 # CORS Configuration - Development
 # Allow frontend development server
 cors:

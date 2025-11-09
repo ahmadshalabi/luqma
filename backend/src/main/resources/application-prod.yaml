@@ -29,6 +29,14 @@ logging:
     app.luqma: INFO
     org.springframework.web: WARN
 
+# SpringDoc/OpenAPI Configuration - Production
+# Disable API documentation endpoints in production for security
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
 # CORS Configuration - Production
 # Specify allowed origins explicitly (NEVER use wildcards in production)
 cors:

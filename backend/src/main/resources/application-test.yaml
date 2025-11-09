@@ -21,6 +21,14 @@ logging:
     app.luqma: DEBUG
     org.springframework.test: DEBUG
 
+# SpringDoc/OpenAPI Configuration - Test
+# Disable API documentation endpoints in tests for consistency
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
 # Spoonacular API Configuration - Test (use mock values)
 spoonacular:
   api-key: test-api-key
