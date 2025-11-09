@@ -1,13 +1,6 @@
 # Development Profile Configuration
 # This profile is used for local development with ./gradlew bootRun
 
-spring:
-  # Docker Compose Configuration
-  # DISABLED for local development - only needed when running via docker compose
-  docker:
-    compose:
-      enabled: false
-
 # Actuator Configuration - Development
 management:
   endpoint:
@@ -20,6 +13,7 @@ server:
     include-message: always
     include-binding-errors: always
     include-stacktrace: always  # Show full stack traces in dev
+    include-exception: true
 
 # Development Logging - More verbose
 logging:

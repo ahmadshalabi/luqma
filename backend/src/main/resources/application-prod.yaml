@@ -1,13 +1,5 @@
 # Production Profile Configuration
-# This profile is used when running in Docker or production environments
-
-spring:
-  # Docker Compose Configuration
-  # DISABLED - Spring Boot's docker-compose integration not needed in production
-  # (This feature auto-starts docker-compose services during development)
-  docker:
-    compose:
-      enabled: false
+# This profile is used when running in production environments
 
 # Actuator Configuration - Production
 management:
@@ -22,9 +14,13 @@ management:
 # Production server configuration
 server:
   error:
-    include-message: always
+    include-message: never         # Use custom error responses
     include-binding-errors: never  # Don't expose validation errors
     include-stacktrace: never      # Never show stack traces in production
+    include-exception: false
+  # Enable HTTPS in production
+  ssl:
+    enabled: false  # Set to true and configure when deploying with SSL
 
 # Production Logging - Less verbose
 logging:

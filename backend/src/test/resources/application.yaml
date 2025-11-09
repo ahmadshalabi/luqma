@@ -1,0 +1,79 @@
+# Test Configuration
+# This file provides defaults for all tests
+# It overrides the main application.yaml for test runs
+
+spring:
+  application:
+    name: luqma-backend-test
+
+# Server Configuration - Test defaults
+server:
+  port: ${BACKEND_PORT:8080}
+  shutdown: graceful
+  max-http-request-header-size: 10KB
+  tomcat:
+    max-swallow-size: 10MB
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: always
+
+# Actuator Configuration - Test
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true
+
+# Spoonacular API Configuration - Test (use mock values)
+spoonacular:
+  api-key: ${SPOONACULAR_API_KEY:test-api-key}
+  api-url: ${SPOONACULAR_API_URL:https://api.spoonacular.com}
+  connection-timeout: ${SPOONACULAR_CONNECTION_TIMEOUT:5000}
+  read-timeout: ${SPOONACULAR_READ_TIMEOUT:5000}
+
+# Recipe Search Configuration
+recipe-search:
+  default-page-size: 9
+  max-page-size: 100
+  max-page-number: 1000
+
+# Rate Limiting Configuration
+rate-limit:
+  max-requests-per-minute: 100
+  window-size-millis: 60000
+  max-entries: 10000
+  cleanup-interval-millis: 300000
+
+# CORS Configuration - Test
+cors:
+  allowed-origins: ${FRONTEND_URL:http://localhost:3000}
+  allowed-methods:
+    - GET
+    - POST
+    - PUT
+    - PATCH
+    - DELETE
+  allowed-headers:
+    - "*"
+  allow-credentials: true
+  max-age: 3600
+
+# Test Logging
+logging:
+  level:
+    root: WARN
+    app.luqma: DEBUG
+    org.springframework.test: DEBUG
+

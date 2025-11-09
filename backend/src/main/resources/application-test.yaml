@@ -1,12 +1,6 @@
 # Test Profile Configuration
 # This profile is used for integration tests
 
-spring:
-  # Docker Compose Configuration
-  docker:
-    compose:
-      enabled: false
-
 # Actuator Configuration - Test
 management:
   endpoint:

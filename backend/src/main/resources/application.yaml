@@ -12,8 +12,15 @@ spring:
 
 # Server Configuration
 server:
-  port: ${SERVER_PORT:8080}
+  port: 8080
   shutdown: graceful  # Enable graceful shutdown
+  max-http-request-header-size: 10KB
+  tomcat:
+    max-swallow-size: 10MB
+  error:
+    include-message: never
+    include-binding-errors: never
+    include-stacktrace: never
 
 # Actuator Configuration
 management:
@@ -39,6 +46,36 @@ spoonacular:
   api-key: ${SPOONACULAR_API_KEY:}
   connection-timeout: ${SPOONACULAR_CONNECTION_TIMEOUT:10000}
   read-timeout: ${SPOONACULAR_READ_TIMEOUT:30000}
+
+# Recipe Search Configuration
+recipe-search:
+  default-page-size: 9
+  max-page-size: 100
+  max-page-number: 1000
+
+# Rate Limiting Configuration
+rate-limit:
+  max-requests-per-minute: 100
+  window-size-millis: 60000
+  max-entries: 10000
+  cleanup-interval-millis: 300000
+
+# CORS Configuration
+cors:
+  allowed-origins:
+    - http://localhost:3000
+  allowed-methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+    - OPTIONS
+  allowed-headers:
+    - Content-Type
+    - Accept
+    - Authorization
+  allow-credentials: false
+  max-age: 3600
 
 # Logging Configuration (base level)
 logging:
