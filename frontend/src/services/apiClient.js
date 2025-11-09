@@ -14,36 +14,62 @@
  * - Frontend NEVER calls external APIs directly
  * - All requests go through backend proxy
  * - API keys are protected on backend
- * 
- * ⚠️ IMPORTANT: Backend business logic endpoints are NOT yet implemented.
- * The backend currently only provides Spring Boot Actuator health check endpoints.
- * 
- * Planned endpoints (NOT YET AVAILABLE):
- * @function searchRecipes - POST /api/v1/recipes/search - 🚧 PLANNED
- * @function getRecipeDetails - GET /api/v1/recipes/{id} - 🚧 PLANNED
- * @function excludeIngredients - POST /api/v1/recipes/{id}/exclude-ingredients - 🚧 PLANNED
- * 
- * TODO: Implement API client functions when backend endpoints are ready
  */
 
-// eslint-disable-next-line no-unused-vars
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1'
 
-// Example structure for future implementation:
-// 
-// export async function searchRecipes(searchParams) {
-//   const response = await fetch(`${API_BASE_URL}/recipes/search`, {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify(searchParams)
-//   })
-//   if (!response.ok) {
-//     throw new Error(`API error: ${response.status}`)
-//   }
-//   return response.json()
-// }
+/**
+ * Search for recipes with pagination support.
+ * 
+ * @param {Object} params - Search parameters
+ * @param {string} params.query - Search query (required, 1-200 characters)
+ * @param {number} [params.page=1] - Page number (1-indexed, 1-1000)
+ * @param {number} [params.pageSize=9] - Number of results per page (1-100)
+ * @returns {Promise<Object>} Search results with results array, page, pageSize, and totalResults
+ * @throws {Error} If the API request fails or returns an error
+ * 
+ * @example
+ * const results = await searchRecipes({ query: 'pasta', page: 1, pageSize: 9 })
+ * // returns: { results: [...], page: 1, pageSize: 9, totalResults: 47 }
+ */
+export async function searchRecipes({ query, page = 1, pageSize = 9 }) {
+  if (!query || query.trim().length === 0) {
+    throw new Error('Search query is required')
+  }
+
+  const params = new URLSearchParams({
+    query: query.trim(),
+    page: String(page),
+    pageSize: String(pageSize)
+  })
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/recipes/search?${params}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+
+    if (!response.ok) {
+      // Try to parse error response from backend
+      const errorData = await response.json().catch(() => ({}))
+      const errorMessage = errorData.message || `API error: ${response.status} ${response.statusText}`
+      throw new Error(errorMessage)
+    }
+
+    return await response.json()
+  } catch (error) {
+    // Re-throw with more context if it's a network error
+    if (error.name === 'TypeError' && error.message.includes('fetch')) {
+      throw new Error('Unable to connect to the server. Please check your connection.')
+    }
+    throw error
+  }
+}
 
 export default {
-  // Functions will be implemented here
+  searchRecipes
 }
 
