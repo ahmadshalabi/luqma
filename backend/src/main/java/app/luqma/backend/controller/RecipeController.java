@@ -1,6 +1,8 @@
 package app.luqma.backend.controller;
 
+import app.luqma.backend.model.dto.RecipeDetailResponse;
 import app.luqma.backend.model.dto.RecipeSearchResponse;
+import app.luqma.backend.service.RecipeDetailService;
 import app.luqma.backend.service.RecipeSearchService;
 import app.luqma.backend.util.StringSanitizer;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,13 +20,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * REST controller for recipe-related operations.
- * Provides endpoints for searching recipes with pagination.
+ * Provides endpoints for searching recipes with pagination and retrieving recipe details.
  */
 @Slf4j
 @Validated
@@ -34,9 +37,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class RecipeController {
     
     private final RecipeSearchService recipeSearchService;
+    private final RecipeDetailService recipeDetailService;
     
-    public RecipeController(RecipeSearchService recipeSearchService) {
+    public RecipeController(RecipeSearchService recipeSearchService, RecipeDetailService recipeDetailService) {
         this.recipeSearchService = recipeSearchService;
+        this.recipeDetailService = recipeDetailService;
     }
     
     /**
@@ -116,19 +121,80 @@ public class RecipeController {
             @Max(value = 100, message = "Page size must not exceed 100")
             int pageSize
     ) {
-        // Trim whitespace from query
         String trimmedQuery = query.trim();
         
         log.info("Received search request: query='{}', page={}, pageSize={}", 
-                StringSanitizer.sanitizeForLogging(trimmedQuery, 100), page, pageSize);
-        
-        log.debug("Processing search request with parameters: query='{}', page={}, pageSize={}", 
                 StringSanitizer.sanitizeForLogging(trimmedQuery, 100), page, pageSize);
         
         RecipeSearchResponse response = recipeSearchService.searchRecipes(trimmedQuery, page, pageSize);
         
         log.debug("Search request completed successfully: page {} with {} results of {} total", 
                 response.page(), response.results().size(), response.totalResults());
+        
+        return ResponseEntity.ok(response);
+    }
+    
+    /**
+     * Retrieves detailed information for a specific recipe by ID.
+     * 
+     * @param id the recipe ID (must be positive)
+     * @return detailed recipe information
+     */
+    @GetMapping("/{id}")
+    @Operation(
+        summary = "Get recipe details by ID",
+        description = "Retrieves complete recipe information including ingredients, nutrition, and cooking instructions. " +
+                     "Returns 404 if the recipe is not found."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Recipe found successfully",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = RecipeDetailResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Invalid recipe ID (must be positive integer)",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = app.luqma.backend.exception.ErrorResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Recipe not found with the specified ID",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = app.luqma.backend.exception.ErrorResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Internal server error",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = app.luqma.backend.exception.ErrorResponse.class)
+            )
+        )
+    })
+    public ResponseEntity<RecipeDetailResponse> getRecipeById(
+            @Parameter(
+                description = "Recipe ID (must be a positive integer)",
+                required = true,
+                example = "715497"
+            )
+            @PathVariable
+            @Min(value = 1, message = "Recipe ID must be a positive integer")
+            Long id
+    ) {
+        log.info("Received request for recipe details: id={}", id);
+        
+        RecipeDetailResponse response = recipeDetailService.getRecipeById(id);
+        
+        log.debug("Recipe details retrieved successfully for ID: {}", id);
         
         return ResponseEntity.ok(response);
     }

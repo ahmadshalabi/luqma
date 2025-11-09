@@ -1,8 +1,11 @@
 package app.luqma.backend.controller;
 
 import app.luqma.backend.exception.InvalidPaginationException;
+import app.luqma.backend.exception.ResourceNotFoundException;
+import app.luqma.backend.model.dto.RecipeDetailResponse;
 import app.luqma.backend.model.dto.RecipeSearchResponse;
 import app.luqma.backend.model.dto.RecipeSummary;
+import app.luqma.backend.service.RecipeDetailService;
 import app.luqma.backend.service.RecipeSearchService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -12,11 +15,18 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Unit tests for RecipeController.
@@ -33,6 +43,9 @@ class RecipeControllerTest {
     
     @MockitoBean
     private RecipeSearchService recipeSearchService;
+    
+    @MockitoBean
+    private RecipeDetailService recipeDetailService;
     
     @Test
     void searchRecipes_withValidParameters_returnsOk() throws Exception {
@@ -182,6 +195,63 @@ class RecipeControllerTest {
                 .andExpect(status().isOk());
         
         verify(recipeSearchService).searchRecipes("pasta", 1, 9);
+    }
+    
+    // Recipe Detail Endpoint Tests
+    
+    @Test
+    void getRecipeById_withValidId_returnsOk() throws Exception {
+        // Given: A valid recipe ID
+        Long recipeId = 715497L;
+        RecipeDetailResponse mockRecipe = new RecipeDetailResponse(
+                recipeId,
+                "Chicken Pasta Alfredo",
+                "https://example.com/image.jpg",
+                35,
+                4,
+                List.of(),
+                null,
+                List.of()
+        );
+        
+        when(recipeDetailService.getRecipeById(recipeId))
+                .thenReturn(mockRecipe);
+        
+        // When / Then
+        mockMvc.perform(get("/api/v1/recipes/{id}", recipeId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(recipeId.intValue())))
+                .andExpect(jsonPath("$.title", is("Chicken Pasta Alfredo")));
+        
+        verify(recipeDetailService).getRecipeById(recipeId);
+    }
+    
+    @Test
+    void getRecipeById_withInvalidId_returnsNotFound() throws Exception {
+        // Given: An invalid recipe ID
+        Long invalidId = 999999L;
+        
+        when(recipeDetailService.getRecipeById(invalidId))
+                .thenThrow(ResourceNotFoundException.forRecipe(invalidId));
+        
+        // When / Then
+        mockMvc.perform(get("/api/v1/recipes/{id}", invalidId))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status", is(404)))
+                .andExpect(jsonPath("$.message", containsString("not found")));
+        
+        verify(recipeDetailService).getRecipeById(invalidId);
+    }
+    
+    @Test
+    void getRecipeById_withNegativeId_returnsBadRequest() throws Exception {
+        // Given: A negative recipe ID
+        Long negativeId = -1L;
+        
+        // When / Then: Validation should reject before service call
+        mockMvc.perform(get("/api/v1/recipes/{id}", negativeId))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status", is(400)));
     }
 }
 
