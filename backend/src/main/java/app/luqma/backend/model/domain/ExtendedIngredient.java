@@ -21,4 +21,17 @@ public class ExtendedIngredient {
     private String name;
     private Double amount;
     private String unit;
+    private IngredientNutrition nutrition;
+    
+    /**
+     * Nutrition information for an ingredient.
+     */
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class IngredientNutrition {
+        private java.util.List<Nutrient> nutrients;
+    }
 }

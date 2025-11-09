@@ -34,6 +34,7 @@ public class RecipeDetailService {
     
     private final ObjectMapper objectMapper;
     private final Map<Long, RecipeDetail> recipeCache;
+    private final NutritionCalculationService nutritionCalculationService;
     
     private static final List<String> RECIPE_FILES = List.of(
             "recipe-642539.json",
@@ -42,8 +43,10 @@ public class RecipeDetailService {
             "recipe-782601.json"
     );
     
-    public RecipeDetailService(ObjectMapper objectMapper) {
+    public RecipeDetailService(ObjectMapper objectMapper, NutritionCalculationService nutritionCalculationService) {
         this.objectMapper = Objects.requireNonNull(objectMapper, "ObjectMapper cannot be null");
+        this.nutritionCalculationService = Objects.requireNonNull(nutritionCalculationService, 
+                "NutritionCalculationService cannot be null");
         this.recipeCache = new ConcurrentHashMap<>();
     }
     
@@ -211,6 +214,56 @@ public class RecipeDetailService {
     
     public Set<Long> getAllRecipeIds() {
         return new HashSet<>(recipeCache.keySet());
+    }
+    
+    /**
+     * Excludes specified ingredients from a recipe and recalculates nutrition.
+     * 
+     * @param recipeId the recipe ID
+     * @param ingredientIds set of ingredient IDs to exclude
+     * @return recipe detail response with updated ingredients and nutrition
+     * @throws ResourceNotFoundException if recipe not found
+     * @throws IllegalArgumentException if any excluded ingredient ID is not in the recipe
+     */
+    public RecipeDetailResponse excludeIngredients(Long recipeId, Set<Long> ingredientIds) {
+        Objects.requireNonNull(recipeId, "Recipe ID cannot be null");
+        Objects.requireNonNull(ingredientIds, "Ingredient IDs cannot be null");
+        
+        if (ingredientIds.isEmpty()) {
+            log.debug("No ingredients to exclude, returning original recipe");
+            return getRecipeById(recipeId);
+        }
+        
+        log.info("Excluding {} ingredients from recipe {}", ingredientIds.size(), recipeId);
+        
+        // Get original recipe
+        RecipeDetail originalRecipe = Optional.ofNullable(recipeCache.get(recipeId))
+                .orElseThrow(() -> {
+                    log.warn("Recipe not found for exclusion: {}", recipeId);
+                    return ResourceNotFoundException.forRecipe(recipeId);
+                });
+        
+        // Validate that all ingredient IDs exist in the recipe
+        Set<Long> recipeIngredientIds = originalRecipe.getExtendedIngredients().stream()
+                .map(ExtendedIngredient::getId)
+                .collect(Collectors.toSet());
+        
+        List<Long> invalidIds = ingredientIds.stream()
+                .filter(id -> !recipeIngredientIds.contains(id))
+                .collect(Collectors.toList());
+        
+        if (!invalidIds.isEmpty()) {
+            log.warn("Invalid ingredient IDs for recipe {}: {}", recipeId, invalidIds);
+            throw new IllegalArgumentException(
+                    "The following ingredient IDs are not in this recipe: " + invalidIds);
+        }
+        
+        RecipeDetail updatedRecipe = nutritionCalculationService.recalculateNutrition(
+                originalRecipe, ingredientIds);
+        
+        log.debug("Successfully excluded ingredients from recipe {}", recipeId);
+        
+        return mapToResponse(updatedRecipe);
     }
 }
 

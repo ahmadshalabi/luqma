@@ -1,5 +1,6 @@
 package app.luqma.backend.controller;
 
+import app.luqma.backend.model.dto.ExcludeIngredientsRequest;
 import app.luqma.backend.model.dto.RecipeDetailResponse;
 import app.luqma.backend.model.dto.RecipeSearchResponse;
 import app.luqma.backend.service.RecipeDetailService;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -21,9 +23,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashSet;
 
 /**
  * REST controller for recipe-related operations.
@@ -195,6 +201,82 @@ public class RecipeController {
         RecipeDetailResponse response = recipeDetailService.getRecipeById(id);
         
         log.debug("Recipe details retrieved successfully for ID: {}", id);
+        
+        return ResponseEntity.ok(response);
+    }
+    
+    /**
+     * Excludes specified ingredients from a recipe and returns updated nutrition.
+     * 
+     * @param id the recipe ID
+     * @param request the request containing ingredient IDs to exclude
+     * @return recipe details with updated ingredients and recalculated nutrition
+     */
+    @PostMapping("/{id}/exclude-ingredients")
+    @Operation(
+        summary = "Exclude ingredients from recipe",
+        description = "Excludes specified ingredients from a recipe and recalculates nutritional information. " +
+                     "Returns updated recipe details with filtered ingredients and adjusted nutrition values."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Ingredients excluded successfully, nutrition recalculated",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = RecipeDetailResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Invalid request (empty ingredient list, invalid IDs, or IDs not in recipe)",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = app.luqma.backend.exception.ErrorResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Recipe not found with the specified ID",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = app.luqma.backend.exception.ErrorResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Internal server error",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = app.luqma.backend.exception.ErrorResponse.class)
+            )
+        )
+    })
+    public ResponseEntity<RecipeDetailResponse> excludeIngredients(
+            @Parameter(
+                description = "Recipe ID (must be a positive integer)",
+                required = true,
+                example = "715497"
+            )
+            @PathVariable
+            @Min(value = 1, message = "Recipe ID must be a positive integer")
+            Long id,
+            
+            @Parameter(
+                description = "Request body containing list of ingredient IDs to exclude",
+                required = true
+            )
+            @Valid
+            @RequestBody
+            ExcludeIngredientsRequest request
+    ) {
+        log.info("Received request to exclude ingredients from recipe: id={}, ingredientCount={}", 
+                id, request.ingredientIds().size());
+        
+        RecipeDetailResponse response = recipeDetailService.excludeIngredients(
+                id, new HashSet<>(request.ingredientIds()));
+        
+        log.debug("Ingredient exclusion completed successfully for recipe: {}", id);
         
         return ResponseEntity.ok(response);
     }
