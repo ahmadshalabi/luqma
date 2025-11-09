@@ -6,7 +6,7 @@
  * 
  * Usage:
  * ```javascript
- * import { getRecipeSearchResults, getRecipeById } from '@/mocks'
+ * import { getRecipeSearchResults, getRecipeById } from '@/test/mocks'
  * 
  * // Get all search results
  * const searchResults = getRecipeSearchResults()
@@ -34,9 +34,9 @@ const recipesById = {
 
 /**
  * Get mock recipe search results
- * Simulates response from POST /api/v1/recipes/search
+ * Simulates response from GET /api/v1/recipes/search
  * 
- * @returns {Object} Search results with results array, offset, number, and totalResults
+ * @returns {Object} Search results with results array, page, pageSize, and totalResults
  */
 export function getRecipeSearchResults() {
   return recipeSearchResults
