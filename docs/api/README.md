@@ -31,10 +31,33 @@ curl "http://localhost:8080/api/v1/recipes/search?query=pasta&page=1&pageSize=9"
 - Currently using mock data (Spoonacular integration pending)
 - Rate limiting applied
 
-### Planned Endpoints (Coming Soon)
+### Recipe Details API
 
-- **GET /api/v1/recipes/{id}** - Get detailed recipe information
-- **POST /api/v1/recipes/{id}/exclude-ingredients** - Exclude ingredients and recalculate nutrition
+**Endpoint:** `GET /api/v1/recipes/{id}`
+
+Get complete recipe information including ingredients, nutrition, and cooking instructions.
+
+**Quick Example:**
+```bash
+curl "http://localhost:8080/api/v1/recipes/715497"
+```
+
+**Implementation Notes:**
+- Returns 404 if recipe not found
+- Recipe ID must be a positive integer
+- Currently using mock data (Spoonacular integration pending)
+- Includes comprehensive nutrition information with caloric breakdown
+- Provides step-by-step cooking instructions
+
+**Response Structure:**
+- Basic info: title, image, servings, ready time
+- Ingredients list with measurements (simplified: id, name, amount, unit)
+- Nutrition data with macronutrients and percentages
+- Step-by-step cooking instructions
+
+**OpenAPI Schema Names:**
+- Internal DTOs use clean names in API docs: `Ingredient`, `Nutrition` (not `IngredientDTO`, `NutritionDTO`)
+- Domain models are excluded from API documentation (internal implementation only)
 
 ## Security
 

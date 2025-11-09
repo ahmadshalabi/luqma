@@ -54,13 +54,20 @@ The application will be available at http://localhost:8080 (default port)
   - Parameters: `query` (required), `page`, `pageSize`
   - Currently using mock data
 
+**Recipe Details:**
+- `GET /api/v1/recipes/{id}` - Get complete recipe information
+  - Path parameter: `id` (recipe ID, positive integer)
+  - Returns: ingredients, nutrition, instructions
+  - Currently using mock data
+
 **Health & Monitoring:**
 - `GET /actuator/health` - Health check
 - `GET /actuator/health/liveness` - Liveness probe
 - `GET /actuator/health/readiness` - Readiness probe
 - `GET /actuator/info` - Application info
 
-**Full API documentation:** http://localhost:8080/swagger-ui.html
+**Full API documentation:** http://localhost:8080/swagger-ui.html  
+*(Only exposes public REST API models - internal domain models are hidden)*
 
 ## Configuration
 
