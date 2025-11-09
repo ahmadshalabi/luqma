@@ -4,7 +4,7 @@ This directory contains mock data from the Spoonacular API for development and t
 
 ## Purpose
 
-These mock files replicate actual Spoonacular API responses to enable frontend development without requiring live API calls or backend implementation. This approach:
+These mock files replicate the Luqma backend API responses to enable frontend development without requiring a running backend server. This approach:
 
 - Reduces API call costs during development
 - Enables offline development
@@ -22,7 +22,7 @@ These mock files replicate actual Spoonacular API responses to enable frontend d
 Import the helper functions to access mock data:
 
 ```javascript
-import { getRecipeSearchResults, getRecipeById } from '@/mocks'
+import { getRecipeSearchResults, getRecipeById } from '@/test/mocks'
 
 // Get all search results
 const searchResults = getRecipeSearchResults()
@@ -33,14 +33,14 @@ const recipe = getRecipeById(654812)
 
 ## Data Structure
 
-Mock data matches the structure of actual Spoonacular API responses:
+Mock data matches the structure of the Luqma backend API responses:
 
 **Search Results:**
 ```json
 {
   "results": [...],
-  "offset": 0,
-  "number": 10,
+  "page": 1,
+  "pageSize": 9,
   "totalResults": 100
 }
 ```
@@ -65,5 +65,5 @@ These mocks should be removed once:
 ## Related
 
 - Backend mocks: `backend/src/main/resources/mocks/`
-- API client: `frontend/src/services/api.js` (to be implemented)
+- API client: `frontend/src/services/apiClient.js` (to be implemented)
 
