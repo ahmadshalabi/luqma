@@ -1,5 +1,7 @@
-import { memo, useState } from 'react'
+import { memo } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Card } from '@/primitives/Card'
+import { useImageFallback } from '@/hooks/useImageFallback'
 
 /**
  * RecipeCard Component
@@ -11,11 +13,12 @@ import { Card } from '@/primitives/Card'
  * @param {Object} props.recipe - Recipe object containing id, title, and image
  */
 const RecipeCardComponent = ({ recipe }) => {
-  const [imageError, setImageError] = useState(false)
-
-  const handleImageError = () => {
-    setImageError(true)
-  }
+  const { imageError, handleImageError } = useImageFallback()
+  const [searchParams] = useSearchParams()
+  
+  const query = searchParams.get('q') || ''
+  const page = searchParams.get('page') || '1'
+  
   return (
     <Card
       as="article"
@@ -24,8 +27,9 @@ const RecipeCardComponent = ({ recipe }) => {
       interactive={true}
       className="flex flex-col overflow-hidden"
     >
-      <button
-        type="button"
+      <Link
+        to={`/recipe/${recipe.id}`}
+        state={{ query, page }}
         className="flex flex-col w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-500"
         aria-label={`View recipe: ${recipe.title}`}
       >
@@ -53,11 +57,10 @@ const RecipeCardComponent = ({ recipe }) => {
             {recipe.title}
           </h3>
         </div>
-      </button>
+      </Link>
     </Card>
   )
 }
 
-// Memoize component to prevent unnecessary re-renders
 export const RecipeCard = memo(RecipeCardComponent)
 

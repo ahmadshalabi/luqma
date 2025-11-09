@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
+import { BrowserRouter } from 'react-router-dom'
 import { RecipeCard } from '@/features/recipe/RecipeCard'
 
 describe('RecipeCard', () => {
@@ -9,17 +10,21 @@ describe('RecipeCard', () => {
     image: 'https://example.com/pasta.jpg',
   }
 
+  const renderWithRouter = (component) => {
+    return render(<BrowserRouter>{component}</BrowserRouter>)
+  }
+
   it('should render recipe image and title', () => {
-    render(<RecipeCard recipe={mockRecipe} />)
+    renderWithRouter(<RecipeCard recipe={mockRecipe} />)
     
     expect(screen.getByRole('img', { name: 'Pasta Carbonara' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Pasta Carbonara' })).toBeInTheDocument()
   })
 
-  it('should have accessible button label', () => {
-    render(<RecipeCard recipe={mockRecipe} />)
+  it('should have accessible link label', () => {
+    renderWithRouter(<RecipeCard recipe={mockRecipe} />)
     
-    expect(screen.getByRole('button', { name: 'View recipe: Pasta Carbonara' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'View recipe: Pasta Carbonara' })).toBeInTheDocument()
   })
 })
 

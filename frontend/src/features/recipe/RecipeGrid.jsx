@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import { RecipeCard } from './RecipeCard'
-import { EmptyState } from '@/primitives/EmptyState'
+import { MessageState } from '@/primitives/MessageState'
 
 /**
  * RecipeGrid Component
@@ -15,7 +15,8 @@ import { EmptyState } from '@/primitives/EmptyState'
 const RecipeGridComponent = ({ recipes = [], emptyTitle, emptyMessage }) => {
   if (!recipes || recipes.length === 0) {
     return (
-      <EmptyState
+      <MessageState
+        variant="empty"
         icon="lightbulb"
         title={emptyTitle}
         message={emptyMessage}

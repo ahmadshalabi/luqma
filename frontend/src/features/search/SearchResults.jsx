@@ -1,12 +1,13 @@
-import { useState, useCallback, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { RecipeGrid } from '@/features/recipe/RecipeGrid'
 import { PageSection } from '@/features/layout/PageSection'
 import { Pagination } from '@/primitives/Pagination'
 import { ResultsHeader } from './ResultsHeader'
+import { LoadingState } from '@/primitives/LoadingState'
 import { LoadingSpinner } from '@/primitives/LoadingSpinner'
-import { ErrorState } from '@/primitives/ErrorState'
+import { MessageState } from '@/primitives/MessageState'
 import { searchRecipes } from '@/services/apiClient'
+import { useSearchState } from '@/hooks/useSearchState'
 
 const ITEMS_PER_PAGE = 9
 
@@ -18,35 +19,39 @@ const ITEMS_PER_PAGE = 9
  * @param {string} props.query - The search query to filter recipes
  */
 export const SearchResults = ({ query }) => {
-  const [searchParams, setSearchParams] = useSearchParams()
-  
-  // Validate and sanitize page parameter
-  const pageParam = searchParams.get('page') || '1'
-  const parsedPage = parseInt(pageParam, 10)
-  const currentPage = (!isNaN(parsedPage) && parsedPage > 0) ? parsedPage : 1
+  const { page: currentPage, rawPage: pageParam, setSearchParams, updatePage } = useSearchState()
+  const resultsRef = useRef(null)
+  const previousQueryRef = useRef('')
 
-  // API state management
   const [recipes, setRecipes] = useState([])
   const [totalResults, setTotalResults] = useState(0)
   const [loading, setLoading] = useState(false)
+  const [isInitialLoad, setIsInitialLoad] = useState(true)
   const [error, setError] = useState(null)
 
-  // Calculate pagination values
   const totalPages = Math.ceil(totalResults / ITEMS_PER_PAGE)
   const startItem = totalResults > 0 ? (currentPage - 1) * ITEMS_PER_PAGE + 1 : 0
   const endItem = Math.min(currentPage * ITEMS_PER_PAGE, totalResults)
-
-  // Correct URL if invalid page parameter was provided
+  
   useEffect(() => {
     if (pageParam !== currentPage.toString() && query) {
       setSearchParams({ q: query, page: currentPage.toString() }, { replace: true })
     }
   }, [pageParam, currentPage, query, setSearchParams])
 
-  // Fetch recipes from API
   useEffect(() => {
     if (!query || query.trim().length === 0) {
+      setRecipes([])
+      setTotalResults(0)
+      setIsInitialLoad(true)
+      previousQueryRef.current = ''
       return
+    }
+
+    const isNewQuery = query !== previousQueryRef.current
+    if (isNewQuery) {
+      setIsInitialLoad(true)
+      previousQueryRef.current = query
     }
 
     const fetchRecipes = async () => {
@@ -62,15 +67,18 @@ export const SearchResults = ({ query }) => {
 
         setRecipes(data.results || [])
         setTotalResults(data.totalResults || 0)
+        setIsInitialLoad(false)
 
-        // If current page is beyond available results and there are results, redirect to page 1
         if (data.totalResults > 0 && data.results.length === 0 && currentPage > 1) {
           setSearchParams({ q: query, page: '1' })
         }
       } catch (err) {
         setError(err.message || 'Failed to load recipes')
-        setRecipes([])
-        setTotalResults(0)
+        if (isNewQuery) {
+          setRecipes([])
+          setTotalResults(0)
+        }
+        setIsInitialLoad(false)
       } finally {
         setLoading(false)
       }
@@ -79,34 +87,39 @@ export const SearchResults = ({ query }) => {
     fetchRecipes()
   }, [query, currentPage, setSearchParams])
 
-  // Scroll to top on page change
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [currentPage])
+    if (!loading && resultsRef.current && currentPage > 1 && recipes.length > 0) {
+      requestAnimationFrame(() => {
+        const headerHeight = 64
+        const yOffset = -headerHeight - 20
+        const element = resultsRef.current
+        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset
+        
+        window.scrollTo({ top: y, behavior: 'smooth' })
+      })
+    }
+  }, [loading, currentPage, recipes.length])
 
-  // Handle page change
   const handlePageChange = useCallback((newPage) => {
-    setSearchParams({ q: query, page: newPage.toString() })
-  }, [query, setSearchParams])
+    updatePage(newPage)
+  }, [updatePage])
 
-  // Return null if no query
   if (!query) {
     return null
   }
 
-  // Show loading state
-  if (loading) {
+  if (loading && isInitialLoad) {
     return (
-      <PageSection as="div">
-        <div className="flex justify-center items-center min-h-[400px]">
-          <LoadingSpinner size="lg" centered={false} text="Loading recipes..." />
-        </div>
-      </PageSection>
+      <LoadingState 
+        message="Loading recipes..."
+        size="lg"
+        wrapper={PageSection}
+        wrapperProps={{ as: 'div' }}
+      />
     )
   }
 
-  // Show error state
-  if (error) {
+  if (error && !loading) {
     return (
       <PageSection as="div">
         <div className="space-y-6">
@@ -117,7 +130,8 @@ export const SearchResults = ({ query }) => {
             endItem={0}
             itemLabel="recipe"
           />
-          <ErrorState
+          <MessageState
+            variant="error"
             title="Error Loading Results"
             message={error}
           />
@@ -127,8 +141,8 @@ export const SearchResults = ({ query }) => {
   }
 
   return (
-    <PageSection as="div">
-      <div className="space-y-6">
+    <PageSection as="div" ref={resultsRef}>
+      <div className="space-y-6 relative">
         <ResultsHeader
           title={`Search Results for "${query}"`}
           totalCount={totalResults}
@@ -136,11 +150,18 @@ export const SearchResults = ({ query }) => {
           endItem={endItem}
           itemLabel="recipe"
         />
-        <RecipeGrid
-          recipes={recipes}
-          emptyTitle="No recipes found"
-          emptyMessage="Try adjusting your search or browse our collection"
-        />
+        <div className="relative">
+          <RecipeGrid
+            recipes={recipes}
+            emptyTitle="No recipes found"
+            emptyMessage="Try adjusting your search or browse our collection"
+          />
+          {loading && !isInitialLoad && (
+            <div className="absolute inset-0 bg-white/70 backdrop-blur-sm flex items-center justify-center rounded-lg">
+              <LoadingSpinner size="md" text="Loading..." centered={false} />
+            </div>
+          )}
+        </div>
         {totalResults > ITEMS_PER_PAGE && (
           <Pagination
             currentPage={currentPage}

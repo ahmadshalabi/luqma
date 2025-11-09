@@ -13,7 +13,6 @@ describe('App', () => {
     render(<App />)
     
     expect(screen.getByRole('link', { name: 'Luqma' })).toBeInTheDocument()
-    // Wait for lazy-loaded HomePage to render
     expect(await screen.findByRole('heading', { name: 'Welcome to Luqma' })).toBeInTheDocument()
     expect(screen.getByText(/All rights reserved/i)).toBeInTheDocument()
   })

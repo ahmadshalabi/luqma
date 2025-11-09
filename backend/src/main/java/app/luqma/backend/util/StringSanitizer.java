@@ -7,7 +7,6 @@ package app.luqma.backend.util;
 public final class StringSanitizer {
   
   private StringSanitizer() {
-    // Private constructor to prevent instantiation
     throw new UnsupportedOperationException("Utility class - do not instantiate");
   }
   
@@ -24,10 +23,8 @@ public final class StringSanitizer {
       return "";
     }
     
-    // Remove control characters
     String sanitized = input.replaceAll("[\\p{Cntrl}]", "");
     
-    // Limit length
     if (sanitized.length() > maxLength) {
       sanitized = sanitized.substring(0, maxLength) + "...";
     }
@@ -49,10 +46,7 @@ public final class StringSanitizer {
       return "";
     }
     
-    // Trim whitespace
     String sanitized = input.trim();
-    
-    // Remove control characters to prevent injection attacks
     sanitized = sanitized.replaceAll("[\\p{Cntrl}]", "");
     
     return sanitized;
@@ -69,7 +63,6 @@ public final class StringSanitizer {
     if (queryString == null || queryString.isBlank()) {
       return "";
     }
-    // Remove newlines and carriage returns to prevent log injection
     return queryString.replaceAll("[\\n\\r]", "");
   }
 }

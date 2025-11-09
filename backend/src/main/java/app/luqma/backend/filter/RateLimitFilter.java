@@ -1,7 +1,11 @@
 package app.luqma.backend.filter;
 
 import app.luqma.backend.config.RateLimitProperties;
-import jakarta.servlet.*;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +44,6 @@ public class RateLimitFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         
-        // Skip rate limiting for OPTIONS requests (CORS preflight)
         if ("OPTIONS".equalsIgnoreCase(httpRequest.getMethod())) {
             chain.doFilter(request, response);
             return;
@@ -48,13 +51,11 @@ public class RateLimitFilter implements Filter {
         
         String clientIp = getClientIp(httpRequest);
         
-        // Validate IP address
         if (!isValidIp(clientIp)) {
             log.warn("Invalid or missing client IP address, using default");
             clientIp = "unknown";
         }
         
-        // Clean up old entries if map is too large
         if (rateLimitMap.size() > properties.getMaxEntries()) {
             cleanUpOldEntries();
         }
@@ -82,7 +83,6 @@ public class RateLimitFilter implements Filter {
     }
     
     private String getClientIp(HttpServletRequest request) {
-        // Try X-Forwarded-For (sanitize and validate)
         String xForwardedFor = request.getHeader("X-Forwarded-For");
         if (xForwardedFor != null && !xForwardedFor.isEmpty()) {
             String firstIp = xForwardedFor.split(",")[0].trim();
@@ -91,13 +91,11 @@ public class RateLimitFilter implements Filter {
             }
         }
         
-        // Try X-Real-IP (sanitize and validate)
         String xRealIp = request.getHeader("X-Real-IP");
         if (xRealIp != null && !xRealIp.isEmpty() && isValidIp(xRealIp.trim())) {
             return xRealIp.trim();
         }
         
-        // Fallback to remote address
         return request.getRemoteAddr();
     }
     
@@ -147,13 +145,11 @@ public class RateLimitFilter implements Filter {
         synchronized boolean allowRequest() {
             long now = System.currentTimeMillis();
             
-            // Reset window if expired
             if (now - windowStart > windowSize) {
                 windowStart = now;
                 requestCount = 0;
             }
             
-            // Check if request is allowed
             requestCount++;
             return requestCount <= maxRequests;
         }

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Icon } from '@/utils/iconRegistry'
 import { useMobileMenu } from '@/hooks/useMobileMenu'
 
 const navigationLinks = [
@@ -31,7 +31,6 @@ export const Header = () => {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8" aria-label="Main navigation">
             {navigationLinks.map(({ to, label }) => (
               <Link
@@ -44,7 +43,6 @@ export const Header = () => {
             ))}
           </nav>
 
-          {/* Mobile Menu Button */}
           <button
             type="button"
             className="md:hidden inline-flex items-center justify-center p-2 text-gray-700 bg-transparent rounded-lg transition-colors hover:bg-gray-100 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -53,15 +51,10 @@ export const Header = () => {
             aria-label="Toggle navigation menu"
             onClick={toggle}
           >
-            {isOpen ? (
-              <XMarkIcon className="w-6 h-6" />
-            ) : (
-              <Bars3Icon className="w-6 h-6" />
-            )}
+            <Icon name={isOpen ? 'xMark' : 'bars'} className="w-6 h-6" />
           </button>
         </div>
 
-        {/* Mobile Navigation Menu */}
         {isOpen && (
           <nav
             id="mobile-menu"

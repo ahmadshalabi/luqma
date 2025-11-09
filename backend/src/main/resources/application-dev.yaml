@@ -1,6 +1,19 @@
 # Development Profile Configuration
 # This profile is used for local development with ./gradlew bootRun
 
+# SpringDoc/OpenAPI Configuration - Development
+# Enable Swagger UI for development
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+  show-actuator: false  # Hide actuator endpoints from main API docs
+
 # Actuator Configuration - Development
 management:
   endpoint:
@@ -22,14 +35,6 @@ logging:
     app.luqma: DEBUG
     org.springframework.web: DEBUG
     org.springframework.boot: DEBUG
-
-# SpringDoc/OpenAPI Configuration - Development
-# Enable API documentation endpoints for development convenience
-springdoc:
-  api-docs:
-    enabled: true
-  swagger-ui:
-    enabled: true
 
 # CORS Configuration - Development
 # Allow frontend development server

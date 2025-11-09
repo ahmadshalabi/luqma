@@ -33,10 +33,6 @@ public class RateLimitConfig {
         return registrationBean;
     }
     
-    /**
-     * Scheduled task to clean up old rate limit entries.
-     * Runs every 5 minutes by default (configurable via properties).
-     */
     @Scheduled(fixedDelayString = "#{@rateLimitProperties.cleanupIntervalMillis}")
     public void scheduleRateLimitCleanup() {
         if (rateLimitFilter != null) {
