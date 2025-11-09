@@ -5,17 +5,6 @@ alwaysApply: false
 ---
 # Frontend Security Standards
 
-## API Key Protection (CRITICAL)
-
-You must NEVER include API keys in:
-- Frontend code
-- Environment variables (even VITE_ prefixed ones)
-- Git commits
-
-You must:
-- Call backend only, never external APIs directly
-- Never store secrets in frontend
-
 ## Input Validation
 
 You must validate at client-side for UX feedback only:

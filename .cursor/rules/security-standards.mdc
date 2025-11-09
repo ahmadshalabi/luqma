@@ -14,13 +14,14 @@ You must NEVER include API keys in:
 - Error messages
 
 You must:
-- Store API keys in environment variables only (${SPOONACULAR_API_KEY})
+- Store API keys in backend environment variables only (`backend/.env` with ${SPOONACULAR_API_KEY})
 - Use API keys only in backend service layer
 - Ensure frontend calls backend only, never external APIs directly
 
 Ensure Git protection:
-- .env in .gitignore
-- .env.example committed with placeholders only
+- backend/.env and frontend/.env in .gitignore
+- backend/.env.example and frontend/.env.example committed with placeholders only
+- Never commit root .env files or environment variables to version control
 
 ## Dependencies
 
