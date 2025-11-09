@@ -19,7 +19,11 @@ const ITEMS_PER_PAGE = 9
  */
 export const SearchResults = ({ query }) => {
   const [searchParams, setSearchParams] = useSearchParams()
-  const currentPage = parseInt(searchParams.get('page') || '1', 10)
+  
+  // Validate and sanitize page parameter
+  const pageParam = searchParams.get('page') || '1'
+  const parsedPage = parseInt(pageParam, 10)
+  const currentPage = (!isNaN(parsedPage) && parsedPage > 0) ? parsedPage : 1
 
   // API state management
   const [recipes, setRecipes] = useState([])
@@ -31,6 +35,13 @@ export const SearchResults = ({ query }) => {
   const totalPages = Math.ceil(totalResults / ITEMS_PER_PAGE)
   const startItem = totalResults > 0 ? (currentPage - 1) * ITEMS_PER_PAGE + 1 : 0
   const endItem = Math.min(currentPage * ITEMS_PER_PAGE, totalResults)
+
+  // Correct URL if invalid page parameter was provided
+  useEffect(() => {
+    if (pageParam !== currentPage.toString() && query) {
+      setSearchParams({ q: query, page: currentPage.toString() }, { replace: true })
+    }
+  }, [pageParam, currentPage, query, setSearchParams])
 
   // Fetch recipes from API
   useEffect(() => {
