@@ -1,6 +1,7 @@
 package app.luqma.backend.exception;
 
 import app.luqma.backend.controller.RecipeController;
+import app.luqma.backend.service.RecipeDetailService;
 import app.luqma.backend.service.RecipeSearchService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +9,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.hamcrest.Matchers.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Unit tests for GlobalExceptionHandler.
@@ -29,6 +33,9 @@ class GlobalExceptionHandlerTest {
     
     @MockitoBean
     private RecipeSearchService recipeSearchService;
+    
+    @MockitoBean
+    private RecipeDetailService recipeDetailService;
     
     @Test
     void handleInvalidPaginationException_returns400() throws Exception {

@@ -1,5 +1,6 @@
 package app.luqma.backend.exception;
 
+import app.luqma.backend.util.ErrorResponseBuilder;
 import app.luqma.backend.util.StringSanitizer;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 /**
@@ -27,6 +27,9 @@ public class GlobalExceptionHandler {
     
     /**
      * Handles invalid pagination exceptions (400 Bad Request).
+     * 
+     * @param ex the pagination exception
+     * @param request the HTTP servlet request
      */
     @ExceptionHandler(InvalidPaginationException.class)
     public ResponseEntity<ErrorResponse> handleInvalidPaginationException(
@@ -35,19 +38,29 @@ public class GlobalExceptionHandler {
         log.warn("Invalid pagination parameters: {} - Path: {}, Query: {}", 
                 ex.getMessage(), request.getRequestURI(), StringSanitizer.sanitizeQueryString(request.getQueryString()));
         
-        ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
-                "Bad Request",
-                ex.getMessage(),
-                request.getRequestURI()
-        );
+        return ErrorResponseBuilder.build(HttpStatus.BAD_REQUEST, ex.getMessage(), request);
+    }
+    
+    /**
+     * Handles resource not found exceptions (404 Not Found).
+     * 
+     * @param ex the resource not found exception
+     * @param request the HTTP servlet request
+     */
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleResourceNotFoundException(
+            ResourceNotFoundException ex, HttpServletRequest request) {
         
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        log.warn("Resource not found: {} - Path: {}", ex.getMessage(), request.getRequestURI());
+        
+        return ErrorResponseBuilder.build(HttpStatus.NOT_FOUND, ex.getMessage(), request);
     }
     
     /**
      * Handles resource loading exceptions (500 Internal Server Error).
+     * 
+     * @param ex the resource load exception
+     * @param request the HTTP servlet request
      */
     @ExceptionHandler(ResourceLoadException.class)
     public ResponseEntity<ErrorResponse> handleResourceLoadException(
@@ -55,19 +68,18 @@ public class GlobalExceptionHandler {
         
         log.error("Resource loading failed: {} - Path: {}", ex.getMessage(), request.getRequestURI(), ex);
         
-        ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "Internal Server Error",
+        return ErrorResponseBuilder.build(
+                HttpStatus.INTERNAL_SERVER_ERROR,
                 "An error occurred while processing your request. Please try again later.",
-                request.getRequestURI()
+                request
         );
-        
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
     
     /**
      * Handles validation exceptions from @Valid annotations (400 Bad Request).
+     * 
+     * @param ex the method argument validation exception
+     * @param request the HTTP servlet request
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
@@ -80,19 +92,14 @@ public class GlobalExceptionHandler {
         log.warn("Validation failed: {} - Path: {}, Query: {}", 
                 errorMessage, request.getRequestURI(), StringSanitizer.sanitizeQueryString(request.getQueryString()));
         
-        ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
-                "Bad Request",
-                errorMessage,
-                request.getRequestURI()
-        );
-        
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        return ErrorResponseBuilder.build(HttpStatus.BAD_REQUEST, errorMessage, request);
     }
     
     /**
      * Handles constraint violation exceptions (400 Bad Request).
+     * 
+     * @param ex the constraint violation exception
+     * @param request the HTTP servlet request
      */
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorResponse> handleConstraintViolationException(
@@ -105,19 +112,14 @@ public class GlobalExceptionHandler {
         log.warn("Constraint violation: {} - Path: {}, Query: {}", 
                 errorMessage, request.getRequestURI(), StringSanitizer.sanitizeQueryString(request.getQueryString()));
         
-        ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
-                "Bad Request",
-                errorMessage,
-                request.getRequestURI()
-        );
-        
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        return ErrorResponseBuilder.build(HttpStatus.BAD_REQUEST, errorMessage, request);
     }
     
     /**
      * Handles missing request parameter exceptions (400 Bad Request).
+     * 
+     * @param ex the missing parameter exception
+     * @param request the HTTP servlet request
      */
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<ErrorResponse> handleMissingServletRequestParameterException(
@@ -127,19 +129,14 @@ public class GlobalExceptionHandler {
         
         log.warn("Missing required parameter: {} - Path: {}", errorMessage, request.getRequestURI());
         
-        ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
-                "Bad Request",
-                errorMessage,
-                request.getRequestURI()
-        );
-        
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        return ErrorResponseBuilder.build(HttpStatus.BAD_REQUEST, errorMessage, request);
     }
     
     /**
      * Handles type mismatch exceptions (400 Bad Request).
+     * 
+     * @param ex the type mismatch exception
+     * @param request the HTTP servlet request
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(
@@ -149,19 +146,14 @@ public class GlobalExceptionHandler {
         
         log.warn("Type mismatch: {} - Path: {}", errorMessage, request.getRequestURI());
         
-        ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
-                "Bad Request",
-                errorMessage,
-                request.getRequestURI()
-        );
-        
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        return ErrorResponseBuilder.build(HttpStatus.BAD_REQUEST, errorMessage, request);
     }
     
     /**
      * Handles all other unhandled exceptions (500 Internal Server Error).
+     * 
+     * @param ex the unhandled exception
+     * @param request the HTTP servlet request
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGenericException(
@@ -170,15 +162,11 @@ public class GlobalExceptionHandler {
         log.error("Unexpected error occurred - Path: {}, Method: {}, Query: {}", 
                 request.getRequestURI(), request.getMethod(), StringSanitizer.sanitizeQueryString(request.getQueryString()), ex);
         
-        ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "Internal Server Error",
+        return ErrorResponseBuilder.build(
+                HttpStatus.INTERNAL_SERVER_ERROR,
                 "An unexpected error occurred. Please try again later.",
-                request.getRequestURI()
+                request
         );
-        
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
 }
 

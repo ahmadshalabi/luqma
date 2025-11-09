@@ -4,7 +4,7 @@ package app.luqma.backend.exception;
  * Exception thrown when pagination parameters are invalid.
  * Results in a 400 Bad Request response with a user-friendly message.
  */
-public class InvalidPaginationException extends RuntimeException {
+public class InvalidPaginationException extends LuqmaException {
     
     /**
      * Constructs a new InvalidPaginationException with the specified detail message.

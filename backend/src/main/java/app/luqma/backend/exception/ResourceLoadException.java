@@ -4,7 +4,7 @@ package app.luqma.backend.exception;
  * Exception thrown when a resource (such as mock data) fails to load.
  * Results in a 500 Internal Server Error response.
  */
-public class ResourceLoadException extends RuntimeException {
+public class ResourceLoadException extends LuqmaException {
     
     /**
      * Constructs a new ResourceLoadException with the specified detail message.
