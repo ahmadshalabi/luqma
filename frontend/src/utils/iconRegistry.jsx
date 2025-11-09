@@ -17,8 +17,12 @@ import {
   Bars3Icon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  ChevronDownIcon,
   UsersIcon,
-  ChartBarIcon
+  ChartBarIcon,
+  InformationCircleIcon,
+  MinusIcon,
+  PhotoIcon
 } from '@heroicons/react/24/outline'
 
 const ICON_REGISTRY = {
@@ -26,16 +30,21 @@ const ICON_REGISTRY = {
   arrowLeft: ArrowLeftIcon,
   chevronLeft: ChevronLeftIcon,
   chevronRight: ChevronRightIcon,
+  chevronDown: ChevronDownIcon,
   bars: Bars3Icon,
   checkCircle: CheckCircleIcon,
   xMark: XMarkIcon,
   close: XMarkIcon,
   exclamationTriangle: ExclamationTriangleIcon,
   exclamationCircle: ExclamationCircleIcon,
+  info: InformationCircleIcon,
   lightbulb: LightBulbIcon,
   clock: ClockIcon,
   users: UsersIcon,
-  chartBar: ChartBarIcon
+  chartBar: ChartBarIcon,
+  chart: ChartBarIcon,
+  minus: MinusIcon,
+  image: PhotoIcon
 }
 
 /**
