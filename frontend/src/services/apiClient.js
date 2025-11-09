@@ -7,7 +7,7 @@
  * @module apiClient
  * 
  * Configuration:
- * - Base URL configured via VITE_API_URL environment variable
+ * - Base URL configured via LUQMA_API_URL environment variable
  * - Defaults to http://localhost:8080/api/v1 if not set
  * 
  * Security:
@@ -16,7 +16,7 @@
  * - API keys are protected on backend
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1'
+const API_BASE_URL = import.meta.env.LUQMA_API_URL || 'http://localhost:8080/api/v1'
 
 /**
  * Search for recipes with pagination support.
@@ -53,7 +53,6 @@ export async function searchRecipes({ query, page = 1, pageSize = 9 }) {
     })
 
     if (!response.ok) {
-      // Try to parse error response from backend
       const errorData = await response.json().catch(() => ({}))
       const errorMessage = errorData.message || `API error: ${response.status} ${response.statusText}`
       throw new Error(errorMessage)
@@ -61,7 +60,6 @@ export async function searchRecipes({ query, page = 1, pageSize = 9 }) {
 
     return await response.json()
   } catch (error) {
-    // Re-throw with more context if it's a network error
     if (error.name === 'TypeError' && error.message.includes('fetch')) {
       throw new Error('Unable to connect to the server. Please check your connection.')
     }
@@ -69,7 +67,52 @@ export async function searchRecipes({ query, page = 1, pageSize = 9 }) {
   }
 }
 
+/**
+ * Fetch recipe details by ID.
+ * 
+ * @param {number|string} id - Recipe ID
+ * @returns {Promise<Object>} Recipe details with ingredients, nutrition, and instructions
+ * @throws {Error} If the API request fails or returns an error
+ * 
+ * @example
+ * const recipe = await getRecipeById(715497)
+ * // returns: { id: 715497, title: "Chicken Pasta Alfredo", ingredients: [...], ... }
+ */
+export async function getRecipeById(id) {
+  const numId = Number(id)
+  if (!numId || numId <= 0) {
+    throw new Error('Invalid recipe ID')
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/recipes/${numId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error('Recipe not found. Please try another recipe.')
+      }
+      const errorData = await response.json().catch(() => ({}))
+      const errorMessage = errorData.message || 'Failed to load recipe. Please try again.'
+      throw new Error(errorMessage)
+    }
+
+    return await response.json()
+  } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error('Unable to connect to the server. Please check your connection.')
+    }
+    throw error
+  }
+}
+
 export default {
-  searchRecipes
+  searchRecipes,
+  getRecipeById
 }
 

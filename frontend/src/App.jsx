@@ -4,9 +4,9 @@ import { Header } from '@/features/layout/Header'
 import { Footer } from '@/features/layout/Footer'
 import { LoadingSpinner } from '@/primitives/LoadingSpinner'
 
-// Lazy load page components for code splitting
 const HomePage = lazy(() => import('./pages/HomePage').then(module => ({ default: module.HomePage })))
 const AboutPage = lazy(() => import('./pages/AboutPage').then(module => ({ default: module.AboutPage })))
+const RecipePage = lazy(() => import('./pages/RecipePage').then(module => ({ default: module.RecipePage })))
 
 export const App = () => {
   return (
@@ -17,6 +17,7 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/recipe/:id" element={<RecipePage />} />
         </Routes>
         </Suspense>
         <Footer />
