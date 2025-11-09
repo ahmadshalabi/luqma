@@ -3,10 +3,11 @@ plugins {
 	jacoco
 	alias(libs.plugins.spring.boot)
 	alias(libs.plugins.spring.dependency.management)
+	id("org.owasp.dependencycheck") version "11.1.1"
 }
 
 group = "app.luqma"
-version = "0.0.1-SNAPSHOT"
+version = "0.1.0"
 
 java {
 	toolchain {
@@ -82,5 +83,18 @@ tasks.jacocoTestCoverageVerification {
 				minimum = "0.70".toBigDecimal()
 			}
 		}
+	}
+}
+
+// OWASP Dependency-Check Configuration
+configure<org.owasp.dependencycheck.gradle.extension.DependencyCheckExtension> {
+	formats = listOf("HTML", "JSON")
+	scanConfigurations = listOf("runtimeClasspath")
+	suppressionFile = file("dependency-check-suppressions.xml").takeIf { it.exists() }?.absolutePath
+	failBuildOnCVSS = 7.0f
+	analyzers.apply {
+		assemblyEnabled = false
+		nugetconfEnabled = false
+		nodeEnabled = false
 	}
 }
