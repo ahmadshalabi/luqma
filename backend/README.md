@@ -2,80 +2,95 @@
 
 Spring Boot backend service for Luqma - a recipe search application with nutritional information.
 
+## Tech Stack
+
+Spring Boot 3.5.7 • Java 25 • Gradle • JaCoCo • Swagger/OpenAPI • Spoonacular API
+
 ## Prerequisites
 
-- **Java 25**
-- **[Spoonacular API Key](https://spoonacular.com/food-api)** (required)
-- **Docker & Docker Compose** (optional)
+- **Java 25+** - [Download](https://adoptium.net/)
+- **[Spoonacular API Key](https://spoonacular.com/food-api)** - [Get free key](https://spoonacular.com/food-api/console#Dashboard)
 
 ## Quick Start
 
 ```bash
 cd backend
 
-# Setup and run
-./scripts/setup-local.sh
-./scripts/run-local.sh
+# Copy .env.example and configure
+cp .env.example .env
+# Edit .env and add your SPOONACULAR_API_KEY
 
-# Or run with Docker
-docker compose up
+# Run the application
+./gradlew bootRun
 ```
 
-The application will be available at: **http://localhost:8080**
+The application will be available at http://localhost:8080 (default port)
 
-## Verify Installation
-
-```bash
-./scripts/verify-setup.sh
-```
-
-## Configuration
-
-Configure via `.env` file (see `.env.example` for template). Required:
-
-- `SPOONACULAR_API_KEY` - Your Spoonacular API key
-
-## Development
+## Development Commands
 
 ```bash
 # Build
 ./gradlew build
-
-# Run tests
-./gradlew test
-
-# Generate test coverage report
-./gradlew test jacocoTestReport
-
-# View coverage report (opens in browser)
-# Location: backend/build/reports/jacoco/test/html/index.html
-
-# Clean build
 ./gradlew clean build
+
+# Test
+./gradlew test
+./gradlew test jacocoTestReport    # With coverage report
+
+# Security
+./gradlew dependencyCheckAnalyze   # Check vulnerabilities
 ```
 
-## Test Coverage
+**Test Coverage Requirements:**
+- Services: 80%+ (enforced)
+- Controllers: 70%+ (recommended)
+- Reports: `build/reports/jacoco/test/html/index.html`
 
-The project uses JaCoCo for code coverage with the following requirements:
 
-- **Services**: 80%+ line coverage (enforced)
-- **Controllers**: 70%+ line coverage (recommended)
+## API Endpoints
 
-Coverage reports include:
-- HTML report: `build/reports/jacoco/test/html/index.html`
-- XML report: `build/reports/jacoco/test/jacocoTestReport.xml`
+**Recipe Search:**
+- `GET /api/v1/recipes/search` - Search recipes with pagination
+  - Parameters: `query` (required), `page`, `pageSize`
+  - Currently using mock data
 
-## Docker
+**Health & Monitoring:**
+- `GET /actuator/health` - Health check
+- `GET /actuator/health/liveness` - Liveness probe
+- `GET /actuator/health/readiness` - Readiness probe
+- `GET /actuator/info` - Application info
+
+**Full API documentation:** http://localhost:8080/swagger-ui.html
+
+## Configuration
+
+The backend requires a `.env` file in the `backend/` directory:
 
 ```bash
-docker compose up              # Start
-docker compose logs -f         # View logs
-docker compose down            # Stop
-./scripts/docker-rebuild.sh    # Clean rebuild
+cd backend
+cp .env.example .env
+# Edit .env and add your SPOONACULAR_API_KEY
 ```
 
-## Related Documentation
+### Required Configuration
 
-- [Project Documentation](../docs/README.md)
-- [Architecture Decisions](../docs/decisions/)
-- [Frontend README](../frontend/README.md)
+Set these variables in `backend/.env`:
+
+- **`SPOONACULAR_API_KEY`**: Your Spoonacular API key (required) - Get from [Spoonacular Console](https://spoonacular.com/food-api/console#Dashboard)
+- **`SPRING_PROFILES_ACTIVE`**: Spring profile (optional, defaults to `dev`)
+
+### Additional Configuration
+
+Application-specific settings are in `backend/src/main/resources/application*.yaml`:
+- `application.yaml` - Base configuration shared across all profiles
+- `application-dev.yaml` - Development profile (verbose logging, detailed errors)
+- `application-prod.yaml` - Production profile (optimized for performance)
+
+To change the port, edit `server.port` in the appropriate YAML file.
+
+## Documentation
+
+- [Main README](../README.md) - Project overview and setup
+- [Frontend README](../frontend/README.md) - Frontend setup
+- [Troubleshooting Guide](../docs/TROUBLESHOOTING.md) - Common issues
+- [Architecture Decisions](../docs/decisions/) - ADRs

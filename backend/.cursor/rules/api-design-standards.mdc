@@ -22,7 +22,10 @@ You must use:
 - PATCH: Partial update
 - DELETE: Remove (idempotent)
 
-You should use POST for complex searches with multiple filters.
+**Search Endpoints:**
+- Use GET for simple searches (query string + pagination)
+- Use POST for complex searches with many filters or large request bodies
+- GET searches should be cacheable and bookmarkable
 
 ## Status Codes
 
@@ -66,9 +69,16 @@ You must:
 
 ## Pagination
 
-You must use cursor-based pagination for large datasets:
+**Offset-based pagination** (simple, implemented):
+- page parameter: Page number (1-indexed)
+- pageSize parameter: Results per page
+- Response: page, pageSize, totalResults
+- Best for: Small to medium datasets with known total count
+
+**Cursor-based pagination** (advanced, for future use):
 - cursor parameter: Opaque token
 - Response: nextCursor, hasMore
+- Best for: Large datasets, real-time data, infinite scroll
 
 ## Versioning
 
