@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { Icon } from '@/primitives/Icon'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { useSearch } from '@/hooks/useSearch'
 
 /**
@@ -27,7 +27,7 @@ const SearchBarComponent = ({ onSearch, onChange, initialQuery = '', debounceMs 
       </label>
       <div className="relative">
         <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-          <Icon name="search" className="text-gray-400" />
+          <MagnifyingGlassIcon className="w-5 h-5 text-gray-400" />
         </div>
         <input
           id="recipe-search"
