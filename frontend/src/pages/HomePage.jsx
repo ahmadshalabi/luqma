@@ -8,21 +8,14 @@ export const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const query = searchParams.get('q') || ''
 
-  // Handle live search (debounced)
-  const handleSearchChange = useCallback((searchQuery) => {
+  // Handle search (both live search and form submit)
+  const handleSearch = useCallback((searchQuery) => {
     if (searchQuery.trim()) {
       setSearchParams({ q: searchQuery, page: '1' })
     } else {
       setSearchParams({})
     }
-  }, [])
-
-  // Handle form submit (Enter key)
-  const handleSearchSubmit = useCallback((searchQuery) => {
-    if (searchQuery.trim()) {
-      setSearchParams({ q: searchQuery, page: '1' })
-    }
-  }, [])
+  }, [setSearchParams])
 
   return (
     <main id="main-content" className="flex-grow">
@@ -33,8 +26,8 @@ export const HomePage = () => {
       >
         <SearchBar 
           initialQuery={query}
-          onSearch={handleSearchSubmit}
-          onChange={handleSearchChange}
+          onSearch={handleSearch}
+          onChange={handleSearch}
         />
       </HeroSection>
 
