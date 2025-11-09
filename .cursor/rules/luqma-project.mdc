@@ -24,33 +24,33 @@ Recipe search application with nutritional information and dynamic ingredient ex
 **Data Flow:** User → React UI → Backend API → Spoonacular
 
 **Backend Structure** (`backend/src/main/java/app/luqma/backend/`):
-- controller/: ✅ REST endpoints (RecipeController with /search endpoint)
-- service/: ✅ Business logic (RecipeSearchService with mock data integration)
+- controller/: ✅ REST endpoints (RecipeController with /search and /{id} endpoints)
+- service/: ✅ Business logic (RecipeSearchService, RecipeDetailService with mock data integration)
 - filter/: ✅ Servlet filters (RateLimitFilter)
 - client/: 🚧 Spoonacular API client - PENDING (currently using mock data)
-- model/dto/: ✅ API request/response (RecipeSearchResponse, RecipeSummary)
-- model/domain/: 🚧 Internal models - PENDING
+- model/dto/: ✅ API request/response (RecipeSearchResponse, RecipeSummary, RecipeDetailResponse, IngredientDTO, NutritionDTO)
+- model/domain/: ✅ Internal models (RecipeDetail, ExtendedIngredient, NutritionInfo, Nutrient)
 - config/: ✅ Spring configuration (CORS, Security, Rate Limiting, RecipeSearch properties)
 - exception/: ✅ Custom exceptions + GlobalExceptionHandler with comprehensive error handling
-- util/: ✅ Utility classes (StringSanitizer for input validation)
+- util/: ✅ Utility classes (StringSanitizer for input validation, MockDataLoader)
 
 **Frontend Structure** (`frontend/src/`):
 - features/: Feature-based components organized by domain
-  - layout/: Header, Footer, HeroSection, PageSection
-  - recipe/: RecipeCard, RecipeGrid
+  - layout/: Header, Footer, HeroSection, PageSection, MainLayout
+  - recipe/: RecipeCard, RecipeGrid, RecipeDetail
   - search/: SearchBar, SearchResults, ResultsHeader
   - about/: FeatureCard
-- pages/: Route pages (HomePage, AboutPage)
-- primitives/: UI primitives (Button, Card, EmptyState, ErrorState, Icon, LoadingSpinner, Pagination)
-- hooks/: Custom hooks (useMobileMenu, usePagination, useSearch)
-- services/: ✅ API client (apiClient.js with searchRecipes implementation)
+- pages/: Route pages (HomePage, AboutPage, RecipePage)
+- primitives/: UI primitives (Button, Card, MessageState, LoadingState, BackLink, Icon, Pagination)
+- hooks/: Custom hooks (useMobileMenu, usePagination, useSearch, useSearchState, useRecipeDetail)
+- services/: ✅ API client (apiClient.js with searchRecipes and getRecipeById)
 - utils/: Helper functions (searchUtils.js, colorUtils.js)
 - mocks/: Mock Spoonacular API data for development and testing
 
 **Development Approach:**
-- Backend uses mock data from `backend/src/main/resources/mocks/recipe-search-results.json`
+- Backend uses mock data from `backend/src/main/resources/mocks/` for both search and recipe details
 - Mock data replicates Spoonacular API responses for offline development
-- Backend search endpoint (/api/v1/recipes/search) is functional with mock data
+- Backend endpoints (/api/v1/recipes/search and /api/v1/recipes/{id}) are functional with mock data
 - Frontend connects to backend API for all data
 - Spoonacular API integration will replace mock data when implemented
 
@@ -58,7 +58,7 @@ Recipe search application with nutritional information and dynamic ingredient ex
 
 **Backend REST API:**
 - ✅ GET /api/v1/recipes/search - Search recipes with pagination (query, page, pageSize params)
-- 🚧 GET /api/v1/recipes/{id} - Get recipe details - PLANNED
+- ✅ GET /api/v1/recipes/{id} - Get recipe details with ingredients, nutrition, and instructions
 - 🚧 POST /api/v1/recipes/{id}/exclude-ingredients - Exclude ingredients and recalculate - PLANNED
 
 **Health & Monitoring:**
@@ -82,7 +82,7 @@ Recipe search application with nutritional information and dynamic ingredient ex
 - SPRING_PROFILES_ACTIVE (optional, defaults to `dev`)
 
 **Frontend (`frontend/.env`):**
-- VITE_API_URL (Backend API endpoint, default: `http://localhost:8080/api/v1`)
+- LUQMA_API_URL (Backend API endpoint, default: `http://localhost:8080/api/v1`)
 
 ## Commands
 
