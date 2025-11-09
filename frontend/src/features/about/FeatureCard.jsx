@@ -1,6 +1,7 @@
 import { memo } from 'react'
 import { Icon } from '@/primitives/Icon'
 import { Card } from '@/primitives/Card'
+import { getColorClasses } from '@/utils/colorUtils'
 
 /**
  * FeatureCard Component
@@ -15,16 +16,7 @@ import { Card } from '@/primitives/Card'
  * @param {string} props.className - Additional CSS classes
  */
 const FeatureCardComponent = ({ icon, iconColor = 'blue', title, description, className = '' }) => {
-  const colorClasses = {
-    blue: 'bg-blue-100 text-blue-600',
-    green: 'bg-green-100 text-green-600',
-    purple: 'bg-purple-100 text-purple-600',
-    red: 'bg-red-100 text-red-600',
-    yellow: 'bg-yellow-100 text-yellow-600',
-    indigo: 'bg-indigo-100 text-indigo-600'
-  }
-
-  const iconClass = colorClasses[iconColor] || colorClasses.blue
+  const iconClass = getColorClasses(iconColor, 'combined')
 
   return (
     <Card className={`flex flex-col space-y-3 ${className}`}>

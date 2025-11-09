@@ -2,6 +2,11 @@ import { Link } from 'react-router-dom'
 import { Icon } from '@/primitives/Icon'
 import { useMobileMenu } from '@/hooks/useMobileMenu'
 
+const navigationLinks = [
+  { to: '/', label: 'Home' },
+  { to: '/about', label: 'About' }
+]
+
 export const Header = () => {
   const { isOpen, toggle, close } = useMobileMenu()
 
@@ -28,24 +33,15 @@ export const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8" aria-label="Main navigation">
-            <Link
-              to="/"
-              className="px-2 py-1 text-base font-medium text-gray-700 rounded transition-colors hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              Home
-            </Link>
-            <Link
-              to="/recipes"
-              className="px-2 py-1 text-base font-medium text-gray-700 rounded transition-colors hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              Recipes
-            </Link>
-            <Link
-              to="/about"
-              className="px-2 py-1 text-base font-medium text-gray-700 rounded transition-colors hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              About
-            </Link>
+            {navigationLinks.map(({ to, label }) => (
+              <Link
+                key={to}
+                to={to}
+                className="px-2 py-1 text-base font-medium text-gray-700 rounded transition-colors hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                {label}
+              </Link>
+            ))}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -73,27 +69,16 @@ export const Header = () => {
             aria-label="Mobile navigation"
           >
             <div className="flex flex-col space-y-2">
-              <Link
-                to="/"
-                className="px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onClick={close}
-              >
-                Home
-              </Link>
-              <Link
-                to="/recipes"
-                className="px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onClick={close}
-              >
-                Recipes
-              </Link>
-              <Link
-                to="/about"
-                className="px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onClick={close}
-              >
-                About
-              </Link>
+              {navigationLinks.map(({ to, label }) => (
+                <Link
+                  key={to}
+                  to={to}
+                  className="px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  onClick={close}
+                >
+                  {label}
+                </Link>
+              ))}
             </div>
           </nav>
         )}

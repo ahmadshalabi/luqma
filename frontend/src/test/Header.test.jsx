@@ -14,7 +14,6 @@ describe('Header', () => {
     
     expect(screen.getByRole('link', { name: 'Luqma' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Home' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Recipes' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'About' })).toBeInTheDocument()
   })
 
