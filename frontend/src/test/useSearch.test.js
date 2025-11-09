@@ -46,10 +46,8 @@ describe('useSearch', () => {
     
     act(() => result.current.setQuery('pasta'))
     
-    // Should not call immediately
     expect(onChange).not.toHaveBeenCalled()
     
-    // Advance timers and flush promises
     await act(async () => {
       vi.advanceTimersByTime(300)
     })
@@ -75,7 +73,6 @@ describe('useSearch', () => {
     
     expect(result.current.query).toBe('pasta')
     
-    // Simulate browser back/forward navigation changing URL
     rerender({ initialQuery: 'chicken' })
     
     expect(result.current.query).toBe('chicken')
@@ -92,10 +89,8 @@ describe('useSearch', () => {
     
     act(() => result.current.setQuery('pasta'))
     
-    // Change the onSubmit callback
     rerender({ onSubmit: onSubmit2 })
     
-    // Submit should use the latest callback
     act(() => result.current.handleSubmit({ preventDefault: vi.fn() }))
     
     expect(onSubmit1).not.toHaveBeenCalled()

@@ -7,9 +7,6 @@
  * @module colorUtils
  */
 
-/**
- * Available color variants
- */
 export const COLOR_VARIANTS = {
   blue: 'blue',
   green: 'green',
@@ -22,11 +19,7 @@ export const COLOR_VARIANTS = {
   pink: 'pink'
 }
 
-/**
- * Color class mappings for different contexts
- */
 const COLOR_CLASSES = {
-  // Background and text combined (for icon containers, badges, etc.)
   combined: {
     blue: 'bg-blue-100 text-blue-600',
     green: 'bg-green-100 text-green-600',
@@ -38,7 +31,6 @@ const COLOR_CLASSES = {
     orange: 'bg-orange-100 text-orange-600',
     pink: 'bg-pink-100 text-pink-600'
   },
-  // Background only
   background: {
     blue: 'bg-blue-100',
     green: 'bg-green-100',
@@ -50,7 +42,6 @@ const COLOR_CLASSES = {
     orange: 'bg-orange-100',
     pink: 'bg-pink-100'
   },
-  // Text only
   text: {
     blue: 'text-blue-600',
     green: 'text-green-600',
@@ -62,7 +53,6 @@ const COLOR_CLASSES = {
     orange: 'text-orange-600',
     pink: 'text-pink-600'
   },
-  // Border
   border: {
     blue: 'border-blue-300',
     green: 'border-green-300',

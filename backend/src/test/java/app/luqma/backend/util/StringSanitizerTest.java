@@ -2,7 +2,7 @@ package app.luqma.backend.util;
 
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit tests for StringSanitizer utility class.

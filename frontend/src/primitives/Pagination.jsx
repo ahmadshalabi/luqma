@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
+import { Icon } from '@/utils/iconRegistry'
 
 /**
  * Pagination Component
@@ -19,7 +19,6 @@ const PaginationComponent = ({
   onPageChange,
   className = ''
 }) => {
-  // Don't render if only one page or no pages
   if (totalPages <= 1) {
     return null
   }
@@ -37,50 +36,40 @@ const PaginationComponent = ({
     }
   }
 
-  // Generate page numbers to display
   const getPageNumbers = () => {
     const pages = []
-    const maxVisible = 7 // Maximum number of page buttons to show
+    const maxVisible = 7
 
     if (totalPages <= maxVisible) {
-      // Show all pages if total is less than max visible
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i)
       }
     } else {
-      // Always show first page
       pages.push(1)
 
-      // Calculate range around current page
       let start = Math.max(2, currentPage - 1)
       let end = Math.min(totalPages - 1, currentPage + 1)
 
-      // Adjust range if near the start
       if (currentPage <= 3) {
         end = 4
       }
 
-      // Adjust range if near the end
       if (currentPage >= totalPages - 2) {
         start = totalPages - 3
       }
 
-      // Add ellipsis after first page if needed
       if (start > 2) {
         pages.push('ellipsis-start')
       }
 
-      // Add middle pages
       for (let i = start; i <= end; i++) {
         pages.push(i)
       }
 
-      // Add ellipsis before last page if needed
       if (end < totalPages - 1) {
         pages.push('ellipsis-end')
       }
 
-      // Always show last page
       pages.push(totalPages)
     }
 
@@ -100,7 +89,6 @@ const PaginationComponent = ({
       aria-label="Pagination navigation"
       className={`flex items-center justify-center gap-2 ${className}`}
     >
-      {/* Previous Button */}
       <button
         type="button"
         onClick={() => handlePageChange(currentPage - 1)}
@@ -110,11 +98,10 @@ const PaginationComponent = ({
           currentPage === 1 ? disabledClasses : inactiveClasses
         }`}
       >
-        <ChevronLeftIcon className="w-5 h-5" />
+        <Icon name="chevronLeft" className="w-5 h-5" />
         <span className="ml-1 hidden sm:inline">Previous</span>
       </button>
 
-      {/* Page Numbers */}
       <div className="flex items-center gap-1">
         {pageNumbers.map((page) => {
           if (typeof page === 'string' && page.startsWith('ellipsis')) {
@@ -149,7 +136,6 @@ const PaginationComponent = ({
         })}
       </div>
 
-      {/* Next Button */}
       <button
         type="button"
         onClick={() => handlePageChange(currentPage + 1)}
@@ -160,7 +146,7 @@ const PaginationComponent = ({
         }`}
       >
         <span className="mr-1 hidden sm:inline">Next</span>
-        <ChevronRightIcon className="w-5 h-5" />
+        <Icon name="chevronRight" className="w-5 h-5" />
       </button>
     </nav>
   )

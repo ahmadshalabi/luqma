@@ -37,42 +37,33 @@ export function useSearch({ initialQuery = '', onSubmit, onChange, debounceMs = 
   const onSubmitRef = useRef(onSubmit)
   const previousQueryRef = useRef(initialQuery)
 
-  // Keep onChange ref up to date
   useEffect(() => {
     onChangeRef.current = onChange
   }, [onChange])
 
-  // Keep onSubmit ref up to date
   useEffect(() => {
     onSubmitRef.current = onSubmit
   }, [onSubmit])
 
-  // Sync local query state with initialQuery prop (for browser back/forward)
   useEffect(() => {
     setQuery(initialQuery)
   }, [initialQuery])
 
-  // Debounced onChange effect
   useEffect(() => {
     if (!onChangeRef.current) return
 
-    // Only trigger onChange if query actually changed
     if (query === previousQueryRef.current) return
 
-    // Update previous query
     previousQueryRef.current = query
 
-    // Clear existing timer
     if (debounceTimerRef.current) {
       clearTimeout(debounceTimerRef.current)
     }
 
-    // Set new timer
     debounceTimerRef.current = setTimeout(() => {
       onChangeRef.current(query)
     }, debounceMs)
 
-    // Cleanup
     return () => {
       if (debounceTimerRef.current) {
         clearTimeout(debounceTimerRef.current)

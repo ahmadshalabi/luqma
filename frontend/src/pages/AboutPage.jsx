@@ -5,16 +5,13 @@ import { FeatureCard } from '@/features/about/FeatureCard'
 export const AboutPage = () => {
   return (
     <main id="main-content" className="flex-grow">
-      {/* Hero Section */}
       <HeroSection
         title="About Luqma"
         description="Your companion for discovering delicious recipes with detailed nutritional information"
       />
 
-      {/* Main Content Section */}
       <PageSection>
         <div className="space-y-12">
-          {/* Mission */}
           <article className="space-y-4">
             <h2 className="text-2xl md:text-3xl font-semibold text-gray-900">
               Our Mission
@@ -26,7 +23,6 @@ export const AboutPage = () => {
             </p>
           </article>
 
-          {/* Features */}
           <article className="space-y-6">
             <h2 className="text-2xl md:text-3xl font-semibold text-gray-900">
               Features
