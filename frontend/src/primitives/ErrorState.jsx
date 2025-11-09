@@ -1,5 +1,9 @@
 import { memo } from 'react'
-import { Icon } from './Icon'
+import { 
+  XMarkIcon, 
+  ExclamationTriangleIcon, 
+  ExclamationCircleIcon 
+} from '@heroicons/react/24/outline'
 
 /**
  * ErrorState Component
@@ -11,7 +15,7 @@ import { Icon } from './Icon'
  * @param {string} props.title - Error title (default: "Error")
  * @param {string} props.message - Error message (required)
  * @param {React.ReactNode} props.action - Optional action button or link
- * @param {string} props.icon - Icon name (default: "close")
+ * @param {string} props.icon - Icon name (close, exclamationTriangle, exclamationCircle) (default: "close")
  * @param {string} props.className - Additional CSS classes
  */
 const ErrorStateComponent = ({ 
@@ -21,13 +25,23 @@ const ErrorStateComponent = ({
   icon = 'close',
   className = ''
 }) => {
+  // Map icon names to Heroicon components
+  const iconMap = {
+    close: XMarkIcon,
+    xMark: XMarkIcon,
+    exclamationTriangle: ExclamationTriangleIcon,
+    exclamationCircle: ExclamationCircleIcon
+  }
+
+  const IconComponent = iconMap[icon] || XMarkIcon
+
   return (
     <div 
       className={`flex flex-col items-center justify-center py-12 px-4 ${className}`} 
       role="alert"
     >
       <div className="flex items-center justify-center w-16 h-16 rounded-full bg-red-100 mb-4">
-        <Icon name={icon} size="xl" className="text-red-600" />
+        <IconComponent className="w-8 h-8 text-red-600" />
       </div>
       <h3 className="text-xl font-semibold text-red-600 mb-2">{title}</h3>
       <p className="text-base text-gray-600 text-center max-w-md">

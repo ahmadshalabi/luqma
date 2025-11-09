@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { Icon } from './Icon'
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 
 /**
  * Pagination Component
@@ -110,7 +110,7 @@ const PaginationComponent = ({
           currentPage === 1 ? disabledClasses : inactiveClasses
         }`}
       >
-        <Icon name="chevronLeft" size="md" />
+        <ChevronLeftIcon className="w-5 h-5" />
         <span className="ml-1 hidden sm:inline">Previous</span>
       </button>
 
@@ -160,7 +160,7 @@ const PaginationComponent = ({
         }`}
       >
         <span className="mr-1 hidden sm:inline">Next</span>
-        <Icon name="chevronRight" size="md" />
+        <ChevronRightIcon className="w-5 h-5" />
       </button>
     </nav>
   )

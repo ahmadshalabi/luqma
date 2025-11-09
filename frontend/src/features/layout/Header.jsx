@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Icon } from '@/primitives/Icon'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useMobileMenu } from '@/hooks/useMobileMenu'
 
 const navigationLinks = [
@@ -54,9 +54,9 @@ export const Header = () => {
             onClick={toggle}
           >
             {isOpen ? (
-              <Icon name="close" size="lg" />
+              <XMarkIcon className="w-6 h-6" />
             ) : (
-              <Icon name="menu" size="lg" />
+              <Bars3Icon className="w-6 h-6" />
             )}
           </button>
         </div>
