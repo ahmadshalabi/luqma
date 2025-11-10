@@ -12,6 +12,7 @@ spring:
   
   # Cache Configuration
   cache:
+    type: caffeine
     cache-names: recipes
     caffeine:
       spec: maximumSize=500,expireAfterWrite=3600s

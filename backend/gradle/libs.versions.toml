@@ -38,6 +38,12 @@ spring-boot-starter-validation = { module = "org.springframework.boot:spring-boo
 spring-boot-configuration-processor = { module = "org.springframework.boot:spring-boot-configuration-processor" }
 
 # -----------------------------------------------------------------------------
+# Caching
+# -----------------------------------------------------------------------------
+spring-boot-starter-cache = { module = "org.springframework.boot:spring-boot-starter-cache" }
+caffeine = { module = "com.github.ben-manes.caffeine:caffeine" }
+
+# -----------------------------------------------------------------------------
 # Spring Boot Development Tools
 # -----------------------------------------------------------------------------
 spring-boot-devtools = { module = "org.springframework.boot:spring-boot-devtools" }

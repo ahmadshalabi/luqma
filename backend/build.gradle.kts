@@ -30,6 +30,10 @@ dependencies {
 	implementation(libs.bundles.spring.boot)
 	annotationProcessor(libs.spring.boot.configuration.processor)
 
+	// Caching
+	implementation(libs.spring.boot.starter.cache)
+	implementation(libs.caffeine)
+
 	// OpenAPI Documentation
 	implementation(libs.springdoc.openapi.starter.webmvc.ui)
 
