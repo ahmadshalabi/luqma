@@ -59,6 +59,7 @@
 - **npm 10+** (comes with Node.js)
 - **Gradle** (included via wrapper)
 - **Spoonacular API Key** - [Get free key](https://spoonacular.com/food-api/console#Dashboard) (150 requests/day free tier)
+  - *Optional for mock mode* - See offline development below
 
 ---
 
@@ -86,6 +87,21 @@ npm run dev
 # Stop services (in separate terminal or use Ctrl+C)
 npm run stop
 ```
+
+### Offline Development (Mock Mode)
+
+Don't have a Spoonacular API key yet? Use mock mode for offline development:
+
+```bash
+# Run with mock data (no API key needed)
+npm run dev:mock
+```
+
+**Mock mode features:**
+- Uses sample recipe data from `backend/src/main/resources/mocks/`
+- No Spoonacular API key required
+- Simulated API latency (100-500ms) for realistic testing
+- Full functionality for development and testing
 
 **Access the application:**
 - Frontend: http://localhost:3000

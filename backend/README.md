@@ -32,6 +32,26 @@ cp .env.example .env
 
 The application will be available at http://localhost:8080 (default port)
 
+### Mock Mode (Offline Development)
+
+For offline development without a Spoonacular API key:
+
+```bash
+cd backend
+
+# Run with mock profile
+./gradlew bootRun --args='--spring.profiles.active=mock'
+```
+
+**Mock mode features:**
+- No Spoonacular API key required
+- Uses sample data from `src/main/resources/mocks/`
+- Simulated API latency (100-500ms)
+- Optional error injection for testing
+- Verbose logging with full stack traces
+
+**Configuration:** See `src/main/resources/application-mock.yaml`
+
 ---
 
 ## Development Commands
