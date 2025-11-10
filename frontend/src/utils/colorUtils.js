@@ -2,7 +2,7 @@
  * Color utility functions for consistent color theming across components.
  * 
  * Provides centralized color class definitions for different color variants
- * and contexts (background, text, border, etc.).
+ * and contexts (background, text, border, gradients).
  * 
  * @module colorUtils
  */
@@ -20,74 +20,100 @@ export const COLOR_VARIANTS = {
 }
 
 const COLOR_CLASSES = {
-  combined: {
-    blue: 'bg-blue-100 text-blue-600',
-    green: 'bg-green-100 text-green-600',
-    purple: 'bg-purple-100 text-purple-600',
-    red: 'bg-red-100 text-red-600',
-    yellow: 'bg-yellow-100 text-yellow-600',
-    indigo: 'bg-indigo-100 text-indigo-600',
-    gray: 'bg-gray-100 text-gray-600',
-    orange: 'bg-orange-100 text-orange-600',
-    pink: 'bg-pink-100 text-pink-600'
+  blue: {
+    bg100: 'bg-blue-100',
+    bgFrom: 'from-blue-50',
+    bgTo: 'to-blue-100',
+    border: 'border-blue-300',
+    textPrimary: 'text-blue-600',
+    textSecondary: 'text-blue-500'
   },
-  background: {
-    blue: 'bg-blue-100',
-    green: 'bg-green-100',
-    purple: 'bg-purple-100',
-    red: 'bg-red-100',
-    yellow: 'bg-yellow-100',
-    indigo: 'bg-indigo-100',
-    gray: 'bg-gray-100',
-    orange: 'bg-orange-100',
-    pink: 'bg-pink-100'
+  green: {
+    bg100: 'bg-green-100',
+    bgFrom: 'from-green-50',
+    bgTo: 'to-green-100',
+    border: 'border-green-300',
+    textPrimary: 'text-green-600',
+    textSecondary: 'text-green-500'
   },
-  text: {
-    blue: 'text-blue-600',
-    green: 'text-green-600',
-    purple: 'text-purple-600',
-    red: 'text-red-600',
-    yellow: 'text-yellow-600',
-    indigo: 'text-indigo-600',
-    gray: 'text-gray-600',
-    orange: 'text-orange-600',
-    pink: 'text-pink-600'
+  purple: {
+    bg100: 'bg-purple-100',
+    bgFrom: 'from-purple-50',
+    bgTo: 'to-purple-100',
+    border: 'border-purple-300',
+    textPrimary: 'text-purple-600',
+    textSecondary: 'text-purple-500'
   },
-  border: {
-    blue: 'border-blue-300',
-    green: 'border-green-300',
-    purple: 'border-purple-300',
-    red: 'border-red-300',
-    yellow: 'border-yellow-300',
-    indigo: 'border-indigo-300',
-    gray: 'border-gray-300',
-    orange: 'border-orange-300',
-    pink: 'border-pink-300'
+  red: {
+    bg100: 'bg-red-100',
+    bgFrom: 'from-red-50',
+    bgTo: 'to-red-100',
+    border: 'border-red-300',
+    textPrimary: 'text-red-600',
+    textSecondary: 'text-red-500'
+  },
+  yellow: {
+    bg100: 'bg-yellow-100',
+    bgFrom: 'from-yellow-50',
+    bgTo: 'to-yellow-100',
+    border: 'border-yellow-300',
+    textPrimary: 'text-yellow-600',
+    textSecondary: 'text-yellow-500'
+  },
+  indigo: {
+    bg100: 'bg-indigo-100',
+    bgFrom: 'from-indigo-50',
+    bgTo: 'to-indigo-100',
+    border: 'border-indigo-300',
+    textPrimary: 'text-indigo-600',
+    textSecondary: 'text-indigo-500'
+  },
+  gray: {
+    bg100: 'bg-gray-100',
+    bgFrom: 'from-gray-50',
+    bgTo: 'to-gray-100',
+    border: 'border-gray-300',
+    textPrimary: 'text-gray-600',
+    textSecondary: 'text-gray-500'
+  },
+  orange: {
+    bg100: 'bg-orange-100',
+    bgFrom: 'from-orange-50',
+    bgTo: 'to-orange-100',
+    border: 'border-orange-300',
+    textPrimary: 'text-orange-600',
+    textSecondary: 'text-orange-500'
+  },
+  pink: {
+    bg100: 'bg-pink-100',
+    bgFrom: 'from-pink-50',
+    bgTo: 'to-pink-100',
+    border: 'border-pink-300',
+    textPrimary: 'text-pink-600',
+    textSecondary: 'text-pink-500'
   }
 }
 
 /**
- * Get Tailwind CSS color classes for a given color variant and context.
+ * Get Tailwind CSS color classes for a given color variant.
  * 
  * @param {string} color - Color variant (blue, green, purple, red, yellow, indigo, gray, orange, pink)
- * @param {string} context - Context type (combined, background, text, border)
- * @returns {string} Tailwind CSS classes for the color
+ * @returns {Object} Object containing color classes (bg100, bgFrom, bgTo, border, textPrimary, textSecondary)
  * 
  * @example
- * // Get combined background and text classes
- * getColorClasses('blue', 'combined') // Returns 'bg-blue-100 text-blue-600'
+ * const { textPrimary } = getColorClasses('blue')
+ * // textPrimary = 'text-blue-600'
  * 
  * @example
- * // Get only text classes
- * getColorClasses('green', 'text') // Returns 'text-green-600'
+ * const { bg100, border } = getColorClasses('green')
+ * // bg100 = 'bg-green-100', border = 'border-green-300'
  * 
  * @example
  * // Defaults to blue if invalid color provided
- * getColorClasses('invalid', 'combined') // Returns 'bg-blue-100 text-blue-600'
+ * getColorClasses('invalid') // Returns blue color classes
  */
-export function getColorClasses(color, context = 'combined') {
-  const contextMap = COLOR_CLASSES[context] || COLOR_CLASSES.combined
-  return contextMap[color] || contextMap.blue
+export function getColorClasses(color) {
+  return COLOR_CLASSES[color] || COLOR_CLASSES.blue
 }
 
 /**
