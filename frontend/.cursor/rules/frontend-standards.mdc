@@ -69,7 +69,8 @@ import { Container } from '@/components/layout/Container'
 
 // Same directory - relative is acceptable
 import { RecipeHeader } from './RecipeHeader'
-import { RecipeMetadata } from './RecipeMetadata'
+import { RecipeMetadataGroup } from './RecipeMetadataGroup'
+import { RecipeMetadataBadge } from './RecipeMetadataBadge'
 ```
 
 Bad:

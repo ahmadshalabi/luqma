@@ -41,7 +41,7 @@ Recipe search application with nutritional information and dynamic ingredient ex
 - pages/: Route pages with co-located page-specific components
   - about/: AboutPage, FeatureCard, FeaturesSection, MissionSection
   - recipe/: RecipePage with page-specific components
-    - detail/: RecipeDetail, RecipeHeader, RecipeImage, RecipeMetadata
+    - detail/: RecipeDetail, RecipeHeader, RecipeImage, RecipeMetadataBadge, RecipeMetadataGroup
     - ingredients/: Page-specific ingredient components
     - instructions/: Page-specific instruction components
     - nutrition/: Page-specific nutrition components
@@ -55,7 +55,7 @@ Recipe search application with nutritional information and dynamic ingredient ex
   - ui/: UI primitives (Button, Card, Alert, LoadingSpinner, Badge, Typography, Collapsible, LiveRegion, Skeleton, etc.)
 - contexts/: React Context providers (RecipeExclusionContext)
 - hooks/: Custom hooks
-  - State & Data: useImageFallback, useMobileMenu, usePaginationLogic, useRecipeDetail, useSearch, useSearchRecipes, useSearchState, useApiMutation
+  - State & Data: useImageFallback, useIngredientExclusion, useMobileMenu, usePaginationLogic, useRecipeDetail, useRecipeExclusion, useSearch, useSearchRecipes, useSearchState, useApiMutation
   - Accessibility: useKeyboardNavigation (grid navigation, shortcuts, focus trap)
 - services/: ✅ API client (apiClient.js with searchRecipes, getRecipeById, excludeIngredients)
 - utils/: Helper functions (httpClient, iconRegistry, colorUtils, logger)

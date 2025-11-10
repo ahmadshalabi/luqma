@@ -130,6 +130,13 @@ Recipe details are cached using Spring Cache with Caffeine:
 - **TTL:** 1 hour (3600 seconds)
 - **Eviction:** LRU (Least Recently Used)
 
+**Cache Configuration:**
+- Configured in `backend/src/main/resources/application.yaml` (lines 13-17)
+- Enabled via `@EnableCaching` annotation in `SpoonacularConfig.java`
+- Caffeine spec: `maximumSize=500,expireAfterWrite=3600s`
+- Applied to `RecipeRepository.findById()` method using `@Cacheable("recipes")`
+- No separate `CacheConfig` class - caching is integrated into `SpoonacularConfig`
+
 ### Rate Limiting
 The application includes built-in rate limiting to avoid exceeding Spoonacular API quotas:
 - **Max Requests:** 100 per minute (configurable)
