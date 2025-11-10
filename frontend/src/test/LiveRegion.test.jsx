@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { LiveRegion, StatusRegion, AlertRegion } from './LiveRegion'
+import { LiveRegion, StatusRegion, AlertRegion } from '../components/ui/LiveRegion'
 
 describe('LiveRegion', () => {
   it('should render with aria-live and handle visibility', () => {
