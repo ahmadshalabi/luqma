@@ -55,15 +55,24 @@ Mock data matches the structure of the Luqma backend API responses:
 }
 ```
 
+## Current Status
+
+**Status:** Used for testing only
+
+The frontend now uses the API client (`frontend/src/services/apiClient.js`) to communicate with the backend. These mocks are retained for:
+- Unit testing components in isolation
+- Test fixtures for Vitest tests
+- Development when backend is unavailable
+
 ## When to Remove
 
-These mocks should be removed once:
-1. Backend API endpoints are fully implemented
-2. Frontend is integrated with backend services
-3. All components use the API client instead of mock imports
+These mocks should be kept for testing purposes but are no longer used in production code:
+- ✅ Backend API endpoints are fully implemented (using backend mock data)
+- ✅ Frontend is integrated with backend services via API client
+- ✅ All components use the API client instead of direct mock imports
 
 ## Related
 
-- Backend mocks: `backend/src/main/resources/mocks/`
-- API client: `frontend/src/services/apiClient.js` (to be implemented)
+- Backend mocks: `backend/src/main/resources/mocks/` (provides data to backend API)
+- API client: `frontend/src/services/apiClient.js` (✅ implemented)
 
