@@ -24,28 +24,37 @@ Recipe search application with nutritional information and dynamic ingredient ex
 **Data Flow:** User → React UI → Backend API → Spoonacular
 
 **Backend Structure** (`backend/src/main/java/app/luqma/backend/`):
-- controller/: ✅ REST endpoints (RecipeController with /search and /{id} endpoints)
-- service/: ✅ Business logic (RecipeSearchService, RecipeDetailService with mock data integration)
+- controller/: ✅ REST endpoints (RecipeController)
+- service/: ✅ Business logic (RecipeSearchService, RecipeDetailService, IngredientValidationService, NutritionCalculationService)
 - filter/: ✅ Servlet filters (RateLimitFilter)
 - client/: 🚧 Spoonacular API client - PENDING (currently using mock data)
-- model/dto/: ✅ API request/response (RecipeSearchResponse, RecipeSummary, RecipeDetailResponse, IngredientDTO, NutritionDTO)
-- model/domain/: ✅ Internal models (RecipeDetail, ExtendedIngredient, NutritionInfo, Nutrient)
+- repository/: ✅ Data access (MockRecipeRepository)
+- mapper/: ✅ Object mapping (RecipeMapper, NutrientExtractor)
+- model/dto/: ✅ API request/response DTOs (RecipeSearchResponse, RecipeSummary, RecipeDetailResponse, IngredientDTO, NutritionDTO, ExcludeIngredientsRequest)
+- model/domain/: ✅ Internal domain models (RecipeDetail, ExtendedIngredient, NutritionInfo, Nutrient, AnalyzedInstruction, InstructionStep)
 - config/: ✅ Spring configuration (CORS, Security, Rate Limiting, RecipeSearch properties)
 - exception/: ✅ Custom exceptions + GlobalExceptionHandler with comprehensive error handling
-- util/: ✅ Utility classes (StringSanitizer for input validation, MockDataLoader)
+- constants/: ✅ Application constants (ErrorMessages, NutrientNames)
+- util/: ✅ Utility classes (StringSanitizer, MockDataLoader, CollectionUtils, DefaultValue)
 
 **Frontend Structure** (`frontend/src/`):
-- features/: Feature-based components organized by domain
-  - layout/: Header, Footer, HeroSection, PageSection, MainLayout
-  - recipe/: RecipeCard, RecipeGrid, RecipeDetail
-  - search/: SearchBar, SearchResults, ResultsHeader
-  - about/: FeatureCard
-- pages/: Route pages (HomePage, AboutPage, RecipePage)
-- primitives/: UI primitives (Button, Card, MessageState, LoadingState, BackLink, Icon, Pagination)
-- hooks/: Custom hooks (useMobileMenu, usePagination, useSearch, useSearchState, useRecipeDetail)
-- services/: ✅ API client (apiClient.js with searchRecipes and getRecipeById)
-- utils/: Helper functions (searchUtils.js, colorUtils.js)
-- mocks/: Mock Spoonacular API data for development and testing
+- pages/: Route pages with feature-based organization
+  - about/: AboutPage.jsx, FeatureCard, FeaturesSection, MissionSection
+  - recipe/: RecipePage with features subdirectory
+    - features/detail/: RecipeDetail, RecipeHeader, RecipeImage, RecipeMetadata components
+    - features/exclusion/: IngredientExclusionPanel (Desktop/Mobile variants), ExcludedIngredientsList
+    - features/nutrition/: CollapsibleNutrition, NutritionCard, NutritionContent
+  - HomePage.jsx
+- components/: Shared components
+  - layout/: Header (with mobile menu components), Footer, HeroSection, SkipLink, Container
+  - recipe-display/: card/ (RecipeCard, RecipeGrid), ingredients/, instructions/
+  - search/: SearchBar, SearchResults, Pagination (with subcomponents), ResultsHeader
+  - ui/: UI primitives (Button, Card, Alert, LoadingSpinner, Badge, Typography, Collapsible, etc.)
+- contexts/: React Context providers (RecipeExclusionContext)
+- hooks/: Custom hooks (useImageFallback, useMobileMenu, usePaginationLogic, useRecipeDetail, useSearch, useSearchRecipes, useSearchState)
+- services/: ✅ API client (apiClient.js with searchRecipes, getRecipeById, excludeIngredients)
+- utils/: Helper functions (httpClient, iconRegistry, colorUtils)
+- test/: Test files and mocks/
 
 **Development Approach:**
 - Backend uses mock data from `backend/src/main/resources/mocks/` for both search and recipe details
@@ -59,7 +68,7 @@ Recipe search application with nutritional information and dynamic ingredient ex
 **Backend REST API:**
 - ✅ GET /api/v1/recipes/search - Search recipes with pagination (query, page, pageSize params)
 - ✅ GET /api/v1/recipes/{id} - Get recipe details with ingredients, nutrition, and instructions
-- 🚧 POST /api/v1/recipes/{id}/exclude-ingredients - Exclude ingredients and recalculate - PLANNED
+- ✅ POST /api/v1/recipes/{id}/exclude-ingredients - Exclude ingredients and recalculate nutrition
 
 **Health & Monitoring:**
 - GET /actuator/health - Health check
@@ -99,10 +108,33 @@ Recipe search application with nutritional information and dynamic ingredient ex
 - npm test
 - npm run lint:fix
 
+## Architectural Patterns
+
+**Backend (ADR-0009):**
+- Layered: Controller → Service → Repository
+- Controllers: HTTP concerns only
+- Services: Business logic
+- Repositories: Data access (currently mock)
+
+**Frontend:**
+- Feature-based organization (ADR-0007): pages/{page}/features/{feature}/
+- Custom hooks for logic (ADR-0008): useRecipeDetail, useSearch, etc.
+- Context API for cross-component state (ADR-0004): RecipeExclusionContext
+- URL state for search (ADR-0005): shareable URLs, 300ms debounce
+
+**Development (ADR-0006):**
+- Mock data in `backend/src/main/resources/mocks/*.json`
+- Offline development without API calls
+- Migration path: mock → real API
+
 ## Documentation
 
-**ADRs:** docs/decisions/ (MADR format)
+**ADRs:** docs/decisions/ (MADR format) - 9 architectural decisions
 
 **Standards:** .cursor/rules/ (root), backend/.cursor/rules/, frontend/.cursor/rules/
 
-**Key Principle:** Backend protects secrets and handles business logic. Frontend focuses on user experience. Both prioritize accessibility and security.
+**Key Principles:**
+- Separation of concerns
+- Simplicity over complexity
+- Security first (API keys, WCAG 2.1 AA)
+- Independent testability
