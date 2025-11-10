@@ -88,7 +88,6 @@ npm run test:coverage     # With coverage
 **Frontend:**
 ```bash
 npm test                    # Watch mode
-npm run test:run            # CI mode
 npm run test:ui             # UI mode
 npm run test:coverage       # With coverage
 ```

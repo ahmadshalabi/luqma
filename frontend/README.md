@@ -45,7 +45,6 @@ npm run lint:fix      # Auto-fix linting errors
 
 # Testing
 npm test              # Run tests in watch mode
-npm run test:run      # Run tests once (CI mode)
 npm run test:ui       # Run tests with UI
 npm run test:coverage # Run tests with coverage
 
@@ -109,8 +108,7 @@ frontend/src/
 │
 └── constants/                      # Application constants
     ├── api.js                      # API configuration
-    ├── ui.js                       # UI constants
-    └── validation.js               # Validation rules
+    └── ui.js                       # UI constants
 ```
 
 **Organization Principles:**

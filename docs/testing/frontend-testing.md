@@ -92,7 +92,6 @@ vi.mock('@/services/apiClient', () => ({
 ```bash
 # Run tests
 npm test                  # Watch mode
-npm run test:run          # CI mode
 npm run test:coverage     # With coverage
 npm run test:ui           # UI mode
 ```
