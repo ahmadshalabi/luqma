@@ -187,7 +187,7 @@ cat backend/.env | grep SPOONACULAR_API_KEY  # Verify key
 - Free tier: 150 requests/day
 - Usage dashboard: https://spoonacular.com/food-api/console#Dashboard
 
-**Note:** Currently using mock data from `backend/src/main/resources/mocks/` for both recipe search and recipe details. Spoonacular API integration is planned for future implementation.
+**Note:** The application is fully integrated with Spoonacular API via `SpoonacularClient`. Mock data in `backend/src/main/resources/mocks/` is retained for testing purposes only.
 
 ---
 

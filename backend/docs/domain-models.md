@@ -1,14 +1,14 @@
 # Domain Models
 
-This document describes the planned domain models for the Luqma backend.
+This document describes the domain models for the Luqma backend.
 
 ## Purpose
 
 Domain models represent the core business entities and logic of the application. They are distinct from DTOs (Data Transfer Objects) which are used for API communication.
 
-## Planned Models
+## Implemented Models
 
-When Spoonacular API integration is implemented, the `model.domain` package will include:
+The `model.domain` package includes:
 
 - **Recipe** - Complete recipe information including:
   - Basic details (id, title, description, image)
@@ -30,10 +30,10 @@ When Spoonacular API integration is implemented, the `model.domain` package will
 
 ## Usage Pattern
 
-Domain models will be used:
+Domain models are used in:
 1. **Service layer** - Business logic and calculations
-2. **Data transformation** - Converting between external API formats and internal representation
-3. **Recipe manipulation** - Ingredient exclusion and nutritional recalculation
+2. **Data transformation** - Converting between Spoonacular API formats and internal representation
+3. **Recipe manipulation** - Ingredient exclusion and nutritional recalculation (see ADR-0010)
 
 ## Current Status
 
@@ -47,11 +47,12 @@ The `model.domain` package now includes:
 - **AnalyzedInstruction** - Cooking instructions with steps
 - **InstructionStep** - Individual instruction steps
 
-Domain models are currently used with mock data from `backend/src/main/resources/mocks/`. When Spoonacular API integration is implemented, these models will work seamlessly with real API data
+Domain models are now used with live data from Spoonacular API via `SpoonacularClient`. Mock data in `backend/src/main/resources/mocks/` is retained for testing purposes only
 
 ## Related Packages
 
-- `model.dto` - API request/response objects (currently in use)
-- `service` - Business logic that will use domain models
-- `client` - External API clients that will populate domain models
+- `model.dto` - API request/response objects for external communication
+- `service` - Business logic that uses domain models
+- `client` - External API clients (SpoonacularClient) that populate domain models
+- `mapper` - Object mapping utilities (RecipeMapper, NutrientExtractor)
 

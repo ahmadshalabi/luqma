@@ -27,9 +27,9 @@ How should we organize React components as the application grows? By type (all c
 Chosen option: **Feature-based with shared components**
 
 Structure:
-- `pages/{page}/features/{feature}/` - Feature-specific components
-- `components/` - Shared components organized by purpose
-- `components/ui/` - UI primitives
+- `pages/{page}/` - Page-specific components co-located with their pages
+- `components/{domain}/` - Shared domain components organized by purpose (e.g., `recipe/`, `search/`)
+- `components/ui/` - Shared UI primitives (Button, Card, Alert, etc.)
 
 ### Consequences
 
