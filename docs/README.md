@@ -9,6 +9,7 @@ Complete documentation for Luqma.
 - **[Development Workflow](guides/development-workflow.md)** - Local development guide
 - **[Deployment](guides/deployment.md)** - Production deployment
 - **[Troubleshooting](TROUBLESHOOTING.md)** - Common issues
+- **[AI Usage Reflection](ai-usage-reflection.md)** - AI collaboration and development insights
 
 ---
 
