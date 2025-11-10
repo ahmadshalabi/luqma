@@ -72,6 +72,10 @@ curl http://localhost:8080/actuator/health
 - Search for "pasta"
 - Should see recipe results
 
+**Expected Result:**
+
+![Search Results Example](../images/search-results.png)
+
 ---
 
 ## Troubleshooting

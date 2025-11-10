@@ -4,6 +4,8 @@
 
 > Recipe search application with nutritional information and ingredient exclusion.
 
+> **🤖 AI Collaboration:** This project demonstrates effective AI-assisted development. See **[AI Usage & Collaboration Reflection](docs/ai-usage-reflection.md)** for insights on how AI tools were leveraged, challenged, and validated throughout the development process.
+
 ## Table of Contents
 
 - [Tech Stack](#tech-stack)
@@ -49,6 +51,67 @@
 - ✅ Custom hooks for reusable logic
 - ✅ Comprehensive component library
 - ✅ Spoonacular API integration with Spring Cache (Caffeine) and robust error handling
+
+---
+
+## Screenshots
+
+### Desktop View
+
+<table>
+  <tr>
+    <td><img src="docs/images/homepage.png" alt="Homepage Desktop" /></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Homepage</b></td>
+  </tr>
+  <tr>
+    <td><img src="docs/images/search-results.png" alt="Search Results Desktop" /></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Search Results</b></td>
+  </tr>
+  <tr>
+    <td><img src="docs/images/recipe-detail.png" alt="Recipe Detail Desktop" /></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Recipe Detail</b></td>
+  </tr>
+</table>
+
+### Tablet View
+
+<table>
+  <tr>
+    <td><img src="docs/images/homepage-tablet.png" alt="Homepage Tablet" width="400" /></td>
+    <td><img src="docs/images/search-results-tablet.png" alt="Search Results Tablet" width="400" /></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Homepage</b></td>
+    <td align="center"><b>Search Results</b></td>
+  </tr>
+  <tr>
+    <td colspan="2"><img src="docs/images/recipe-detail-tablet.png" alt="Recipe Detail Tablet" width="400" /></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><b>Recipe Detail</b></td>
+  </tr>
+</table>
+
+### Mobile View
+
+<table>
+  <tr>
+    <td><img src="docs/images/homepage-mobile.png" alt="Homepage Mobile" width="250" /></td>
+    <td><img src="docs/images/search-results-mobile.png" alt="Search Results Mobile" width="250" /></td>
+    <td><img src="docs/images/recipe-detail-mobile.png" alt="Recipe Detail Mobile" width="250" /></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Homepage</b></td>
+    <td align="center"><b>Search Results</b></td>
+    <td align="center"><b>Recipe Detail</b></td>
+  </tr>
+</table>
 
 ---
 
@@ -114,6 +177,7 @@ npm run dev:mock
 - 📖 [Getting Started Guide](docs/guides/getting-started.md) - Complete setup walkthrough
 - ⚙️ [Configuration Guide](docs/guides/configuration.md) - Environment variables, ports, CORS
 - 💻 [Development Workflow](docs/guides/development-workflow.md) - Local development tips
+- 🤖 [AI Usage & Collaboration Reflection](docs/ai-usage-reflection.md) - AI-assisted development insights
 
 ---
 
@@ -125,6 +189,7 @@ npm run dev:mock
 - [Development Workflow](docs/guides/development-workflow.md) - Local development guide
 - [Deployment Guide](docs/guides/deployment.md) - Production deployment
 - [Troubleshooting Guide](docs/TROUBLESHOOTING.md) - Common issues and solutions
+- **[AI Usage & Collaboration Reflection](docs/ai-usage-reflection.md)** - 🤖 How AI tools were used and validated
 
 ### Technical Documentation
 - [Documentation Index](docs/README.md) - Complete documentation overview
