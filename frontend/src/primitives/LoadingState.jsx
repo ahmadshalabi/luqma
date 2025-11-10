@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { LoadingSpinner } from './LoadingSpinner'
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 
 /**
  * LoadingState component wrapper providing consistent loading UI.

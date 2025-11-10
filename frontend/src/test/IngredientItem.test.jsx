@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
-import { IngredientItem } from '@/components/recipe-display/ingredients/IngredientItem'
+import { IngredientItem } from '@/pages/recipe/ingredients/IngredientItem'
 
 describe('IngredientItem', () => {
   const ingredient = { id: 1, name: 'Chicken', amount: 2, unit: 'lbs' }

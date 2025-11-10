@@ -1,6 +1,6 @@
 /* global global */
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { searchRecipes } from '../services/apiClient'
+import { searchRecipes } from '@/services/apiClient'
 
 describe('apiClient - searchRecipes', () => {
   beforeEach(() => {

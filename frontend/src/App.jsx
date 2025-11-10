@@ -4,9 +4,9 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 
-const HomePage = lazy(() => import('./pages/HomePage').then(module => ({ default: module.HomePage })))
-const AboutPage = lazy(() => import('./pages/about/AboutPage').then(module => ({ default: module.AboutPage })))
-const RecipePage = lazy(() => import('./pages/recipe/RecipePage').then(module => ({ default: module.RecipePage })))
+const HomePage = lazy(() => import('@/pages/HomePage').then(module => ({ default: module.HomePage })))
+const AboutPage = lazy(() => import('@/pages/about/AboutPage').then(module => ({ default: module.AboutPage })))
+const RecipePage = lazy(() => import('@/pages/recipe/RecipePage').then(module => ({ default: module.RecipePage })))
 
 export function App() {
   return (

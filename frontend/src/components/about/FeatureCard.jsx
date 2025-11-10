@@ -1,4 +1,4 @@
-import { Card } from '../ui/Card'
+import { Card } from '@/components/ui/Card'
 import { Icon } from '@/utils/iconRegistry'
 import { getColorClasses } from '@/utils/colorUtils'
 
