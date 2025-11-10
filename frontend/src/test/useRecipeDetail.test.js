@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { renderHook, waitFor } from '@testing-library/react'
-import { useRecipeDetail } from '../hooks/useRecipeDetail'
+import { useRecipeDetail } from '@/hooks/useRecipeDetail'
 import * as apiClient from '@/services/apiClient'
 
 vi.mock('@/services/apiClient')

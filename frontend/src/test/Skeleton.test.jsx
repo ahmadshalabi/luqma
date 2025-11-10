@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { render } from '@testing-library/react'
-import { Skeleton, RecipeCardSkeleton, RecipeGridSkeleton } from '../components/ui/Skeleton'
+import { Skeleton, RecipeCardSkeleton, RecipeGridSkeleton } from '@/components/ui/Skeleton'
 
 describe('Skeleton', () => {
   it('should render with animation and variants', () => {

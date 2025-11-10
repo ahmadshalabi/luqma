@@ -129,7 +129,7 @@ You must:
 
 You should use the LiveRegion component from `@/components/ui/LiveRegion`:
 - `<StatusRegion>` for polite status updates (search results count, filter changes)
-- `<AlertRegion>` for assertive alerts (errors, warnings)
+- `<LiveRegion priority="assertive" role="alert">` for assertive alerts (errors, warnings)
 - `<LiveRegion>` for custom live region configuration
 
 ## Common Patterns
