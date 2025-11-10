@@ -30,29 +30,23 @@ class NutritionCalculationServiceTest {
     
     @Test
     void recalculateNutrition_withNoExclusions_returnsOriginalRecipe() {
-        // Given
         RecipeDetail originalRecipe = createTestRecipe();
         Set<Long> emptyExclusions = Set.of();
         
-        // When
         RecipeDetail result = nutritionCalculationService.recalculateNutrition(originalRecipe, emptyExclusions);
         
-        // Then
         assertThat(result).isEqualTo(originalRecipe);
     }
     
     @Test
     void recalculateNutrition_withOneExclusion_updatesNutrition() {
-        // Given
         RecipeDetail originalRecipe = createTestRecipe();
         Set<Long> exclusions = Set.of(1L);  // Exclude first ingredient
         
-        // When
         RecipeDetail result = nutritionCalculationService.recalculateNutrition(originalRecipe, exclusions);
         
-        // Then
         assertThat(result.getExtendedIngredients()).hasSize(1);
-        assertThat(result.getExtendedIngredients().get(0).getId()).isEqualTo(2L);
+        assertThat(result.getExtendedIngredients().getFirst().getId()).isEqualTo(2L);
         
         // Verify nutrition was recalculated
         Double newCalories = findNutrientAmount(result.getNutrition().getNutrients(), "Calories");
@@ -61,16 +55,13 @@ class NutritionCalculationServiceTest {
     
     @Test
     void recalculateNutrition_withMultipleExclusions_updatesNutritionCorrectly() {
-        // Given
         RecipeDetail recipe = createTestRecipeWithThreeIngredients();
         Set<Long> exclusions = Set.of(1L, 2L);  // Exclude first two ingredients
         
-        // When
         RecipeDetail result = nutritionCalculationService.recalculateNutrition(recipe, exclusions);
         
-        // Then
         assertThat(result.getExtendedIngredients()).hasSize(1);
-        assertThat(result.getExtendedIngredients().get(0).getId()).isEqualTo(3L);
+        assertThat(result.getExtendedIngredients().getFirst().getId()).isEqualTo(3L);
         
         // Verify nutrition calculations
         List<Nutrient> nutrients = result.getNutrition().getNutrients();
@@ -80,14 +71,11 @@ class NutritionCalculationServiceTest {
     
     @Test
     void recalculateNutrition_recalculatesCaloricBreakdown() {
-        // Given
         RecipeDetail recipe = createTestRecipe();
         Set<Long> exclusions = Set.of(1L);
         
-        // When
         RecipeDetail result = nutritionCalculationService.recalculateNutrition(recipe, exclusions);
         
-        // Then
         NutritionInfo.CaloricBreakdown breakdown = result.getNutrition().getCaloricBreakdown();
         assertThat(breakdown).isNotNull();
         
@@ -98,14 +86,11 @@ class NutritionCalculationServiceTest {
     
     @Test
     void recalculateNutrition_withAllIngredientsExcluded_returnsEmptyIngredients() {
-        // Given
         RecipeDetail recipe = createTestRecipe();
         Set<Long> exclusions = Set.of(1L, 2L);  // Exclude all ingredients
         
-        // When
         RecipeDetail result = nutritionCalculationService.recalculateNutrition(recipe, exclusions);
         
-        // Then
         assertThat(result.getExtendedIngredients()).isEmpty();
         
         // Nutrition should be all zeros or very close
@@ -115,7 +100,6 @@ class NutritionCalculationServiceTest {
     
     @Test
     void recalculateNutrition_withNullRecipe_throwsException() {
-        // When/Then
         assertThatThrownBy(() -> nutritionCalculationService.recalculateNutrition(null, Set.of(1L)))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining("Recipe cannot be null");
@@ -123,10 +107,8 @@ class NutritionCalculationServiceTest {
     
     @Test
     void recalculateNutrition_withNullExclusions_throwsException() {
-        // Given
         RecipeDetail recipe = createTestRecipe();
         
-        // When/Then
         assertThatThrownBy(() -> nutritionCalculationService.recalculateNutrition(recipe, null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining("Excluded ingredient IDs cannot be null");
@@ -134,11 +116,9 @@ class NutritionCalculationServiceTest {
     
     @Test
     void recalculateNutrition_withNonExistentIngredientId_doesNotAffectResult() {
-        // Given
         RecipeDetail recipe = createTestRecipe();
         Set<Long> exclusions = Set.of(999L);  // Non-existent ID
         
-        // When
         RecipeDetail result = nutritionCalculationService.recalculateNutrition(recipe, exclusions);
         
         // Then - should return recipe with all ingredients unchanged
@@ -149,14 +129,11 @@ class NutritionCalculationServiceTest {
     
     @Test
     void recalculateNutrition_preservesNonNutritionFields() {
-        // Given
         RecipeDetail recipe = createTestRecipe();
         Set<Long> exclusions = Set.of(1L);
         
-        // When
         RecipeDetail result = nutritionCalculationService.recalculateNutrition(recipe, exclusions);
         
-        // Then
         assertThat(result.getId()).isEqualTo(recipe.getId());
         assertThat(result.getTitle()).isEqualTo(recipe.getTitle());
         assertThat(result.getImage()).isEqualTo(recipe.getImage());
