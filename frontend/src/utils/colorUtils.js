@@ -7,18 +7,6 @@
  * @module colorUtils
  */
 
-export const COLOR_VARIANTS = {
-  blue: 'blue',
-  green: 'green',
-  purple: 'purple',
-  red: 'red',
-  yellow: 'yellow',
-  indigo: 'indigo',
-  gray: 'gray',
-  orange: 'orange',
-  pink: 'pink'
-}
-
 const COLOR_CLASSES = {
   blue: {
     bg100: 'bg-blue-100',
@@ -115,27 +103,3 @@ const COLOR_CLASSES = {
 export function getColorClasses(color) {
   return COLOR_CLASSES[color] || COLOR_CLASSES.blue
 }
-
-/**
- * Check if a color variant is valid.
- * 
- * @param {string} color - Color variant to validate
- * @returns {boolean} True if the color variant is valid
- * 
- * @example
- * isValidColor('blue') // Returns true
- * isValidColor('invalid') // Returns false
- */
-export function isValidColor(color) {
-  return Object.values(COLOR_VARIANTS).includes(color)
-}
-
-/**
- * Get all available color variants.
- * 
- * @returns {string[]} Array of color variant names
- */
-export function getAvailableColors() {
-  return Object.values(COLOR_VARIANTS)
-}
-
