@@ -153,18 +153,22 @@ rm -rf ~/.gradle/caches/
 
 ### Frontend Dependencies Issues
 
+**Error:** `sh: 1: patch-package: not found` or `npm error code 127`
+
 **Solution:**
 
 ```bash
 cd frontend
 rm -rf node_modules package-lock.json
-npm install
+npm install --ignore-scripts
 node -v  # Verify Node.js 24+
 
 # If still failing, clear cache
 npm cache clean --force
-npm install
+npm install --ignore-scripts
 ```
+
+**Note:** The `--ignore-scripts` flag bypasses problematic postinstall scripts from some dependencies (like rollup) that expect `patch-package` to be available.
 
 ---
 
@@ -233,7 +237,7 @@ Java 25+ • Node.js 24+ • npm 10+
 ```bash
 npm run stop
 cd backend && ./gradlew clean && cd ..
-cd frontend && rm -rf node_modules && npm install && cd ..
+cd frontend && rm -rf node_modules && npm install --ignore-scripts && cd ..
 npm run dev
 ```
 

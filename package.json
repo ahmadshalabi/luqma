@@ -4,7 +4,7 @@
   "private": true,
   "description": "Recipe search application with nutritional information and dynamic ingredient exclusion",
   "scripts": {
-    "setup": "npm run build:backend && cd frontend && npm install",
+    "setup": "npm run build:backend && cd frontend && npm install --ignore-scripts",
     "build": "npm run build:backend && npm run build:frontend",
     "dev": "concurrently -n \"BACKEND,FRONTEND\" -c \"blue,magenta\" \"npm run dev:backend\" \"sleep 15 && npm run dev:frontend\"",
     "stop": "lsof -ti:8080,3000 | xargs kill -9 2>/dev/null || true",
