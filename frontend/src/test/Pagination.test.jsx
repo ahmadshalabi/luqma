@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
-import { Pagination } from '@/primitives/Pagination'
+import { Pagination } from '@/components/search/Pagination'
 
 describe('Pagination', () => {
   it('renders accessible navigation with prev/next buttons', () => {

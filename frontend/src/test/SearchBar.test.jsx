@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { SearchBar } from '@/features/search/SearchBar'
+import { SearchBar } from '@/components/search/SearchBar'
 
 describe('SearchBar', () => {
   it('calls onSearch with query on submit', async () => {
