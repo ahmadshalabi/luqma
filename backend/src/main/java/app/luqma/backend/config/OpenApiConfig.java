@@ -5,9 +5,7 @@ import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.servers.Server;
-import lombok.Getter;
 import org.springdoc.core.models.GroupedOpenApi;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,12 +16,8 @@ import java.util.List;
  * Limits API documentation to only expose REST API classes (DTOs and controllers).
  * Internal domain models are excluded from documentation.
  */
-@Getter
 @Configuration
 public class OpenApiConfig {
-
-    @Value("${spring.application.name:luqma-backend}")
-    private String applicationName;
 
     /**
      * Configures the main OpenAPI documentation.

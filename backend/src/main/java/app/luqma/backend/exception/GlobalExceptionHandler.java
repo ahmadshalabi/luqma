@@ -1,6 +1,5 @@
 package app.luqma.backend.exception;
 
-import app.luqma.backend.util.ErrorResponseBuilder;
 import app.luqma.backend.util.StringSanitizer;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
