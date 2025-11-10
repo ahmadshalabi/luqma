@@ -7,14 +7,15 @@ Feature-based React component organization.
 ```
 frontend/src/
 ├── pages/              # Route-level components
-│   ├── HomePage/       # Search page
-│   └── RecipeDetailPage/  # Recipe details
+│   ├── HomePage.jsx    # Search page
+│   ├── about/          # About page
+│   └── recipe/         # Recipe details page
 ├── components/         # Shared components (2+ pages)
 │   ├── ui/            # Primitives (Button, Card, etc.)
 │   ├── layout/        # Layout components
 │   └── search/        # Search components
 ├── hooks/             # Custom reusable hooks
-├── context/           # React Context providers
+├── contexts/          # React Context providers
 ├── services/          # API client
 ├── utils/             # Utilities
 └── constants/         # App constants
@@ -76,11 +77,14 @@ import { Button } from '../../../components/ui/Button'  // ❌ Bad
 ## Key Patterns
 
 **Custom Hooks:**
-- `useSearch` - Search state
-- `useRecipeDetail` - Fetch recipe
+- `useSearch` - Search state with debouncing
+- `useSearchRecipes` - Fetch search results
+- `useRecipeDetail` - Fetch recipe details
 - `useRecipeExclusion` - Exclude ingredients
-- `useDebounce` - Debounced values
 - `useKeyboardNavigation` - Keyboard handling
+- `usePaginationLogic` - Pagination state
+- `useImageFallback` - Image loading fallback
+- `useMobileMenu` - Mobile menu state
 
 **Performance:**
 - `React.memo` for expensive components

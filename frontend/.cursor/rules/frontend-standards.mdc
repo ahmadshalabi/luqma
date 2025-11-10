@@ -110,7 +110,6 @@ You must:
 - Import constants from `@/constants` instead of hardcoding values
 - Use API constants for HTTP configuration (timeouts, retries, delays)
 - Use UI constants for pagination, animation timings, breakpoints
-- Use validation constants for form validation rules
 
 ## Vite
 

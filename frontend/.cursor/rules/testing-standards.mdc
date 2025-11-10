@@ -73,9 +73,9 @@ You must:
 You must use:
 - waitFor(): Wait for condition to become true
 - findBy queries: Built-in waiting (preferred)
-- jest.useFakeTimers(): Enable fake timers
-- jest.advanceTimersByTime(ms): Fast-forward time
-- jest.useRealTimers(): Restore after test
+- vi.useFakeTimers(): Enable fake timers
+- vi.advanceTimersByTime(ms): Fast-forward time
+- vi.useRealTimers(): Restore after test
 
 ## Coverage Requirements
 
@@ -90,7 +90,7 @@ You must measure:
 ## Mocking
 
 You must:
-- Mock API calls: jest.mock() at module level
+- Mock API calls: vi.mock() at module level
 - Use mockResolvedValue() for async returns
 - Use mockRejectedValue() for errors
 - Create mock context object for Context testing

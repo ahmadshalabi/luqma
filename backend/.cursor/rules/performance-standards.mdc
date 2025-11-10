@@ -37,8 +37,8 @@ You must:
 - Implement application cache: Spring @Cacheable
 - Set HTTP cache: ETag, Cache-Control
 - Cache external API responses
-- Use TTL: 5 minutes for recipe data
-- Use max size: 1000 entries
+- Use TTL: 1 hour for recipe data
+- Use max size: 500 entries
 - Use eviction: LRU
 
 ## Connection Pooling

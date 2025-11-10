@@ -117,7 +117,6 @@ npm run preview
 
 # Test
 npm test                  # Watch mode
-npm run test:run          # CI mode
 npm run test:coverage     # With coverage
 npm run test:ui           # UI mode
 
