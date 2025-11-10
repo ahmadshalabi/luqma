@@ -27,22 +27,18 @@ class IngredientValidationServiceTest {
     
     @Test
     void validateIngredientsExistInRecipe_withValidIds_doesNotThrow() {
-        // Given
         RecipeDetail recipe = createTestRecipe();
         Set<Long> validIds = Set.of(1L, 2L);
         
-        // When/Then
         assertThatCode(() -> validationService.validateIngredientsExistInRecipe(recipe, validIds))
                 .doesNotThrowAnyException();
     }
     
     @Test
     void validateIngredientsExistInRecipe_withInvalidId_throwsException() {
-        // Given
         RecipeDetail recipe = createTestRecipe();
         Set<Long> invalidIds = Set.of(1L, 999L);
         
-        // When/Then
         assertThatThrownBy(() -> validationService.validateIngredientsExistInRecipe(recipe, invalidIds))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("999");
@@ -50,18 +46,15 @@ class IngredientValidationServiceTest {
     
     @Test
     void validateIngredientsExistInRecipe_withEmptySet_doesNotThrow() {
-        // Given
         RecipeDetail recipe = createTestRecipe();
         Set<Long> emptySet = Set.of();
         
-        // When/Then
         assertThatCode(() -> validationService.validateIngredientsExistInRecipe(recipe, emptySet))
                 .doesNotThrowAnyException();
     }
     
     @Test
     void validateIngredientsExistInRecipe_withNullRecipe_throwsException() {
-        // When/Then
         assertThatThrownBy(() -> validationService.validateIngredientsExistInRecipe(null, Set.of(1L)))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining("Recipe cannot be null");
@@ -69,10 +62,8 @@ class IngredientValidationServiceTest {
     
     @Test
     void validateIngredientsExistInRecipe_withNullIngredientIds_throwsException() {
-        // Given
         RecipeDetail recipe = createTestRecipe();
         
-        // When/Then
         assertThatThrownBy(() -> validationService.validateIngredientsExistInRecipe(recipe, null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining(ErrorMessages.INGREDIENT_IDS_NULL);
@@ -80,20 +71,16 @@ class IngredientValidationServiceTest {
     
     @Test
     void validateIngredientIdsNotEmpty_withValidSet_doesNotThrow() {
-        // Given
         Set<Long> validSet = Set.of(1L, 2L);
         
-        // When/Then
         assertThatCode(() -> validationService.validateIngredientIdsNotEmpty(validSet))
                 .doesNotThrowAnyException();
     }
     
     @Test
     void validateIngredientIdsNotEmpty_withEmptySet_throwsException() {
-        // Given
         Set<Long> emptySet = Set.of();
         
-        // When/Then
         assertThatThrownBy(() -> validationService.validateIngredientIdsNotEmpty(emptySet))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ErrorMessages.INGREDIENT_IDS_EMPTY);
@@ -101,7 +88,6 @@ class IngredientValidationServiceTest {
     
     @Test
     void validateIngredientIdsNotEmpty_withNull_throwsException() {
-        // When/Then
         assertThatThrownBy(() -> validationService.validateIngredientIdsNotEmpty(null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ErrorMessages.INGREDIENT_IDS_NULL);
@@ -109,11 +95,9 @@ class IngredientValidationServiceTest {
     
     @Test
     void validateIngredientsExistInRecipe_withAllInvalidIds_throwsException() {
-        // Given
         RecipeDetail recipe = createTestRecipe();
         Set<Long> allInvalidIds = Set.of(999L, 888L);
         
-        // When/Then
         assertThatThrownBy(() -> validationService.validateIngredientsExistInRecipe(recipe, allInvalidIds))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("999")

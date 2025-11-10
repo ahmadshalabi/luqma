@@ -39,7 +39,6 @@ class GlobalExceptionHandlerTest {
     
     @Test
     void handleInvalidPaginationException_returns400() throws Exception {
-        // Given
         when(recipeSearchService.searchRecipes(anyString(), anyInt(), anyInt()))
                 .thenThrow(new InvalidPaginationException("Invalid page"));
         
@@ -52,7 +51,6 @@ class GlobalExceptionHandlerTest {
     
     @Test
     void handleResourceLoadException_returns500() throws Exception {
-        // Given
         when(recipeSearchService.searchRecipes(anyString(), anyInt(), anyInt()))
                 .thenThrow(new ResourceLoadException("Failed to load data"));
         
@@ -65,7 +63,6 @@ class GlobalExceptionHandlerTest {
     
     @Test
     void handleGenericException_returns500() throws Exception {
-        // Given
         when(recipeSearchService.searchRecipes(anyString(), anyInt(), anyInt()))
                 .thenThrow(new RuntimeException("Error"));
         

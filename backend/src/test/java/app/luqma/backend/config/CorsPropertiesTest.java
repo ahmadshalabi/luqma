@@ -28,7 +28,6 @@ class CorsPropertiesTest {
     
     @Test
     void validProperties_noViolations() {
-        // Given
         CorsProperties properties = new CorsProperties();
         properties.setAllowedOrigins(List.of("http://localhost:3000"));
         properties.setAllowedMethods(List.of("GET", "POST"));
@@ -36,73 +35,59 @@ class CorsPropertiesTest {
         properties.setAllowCredentials(false);
         properties.setMaxAge(3600);
         
-        // When
         Set<ConstraintViolation<CorsProperties>> violations = validator.validate(properties);
         
-        // Then
         assertThat(violations).isEmpty();
     }
     
     @Test
     void allowedOrigins_null_hasViolation() {
-        // Given
         CorsProperties properties = new CorsProperties();
         properties.setAllowedOrigins(null);
         properties.setAllowedMethods(List.of("GET"));
         properties.setAllowedHeaders(List.of("Content-Type"));
         
-        // When
         Set<ConstraintViolation<CorsProperties>> violations = validator.validate(properties);
         
-        // Then
         assertThat(violations).isNotEmpty();
         assertThat(violations).anyMatch(v -> v.getMessage().contains("allowed origins must not be null"));
     }
     
     @Test
     void allowedOrigins_empty_hasViolation() {
-        // Given
         CorsProperties properties = new CorsProperties();
         properties.setAllowedOrigins(new ArrayList<>());
         properties.setAllowedMethods(List.of("GET"));
         properties.setAllowedHeaders(List.of("Content-Type"));
         
-        // When
         Set<ConstraintViolation<CorsProperties>> violations = validator.validate(properties);
         
-        // Then
         assertThat(violations).isNotEmpty();
         assertThat(violations).anyMatch(v -> v.getMessage().contains("allowed origins must not be empty"));
     }
     
     @Test
     void allowedMethods_null_hasViolation() {
-        // Given
         CorsProperties properties = new CorsProperties();
         properties.setAllowedOrigins(List.of("http://localhost:3000"));
         properties.setAllowedMethods(null);
         properties.setAllowedHeaders(List.of("Content-Type"));
         
-        // When
         Set<ConstraintViolation<CorsProperties>> violations = validator.validate(properties);
         
-        // Then
         assertThat(violations).isNotEmpty();
         assertThat(violations).anyMatch(v -> v.getMessage().contains("allowed methods must not be null"));
     }
     
     @Test
     void allowedHeaders_empty_hasViolation() {
-        // Given
         CorsProperties properties = new CorsProperties();
         properties.setAllowedOrigins(List.of("http://localhost:3000"));
         properties.setAllowedMethods(List.of("GET"));
         properties.setAllowedHeaders(new ArrayList<>());
         
-        // When
         Set<ConstraintViolation<CorsProperties>> violations = validator.validate(properties);
         
-        // Then
         assertThat(violations).isNotEmpty();
         assertThat(violations).anyMatch(v -> v.getMessage().contains("allowed headers must not be empty"));
     }

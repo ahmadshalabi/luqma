@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { RecipeGrid } from '../recipe/card/RecipeGrid'
 import { Container } from '../layout/Container'
 import { Pagination } from './Pagination'
 import { ResultsHeader } from './ResultsHeader'
 import { Alert } from '../ui/Alert'
+import { Button } from '../ui/Button'
 import { LoadingSpinner } from '../ui/LoadingSpinner'
 import { StatusRegion } from '../ui/LiveRegion'
 import { RecipeGridSkeleton } from '../ui/Skeleton'
@@ -23,11 +24,13 @@ const ITEMS_PER_PAGE = PAGINATION.DEFAULT_PAGE_SIZE
 export function SearchResults({ query }) {
   const { page: currentPage, rawPage: pageParam, setSearchParams, updatePage } = useSearchState()
   const resultsRef = useRef(null)
+  const [retryCount, setRetryCount] = useState(0)
 
   const { recipes, totalResults, loading, isInitialLoad, error } = useSearchRecipes({
     query,
     page: currentPage,
-    pageSize: ITEMS_PER_PAGE
+    pageSize: ITEMS_PER_PAGE,
+    retryCount
   })
 
   const totalPages = Math.ceil(totalResults / ITEMS_PER_PAGE)
@@ -58,9 +61,9 @@ export function SearchResults({ query }) {
   }, [updatePage])
   
   const handleRetry = useCallback(() => {
-    // Trigger a re-fetch by updating the page (same page will refetch)
-    updatePage(currentPage)
-  }, [currentPage, updatePage])
+    // Trigger a re-fetch by incrementing retry counter
+    setRetryCount(prev => prev + 1)
+  }, [])
 
   if (!query) {
     return null
@@ -95,14 +98,14 @@ export function SearchResults({ query }) {
           <Alert
             variant="error"
             title="Error Loading Results"
-            message={`${error} Please check your connection and try again.`}
+            message={error}
             action={
-              <button
+              <Button
                 onClick={handleRetry}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                className="bg-red-600 hover:bg-red-700 focus:ring-red-500 cursor-pointer"
               >
                 Retry Search
-              </button>
+              </Button>
             }
           />
         </div>

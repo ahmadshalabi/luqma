@@ -52,7 +52,7 @@ describe('apiClient - searchRecipes', () => {
     global.fetch.mockRejectedValue(new TypeError('Failed to fetch'))
 
     await expect(searchRecipes({ query: 'test' })).rejects.toThrow(
-      'Unable to connect to the server. Please check your connection.'
+      'We\'re having trouble connecting right now. Please check your internet connection and try again.'
     )
   }, 10000) // Increase timeout due to retry delays
 })
