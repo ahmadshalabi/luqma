@@ -1,6 +1,6 @@
-# Mock Data for Development
+# Mock Data for Testing
 
-This directory contains mock data used for local development and testing without requiring external API calls to Spoonacular.
+This directory contains mock data used for testing purposes. The application now uses the Spoonacular API for live data.
 
 ## Files
 
@@ -47,15 +47,12 @@ These files contain full recipe information including:
 
 ## Usage
 
-The backend services load mock data on application startup:
-- `RecipeSearchService` uses `recipe-search-results.json` for search requests
-- `RecipeDetailService` uses individual `recipe-*.json` files for recipe details and ingredient exclusion
+Mock data is now used only for:
+- **Unit tests** - Consistent test data for predictable test results
+- **Integration tests** - Testing without external API dependencies
+- **Development reference** - Examples of expected API response structure
 
-This approach provides:
-- **Faster development** - No API key needed for basic development
-- **Offline capability** - Work without internet connection
-- **Consistent test data** - Predictable results for testing
-- **Cost savings** - Avoid API quota limits during development
+The application now uses the Spoonacular API integration via `SpoonacularClient` for live data.
 
 ## Updating Mock Data
 
@@ -67,10 +64,10 @@ To update or add mock data:
 4. Place in this directory
 5. Update this README if adding new files
 
-## Transition to Real API
+## Spoonacular API Integration
 
-When implementing the Spoonacular API client:
-1. Create `SpoonacularClient` in `backend/src/main/java/app/luqma/backend/client/`
-2. Update `RecipeSearchService` to use the client instead of mock data
-3. Keep mock data for testing purposes
-4. Use Spring profiles to switch between mock and real data
+The application has been successfully integrated with the Spoonacular API:
+1. ✅ `SpoonacularClient` implemented with full error handling
+2. ✅ `RecipeSearchService` uses SpoonacularClient for live searches
+3. ✅ `RecipeRepository` uses SpoonacularClient with Spring Cache
+4. ✅ Mock data retained for testing purposes

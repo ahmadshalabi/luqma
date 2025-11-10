@@ -6,9 +6,9 @@
 
 ## Tech Stack
 
-- **Backend:** Spring Boot 3.5.7, Java 25, Gradle, Swagger/OpenAPI
+- **Backend:** Spring Boot 3.5.7, Java 25, Gradle, Swagger/OpenAPI, Spoonacular API
 - **Frontend:** React 19.2.0, Vite 7.2.2, TailwindCSS 4.1.17, React Router 7.9.5, Vitest
-- **External API:** Spoonacular (uses mock data currently)
+- **External API:** Spoonacular API integration with caching and error handling
 
 ## Features
 
@@ -35,7 +35,7 @@
 - ✅ Structured logging with environment-aware behavior
 - ✅ Custom hooks for reusable logic
 - ✅ Comprehensive component library
-- 🚧 Spoonacular API integration (search and details currently using mock data)
+- ✅ Spoonacular API integration with Spring Cache (Caffeine) and robust error handling
 
 ## Prerequisites
 
@@ -152,7 +152,7 @@ npm run test:frontend  # Frontend tests with Vitest
 
 ### Technical Documentation
 - [Documentation Index](docs/README.md) - Complete documentation overview
-- [Architecture Decisions](docs/decisions/) - All 13 ADRs (MADR format)
+- [Architecture Decisions](docs/decisions/) - All 10 ADRs (MADR format)
 - [API Documentation](http://localhost:8080/swagger-ui.html) - Interactive API docs (when running)
 
 ### Standards & Guidelines
