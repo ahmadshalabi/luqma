@@ -59,6 +59,45 @@ curl "http://localhost:8080/api/v1/recipes/715497"
 - Internal DTOs use clean names in API docs: `Ingredient`, `Nutrition` (not `IngredientDTO`, `NutritionDTO`)
 - Domain models are excluded from API documentation (internal implementation only)
 
+### Ingredient Exclusion API
+
+**Endpoint:** `POST /api/v1/recipes/{id}/exclude-ingredients`
+
+Exclude specific ingredients from a recipe and recalculate nutrition information based on remaining ingredients.
+
+**Quick Example:**
+```bash
+curl -X POST "http://localhost:8080/api/v1/recipes/715497/exclude-ingredients" \
+  -H "Content-Type: application/json" \
+  -d '{"ingredientIds": [20409, 5006]}'
+```
+
+**Request Body:**
+```json
+{
+  "ingredientIds": [20409, 5006]
+}
+```
+
+**Implementation Notes:**
+- Validates all ingredient IDs exist in the recipe
+- Returns 404 if recipe not found
+- Returns 400 if any ingredient ID is invalid or doesn't exist in the recipe
+- Recalculates nutrition proportionally based on excluded ingredients
+- Currently using mock data (Spoonacular integration pending)
+
+**Response Structure:**
+- Same as Recipe Details API, but with:
+  - Excluded ingredients removed from ingredients list
+  - Nutrition values recalculated based on remaining ingredients
+  - All macronutrient percentages updated accordingly
+
+**Validation:**
+- Recipe ID must be a positive integer
+- At least one ingredient ID must be provided
+- All ingredient IDs must exist in the recipe
+- Ingredient IDs must be positive integers
+
 ## Security
 
 - **CORS:** Configured in `backend/src/main/resources/application.yaml`

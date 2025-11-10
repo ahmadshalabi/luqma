@@ -37,12 +37,17 @@ Domain models will be used:
 
 ## Current Status
 
-**Status:** Not yet implemented
+**Status:** ✅ Implemented
 
-**Why empty:** The application currently uses mock data that returns simple DTOs directly. Domain models will be created when:
-- Spoonacular API client is implemented
-- Recipe details endpoint is developed
-- Ingredient exclusion feature requires complex business logic
+The `model.domain` package now includes:
+- **RecipeDetail** - Complete recipe information with ingredients, nutrition, and instructions
+- **ExtendedIngredient** - Individual ingredients with measurements
+- **NutritionInfo** - Detailed nutritional breakdown with macronutrients
+- **Nutrient** - Individual nutrient information with amounts and percentages
+- **AnalyzedInstruction** - Cooking instructions with steps
+- **InstructionStep** - Individual instruction steps
+
+Domain models are currently used with mock data from `backend/src/main/resources/mocks/`. When Spoonacular API integration is implemented, these models will work seamlessly with real API data
 
 ## Related Packages
 
