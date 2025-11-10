@@ -4,6 +4,7 @@ import app.luqma.backend.model.domain.ExtendedIngredient;
 import app.luqma.backend.model.domain.Nutrient;
 import app.luqma.backend.model.domain.NutritionInfo;
 import app.luqma.backend.model.domain.RecipeDetail;
+import app.luqma.backend.mapper.NutrientExtractor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +52,7 @@ public class NutritionCalculationService {
         
         NutritionInfo updatedNutrition = recalculateNutritionInfo(
                 recipe.getNutrition(), nutrientsToSubtract);
+        
         return RecipeDetail.builder()
                 .id(recipe.getId())
                 .title(recipe.getTitle())
@@ -66,6 +68,10 @@ public class NutritionCalculationService {
     
     /**
      * Calculates total nutrients from excluded ingredients.
+     * 
+     * @param allIngredients all ingredients in the recipe
+     * @param excludedIds IDs of ingredients to exclude
+     * @return map of nutrient names to amounts to subtract
      */
     private Map<String, Double> calculateExcludedNutrients(
             List<ExtendedIngredient> allIngredients, Set<Long> excludedIds) {
@@ -92,6 +98,10 @@ public class NutritionCalculationService {
     
     /**
      * Recalculates nutrition info by subtracting excluded nutrients.
+     * 
+     * @param originalNutrition original nutrition info
+     * @param nutrientsToSubtract map of nutrient amounts to subtract
+     * @return updated nutrition info
      */
     private NutritionInfo recalculateNutritionInfo(
             NutritionInfo originalNutrition, Map<String, Double> nutrientsToSubtract) {
@@ -113,47 +123,12 @@ public class NutritionCalculationService {
                 .collect(Collectors.toList());
         
         NutritionInfo.CaloricBreakdown updatedBreakdown = 
-                recalculateCaloricBreakdown(updatedNutrients);
+                NutrientExtractor.recalculateCaloricBreakdown(updatedNutrients);
         
         return NutritionInfo.builder()
                 .nutrients(updatedNutrients)
                 .caloricBreakdown(updatedBreakdown)
                 .build();
-    }
-    
-    /**
-     * Recalculates caloric breakdown percentages based on updated nutrients.
-     * Uses the 4-4-9 rule: protein and carbs = 4 cal/g, fat = 9 cal/g.
-     */
-    private NutritionInfo.CaloricBreakdown recalculateCaloricBreakdown(List<Nutrient> nutrients) {
-        Double protein = findNutrientAmount(nutrients, "Protein");
-        Double fat = findNutrientAmount(nutrients, "Fat");
-        Double carbs = findNutrientAmount(nutrients, "Carbohydrates");
-        
-        double proteinCalories = protein * 4;
-        double fatCalories = fat * 9;
-        double carbCalories = carbs * 4;
-        double totalCalories = proteinCalories + fatCalories + carbCalories;
-        
-        double percentProtein = totalCalories > 0 ? (proteinCalories / totalCalories) * 100 : 0.0;
-        double percentFat = totalCalories > 0 ? (fatCalories / totalCalories) * 100 : 0.0;
-        double percentCarbs = totalCalories > 0 ? (carbCalories / totalCalories) * 100 : 0.0;
-        
-        log.debug("Recalculated breakdown - Protein: {:.2f}%, Fat: {:.2f}%, Carbs: {:.2f}%",
-                percentProtein, percentFat, percentCarbs);
-        
-        return new NutritionInfo.CaloricBreakdown(percentProtein, percentFat, percentCarbs);
-    }
-    
-    /**
-     * Finds nutrient amount by name from the nutrients list.
-     */
-    private Double findNutrientAmount(List<Nutrient> nutrients, String name) {
-        return nutrients.stream()
-                .filter(n -> name.equalsIgnoreCase(n.name()))
-                .findFirst()
-                .map(Nutrient::amount)
-                .orElse(0.0);
     }
 }
 
