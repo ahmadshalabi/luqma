@@ -37,11 +37,12 @@ export const SearchBar = forwardRef(function SearchBar({ onSearch, onChange, ini
           name="search"
           value={query}
           onChange={handleChange}
-          className="w-full pl-12 pr-4 py-4 text-base md:text-lg text-gray-900 placeholder-gray-500 bg-white border border-gray-300 rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full pl-12 pr-4 py-3 md:py-4 text-base md:text-lg text-gray-900 placeholder-gray-500 bg-white border border-gray-300 rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400"
           placeholder="Search for recipes..."
+          aria-describedby="search-hint"
         />
       </div>
-      <p className="mt-2 text-sm text-gray-500">
+      <p id="search-hint" className="mt-2 text-sm text-white/90 drop-shadow">
         Try searching for &ldquo;pasta&rdquo;, &ldquo;chicken&rdquo;, or your favorite dish
       </p>
     </form>
