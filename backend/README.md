@@ -52,13 +52,13 @@ The application will be available at http://localhost:8080 (default port)
 **Recipe Search:**
 - `GET /api/v1/recipes/search` - Search recipes with pagination
   - Parameters: `query` (required), `page`, `pageSize`
-  - Currently using mock data
+  - Powered by Spoonacular API
 
 **Recipe Details:**
 - `GET /api/v1/recipes/{id}` - Get complete recipe information
   - Path parameter: `id` (recipe ID, positive integer)
   - Returns: ingredients, nutrition, instructions
-  - Currently using mock data
+  - Powered by Spoonacular API with caching
 
 **Ingredient Exclusion:**
 - `POST /api/v1/recipes/{id}/exclude-ingredients` - Exclude ingredients and recalculate nutrition
@@ -101,6 +101,40 @@ Application-specific settings are in `backend/src/main/resources/application*.ya
 - `application-prod.yaml` - Production profile (optimized for performance)
 
 To change the port, edit `server.port` in the appropriate YAML file.
+
+## Spoonacular API Integration
+
+The backend integrates with the Spoonacular API for all recipe data:
+
+### Features
+- **Recipe Search** - Uses Spoonacular's `complexSearch` endpoint with `titleMatch` parameter
+- **Recipe Details** - Fetches complete recipe information with nutrition data
+- **Caching** - Spring Cache (Caffeine) caches recipe details for 1 hour
+- **Error Handling** - Comprehensive handling of rate limits (429), network errors, and API failures
+- **Security** - API key sent via `x-api-key` header, never exposed to frontend
+
+### Configuration
+All Spoonacular API settings are in `application.yaml`:
+```yaml
+spoonacular:
+  api-url: https://api.spoonacular.com
+  api-key: ${SPOONACULAR_API_KEY}
+  connection-timeout: 10000  # 10 seconds
+  read-timeout: 30000        # 30 seconds
+```
+
+### Caching Strategy
+Recipe details are cached using Spring Cache with Caffeine:
+- **Cache Name:** `recipes`
+- **Max Size:** 500 recipes
+- **TTL:** 1 hour (3600 seconds)
+- **Eviction:** LRU (Least Recently Used)
+
+### Rate Limiting
+The application includes built-in rate limiting to avoid exceeding Spoonacular API quotas:
+- **Max Requests:** 100 per minute (configurable)
+- **Scope:** Per IP address
+- **Response:** HTTP 429 when limit exceeded
 
 ## Documentation
 
