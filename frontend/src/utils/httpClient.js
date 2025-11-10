@@ -364,26 +364,3 @@ export function post(url, body, options = {}) {
   return httpClient(url, { ...options, method: 'POST', body })
 }
 
-/**
- * Helper for PUT requests.
- * 
- * @param {string} url - URL to request
- * @param {Object} body - Request body
- * @param {Object} options - Additional fetch options
- * @returns {Promise<Object>} Parsed JSON response
- */
-export function put(url, body, options = {}) {
-  return httpClient(url, { ...options, method: 'PUT', body })
-}
-
-/**
- * Helper for DELETE requests.
- * 
- * @param {string} url - URL to request
- * @param {Object} options - Additional fetch options
- * @returns {Promise<Object>} Parsed JSON response
- */
-export function del(url, options = {}) {
-  return httpClient(url, { ...options, method: 'DELETE' })
-}
-

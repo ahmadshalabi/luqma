@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { render } from '@testing-library/react'
-import { Skeleton, RecipeCardSkeleton, RecipeGridSkeleton, RecipeDetailSkeleton } from '../components/ui/Skeleton'
+import { Skeleton, RecipeCardSkeleton, RecipeGridSkeleton } from '../components/ui/Skeleton'
 
 describe('Skeleton', () => {
   it('should render with animation and variants', () => {
@@ -43,15 +43,6 @@ describe('RecipeGridSkeleton', () => {
     
     rerender(<RecipeGridSkeleton count={3} />)
     expect(container.querySelectorAll('.bg-white').length).toBe(3)
-  })
-})
-
-describe('RecipeDetailSkeleton', () => {
-  it('should render detail page structure with multiple sections', () => {
-    const { container } = render(<RecipeDetailSkeleton />)
-    
-    expect(container.querySelectorAll('[aria-hidden="true"]').length).toBeGreaterThan(5)
-    expect(container.querySelectorAll('.grid').length).toBeGreaterThan(0)
   })
 })
 
