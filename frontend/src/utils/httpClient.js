@@ -231,7 +231,7 @@ export async function httpClient(url, options = {}) {
 
         // Handle network errors
         if (error.name === 'TypeError' && error.message.includes('fetch')) {
-          lastError = new Error('Unable to connect to the server. Please check your connection.')
+          lastError = new Error('We\'re having trouble connecting right now. Please check your internet connection and try again.')
           
           // Retry network errors
           if (attempt < retries) {

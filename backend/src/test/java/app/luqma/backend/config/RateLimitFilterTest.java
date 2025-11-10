@@ -59,17 +59,14 @@ class RateLimitFilterTest {
     
     @Test
     void doFilter_withValidRequest_allowsRequest() throws ServletException, IOException {
-        // When
         filter.doFilter(request, response, filterChain);
         
-        // Then
         verify(filterChain).doFilter(request, response);
         verify(response, never()).setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
     }
     
     @Test
     void doFilter_exceedingRateLimit_returnsT29() throws ServletException, IOException {
-        // Given
         StringWriter writer = new StringWriter();
         when(response.getWriter()).thenReturn(new PrintWriter(writer));
         
@@ -81,7 +78,6 @@ class RateLimitFilterTest {
         // When - 6th request should be rate limited
         filter.doFilter(request, response, filterChain);
         
-        // Then
         verify(response).setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
         verify(response).setContentType("application/json");
         assertThat(writer.toString()).contains("Too Many Requests");
@@ -90,43 +86,33 @@ class RateLimitFilterTest {
     
     @Test
     void doFilter_withXForwardedForHeader_usesCorrectIp() throws ServletException, IOException {
-        // Given
         when(request.getHeader("X-Forwarded-For")).thenReturn("10.0.0.1, 10.0.0.2");
         
-        // When
         filter.doFilter(request, response, filterChain);
         
-        // Then
         verify(filterChain).doFilter(request, response);
     }
     
     @Test
     void doFilter_withInvalidXForwardedFor_fallsBackToRemoteAddr() throws ServletException, IOException {
-        // Given
         when(request.getHeader("X-Forwarded-For")).thenReturn("invalid-ip");
         
-        // When
         filter.doFilter(request, response, filterChain);
         
-        // Then
         verify(filterChain).doFilter(request, response);
     }
     
     @Test
     void doFilter_withXRealIPHeader_usesCorrectIp() throws ServletException, IOException {
-        // Given
         when(request.getHeader("X-Real-IP")).thenReturn("172.16.0.1");
         
-        // When
         filter.doFilter(request, response, filterChain);
         
-        // Then
         verify(filterChain).doFilter(request, response);
     }
     
     @Test
     void doFilter_afterWindowExpires_resetsCounter() throws ServletException, IOException {
-        // Given
         RateLimitProperties shortWindowProperties = new RateLimitProperties();
         shortWindowProperties.setMaxRequestsPerMinute(2);
         shortWindowProperties.setWindowSizeMillis(100); // 100ms window
@@ -149,7 +135,6 @@ class RateLimitFilterTest {
         // When - Should allow new request after window reset
         shortFilter.doFilter(request, response, filterChain);
         
-        // Then
         verify(filterChain, times(3)).doFilter(request, response);
         verify(response, never()).setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
     }

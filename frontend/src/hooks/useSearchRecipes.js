@@ -9,9 +9,10 @@ import { searchRecipes } from '@/services/apiClient'
  * @param {string} options.query - Search query
  * @param {number} options.page - Current page (1-indexed)
  * @param {number} options.pageSize - Results per page
+ * @param {number} [options.retryCount=0] - Retry counter to force refetch
  * @returns {Object} Search state and methods
  */
-export function useSearchRecipes({ query, page, pageSize }) {
+export function useSearchRecipes({ query, page, pageSize, retryCount = 0 }) {
   const [recipes, setRecipes] = useState([])
   const [totalResults, setTotalResults] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -61,7 +62,7 @@ export function useSearchRecipes({ query, page, pageSize }) {
     }
 
     fetchRecipes()
-  }, [query, page, pageSize])
+  }, [query, page, pageSize, retryCount])
 
   return {
     recipes,
