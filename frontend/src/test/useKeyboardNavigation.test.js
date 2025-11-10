@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { renderHook, act } from '@testing-library/react'
-import { useKeyboardNavigation, useKeyboardShortcuts, useFocusTrap } from '../hooks/useKeyboardNavigation'
+import { useKeyboardNavigation, useKeyboardShortcuts, useFocusTrap } from '@/hooks/useKeyboardNavigation'
 
 describe('useKeyboardNavigation', () => {
   it('should provide navigation handlers', () => {

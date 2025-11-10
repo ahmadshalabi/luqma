@@ -1,10 +1,10 @@
 import { useRecipeExclusion } from '@/hooks/useRecipeExclusion'
 import { RecipeHeader } from './RecipeHeader'
-import { IngredientList } from '../ingredients/IngredientList'
-import { CollapsibleNutrition } from '../nutrition/CollapsibleNutrition'
-import { InstructionList } from '../instructions/InstructionList'
-import { IngredientExclusionPanel } from '../ingredients/IngredientExclusionPanel'
-import { ExcludedIngredientsList } from '../ingredients/ExcludedIngredientsList'
+import { IngredientList } from '@/pages/recipe/ingredients/IngredientList'
+import { CollapsibleNutrition } from '@/pages/recipe/nutrition/CollapsibleNutrition'
+import { InstructionList } from '@/pages/recipe/instructions/InstructionList'
+import { IngredientExclusionPanel } from '@/pages/recipe/ingredients/IngredientExclusionPanel'
+import { ExcludedIngredientsList } from '@/pages/recipe/ingredients/ExcludedIngredientsList'
 
 /**
  * RecipeDetail component composing all recipe detail sub-components.
