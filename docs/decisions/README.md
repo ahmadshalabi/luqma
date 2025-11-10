@@ -13,6 +13,7 @@ ADRs for Luqma using [MADR 4.0.0](https://adr.github.io/madr/) format.
 - [ADR-0007](0007-use-feature-based-component-organization.md) - Use Feature-Based Component Organization
 - [ADR-0008](0008-use-custom-hooks-for-business-logic.md) - Use Custom Hooks for Business Logic
 - [ADR-0009](0009-implement-layered-architecture-in-backend.md) - Use Layered Architecture in Backend
+- [ADR-0010](0010-use-proportional-estimation-for-nutrition-calculation.md) - Use Proportional Estimation for Nutrition Calculation with Ingredient Exclusion
 
 ## Creating New ADRs
 
