@@ -30,6 +30,12 @@ SPRING_PROFILES_ACTIVE=dev  # or prod
 - Generic errors  
 - Restricted CORS
 
+**Mock (`mock`):**
+- Offline development without API key
+- Uses local mock data
+- Simulated latency and errors
+- Verbose logging with stack traces
+
 ### Ports
 
 **Default:** 8080
@@ -69,6 +75,52 @@ cache:
 **Default:** 100 requests/minute per IP
 
 **Change:** See `RateLimitFilter.java`
+
+### Mock Profile
+
+Use mock mode for offline development without a Spoonacular API key.
+
+**Activate:**
+```bash
+# Root level
+npm run dev:mock
+
+# Backend only
+cd backend
+./gradlew bootRun --args='--spring.profiles.active=mock'
+```
+
+**Configuration:**
+File: `backend/src/main/resources/application-mock.yaml`
+
+```yaml
+mock:
+  # Latency simulation - mimics real API response times
+  latency:
+    enabled: true           # Enable latency simulation
+    min-millis: 100         # Minimum latency in milliseconds
+    max-millis: 500         # Maximum latency in milliseconds
+  
+  # Error simulation - test error handling
+  errors:
+    enabled: false          # Disable by default
+    rate: 0.0               # Error rate (0.0-1.0)
+```
+
+**Features:**
+- No API key required
+- Uses sample data from `backend/src/main/resources/mocks/`
+- Configurable latency simulation (default: 100-500ms)
+- Optional error injection for testing
+- Full stack traces for debugging
+- CORS configured for both localhost:3000 and localhost:5173
+
+**When to use:**
+- Development without Spoonacular API key
+- Offline development
+- Conserving API quota
+- Testing with consistent, predictable data
+- Error handling scenarios (with errors.enabled = true)
 
 ---
 

@@ -23,6 +23,64 @@ cd frontend && npm run dev
 
 ---
 
+## Offline Development (Mock Mode)
+
+Use mock mode for development without a Spoonacular API key or to avoid consuming API quota.
+
+### Starting Mock Mode
+
+**Root level:**
+```bash
+npm run dev:mock
+```
+
+**Backend only:**
+```bash
+cd backend
+./gradlew bootRun --args='--spring.profiles.active=mock'
+```
+
+### Mock Mode Features
+
+- **No API Key Required** - Uses local mock data instead of Spoonacular API
+- **Mock Data Location** - `backend/src/main/resources/mocks/`
+- **Realistic Latency** - Simulates API response times (100-500ms)
+- **Error Simulation** - Optional error injection for testing error handling
+- **Verbose Logging** - Detailed logs with stack traces for debugging
+- **Full Functionality** - All endpoints work with sample recipe data
+
+### When to Use Mock Mode
+
+**Use mock mode when:**
+- You don't have a Spoonacular API key yet
+- Testing offline or without internet connection
+- Conserving API quota during development
+- Developing features that don't require live data
+- Testing with consistent, predictable data
+
+**Use live mode when:**
+- Testing with real Spoonacular data
+- Verifying API integration behavior
+- Testing with diverse recipe data
+- Validating production-like scenarios
+
+### Mock Configuration
+
+Mock behavior is configured in `backend/src/main/resources/application-mock.yaml`:
+
+```yaml
+mock:
+  latency:
+    enabled: true
+    min-millis: 100
+    max-millis: 500
+  errors:
+    enabled: false  # Enable for error testing
+    rate: 0.0       # 0.0 = no errors, 0.1 = 10%, 1.0 = 100%
+```
+
+---
+
 ## Development Commands
 
 ### Backend

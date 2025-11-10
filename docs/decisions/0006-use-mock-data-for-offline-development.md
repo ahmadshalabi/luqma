@@ -1,39 +1,63 @@
 ---
-status: "superseded"
+status: "accepted"
 date: 2025-11-10
-superseded-date: 2025-11-10
-superseded-by: "Live Spoonacular API integration with Spring Cache (implemented 2025-11-10)"
+updated: 2025-11-10
 ---
 
 # Use Mock Data for Offline Development
 
 ## Current Status
 
-**⚠️ This ADR has been SUPERSEDED**
+**✅ This ADR is ACTIVE** (Backend Mock Profile)
 
-**Superseded by:** Live Spoonacular API integration with Spring Cache (Caffeine)  
-**Date superseded:** 2025-11-10  
-**Reason:** Application evolved from offline development with mocks to production-ready live API integration
+The application supports both live and mock modes:
 
-The application now uses **live Spoonacular API integration** via `SpoonacularClient` with `RestClient` (Spring 6.2). Mock data in `backend/src/main/resources/mocks/` is **retained only for unit and integration tests**, not for offline development or runtime use.
+**Backend Mock Profile (`mock`):**
+- Active and fully supported for offline development
+- Uses mock data from `backend/src/main/resources/mocks/`
+- Activated via `--spring.profiles.active=mock` or `npm run dev:mock`
+- Includes configurable latency and error simulation
+- No Spoonacular API key required
 
-For current Spoonacular API integration details, see:
-- [Backend README - Spoonacular Integration](../../backend/README.md#spoonacular-api-integration)
-- [Architecture - Caching Strategy](../architecture/README.md#caching-strategy)
+**Frontend Mock Data:**
+- Removed as of 2025-11-10
+- Frontend now always calls backend API (live or mock)
+- Frontend tests mock `apiClient` directly using `vi.mock()`
+- No longer uses JSON mock files in `frontend/src/test/mocks/`
 
-### What Changed
+**Live Mode (Default):**
+- Uses Spoonacular API with Spring Cache (Caffeine)
+- Requires API key in `backend/.env`
+- Caches recipe details for 1 hour
 
-- **Before**: Mock data loaded at startup for offline development
-- **After**: Live API integration with Spring Cache (Caffeine) for performance
-- **Mock data now**: Used exclusively in test classes, not loaded at application startup
-- **Implementation**: `app.luqma.backend.client.SpoonacularClient` handles all API communication
+### Current Implementation
+
+**Backend Mock Profile:**
+- Configuration: `backend/src/main/resources/application-mock.yaml`
+- Mock data: `backend/src/main/resources/mocks/` (JSON files)
+- Mock client: `MockSpoonacularClient` (implements `SpoonacularClientInterface`)
+- Activation: Spring profile `mock`
+- Usage: Offline development, API quota conservation, consistent testing
+
+**Live API Integration:**
+- Client: `SpoonacularClient` (RestClient-based)
+- Configuration: `SpoonacularConfig` with API key authentication
+- Caching: `RecipeRepository` with Spring Cache (Caffeine, 1h TTL)
+- Activation: Spring profiles `dev` or `prod` (default)
+
+**Frontend Changes (2025-11-10):**
+- Mock data files removed from `frontend/src/test/mocks/`
+- Tests now mock `@/services/apiClient` directly
+- Frontend always calls backend (which may be in mock or live mode)
+- No frontend-side data mocking
 
 ### Related Components
 
-- `SpoonacularClient` - HTTP client for Spoonacular API integration
-- `SpoonacularConfig` - RestClient configuration with API key authentication
-- `RecipeRepository` - Spring Cache implementation (1 hour TTL, max 500 recipes)
-- `MockDataLoader` - Utility retained for test data loading only
+- `MockSpoonacularClient` - Mock implementation for offline development
+- `SpoonacularClient` - Live API integration with RestClient
+- `SpoonacularConfig` - Configuration and RestClient bean setup
+- `RecipeRepository` - Spring Cache implementation (live mode only)
+- `application-mock.yaml` - Mock profile configuration
 
 ---
 
