@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { Card } from '@/components/ui/Card'
 import { useImageFallback } from '@/hooks/useImageFallback'
@@ -9,11 +10,12 @@ import { RecipeCardContent } from './RecipeCardContent'
  * 
  * Displays a single recipe card with image and title.
  * Card is interactive and accessible via keyboard navigation.
+ * Memoized to prevent unnecessary re-renders when recipe data hasn't changed.
  * 
  * @param {Object} props
  * @param {Object} props.recipe - Recipe object containing id, title, and image
  */
-export function RecipeCard({ recipe }) {
+const RecipeCardComponent = ({ recipe }) => {
   const { imageError, handleImageError } = useImageFallback()
   const [searchParams] = useSearchParams()
   
@@ -45,4 +47,6 @@ export function RecipeCard({ recipe }) {
     </Card>
   )
 }
+
+export const RecipeCard = memo(RecipeCardComponent)
 

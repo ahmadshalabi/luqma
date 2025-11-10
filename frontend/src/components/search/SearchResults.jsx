@@ -3,12 +3,15 @@ import { RecipeGrid } from '../recipe/card/RecipeGrid'
 import { Container } from '../layout/Container'
 import { Pagination } from './Pagination'
 import { ResultsHeader } from './ResultsHeader'
-import { LoadingSpinner } from '../ui/LoadingSpinner'
 import { Alert } from '../ui/Alert'
+import { LoadingSpinner } from '../ui/LoadingSpinner'
+import { StatusRegion } from '../ui/LiveRegion'
+import { RecipeGridSkeleton } from '../ui/Skeleton'
 import { useSearchState } from '@/hooks/useSearchState'
 import { useSearchRecipes } from '@/hooks/useSearchRecipes'
+import { PAGINATION } from '@/constants/ui'
 
-const ITEMS_PER_PAGE = 9
+const ITEMS_PER_PAGE = PAGINATION.DEFAULT_PAGE_SIZE
 
 /**
  * SearchResults component for displaying recipe search results.
@@ -53,6 +56,11 @@ export function SearchResults({ query }) {
   const handlePageChange = useCallback((newPage) => {
     updatePage(newPage)
   }, [updatePage])
+  
+  const handleRetry = useCallback(() => {
+    // Trigger a re-fetch by updating the page (same page will refetch)
+    updatePage(currentPage)
+  }, [currentPage, updatePage])
 
   if (!query) {
     return null
@@ -61,7 +69,14 @@ export function SearchResults({ query }) {
   if (loading && isInitialLoad) {
     return (
       <Container as="div">
-        <LoadingSpinner size="lg" text="Loading recipes..." />
+        <div className="space-y-6">
+          <div className="text-center">
+            <StatusRegion visible={true}>
+              <p className="text-gray-600">Loading recipes...</p>
+            </StatusRegion>
+          </div>
+          <RecipeGridSkeleton count={ITEMS_PER_PAGE} />
+        </div>
       </Container>
     )
   }
@@ -80,7 +95,15 @@ export function SearchResults({ query }) {
           <Alert
             variant="error"
             title="Error Loading Results"
-            message={error}
+            message={`${error} Please check your connection and try again.`}
+            action={
+              <button
+                onClick={handleRetry}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+              >
+                Retry Search
+              </button>
+            }
           />
         </div>
       </Container>
@@ -90,6 +113,16 @@ export function SearchResults({ query }) {
   return (
     <Container as="div" ref={resultsRef}>
       <div className="space-y-6 relative">
+        {/* Screen reader announcement for search results */}
+        <StatusRegion>
+          {!loading && totalResults > 0 && 
+            `Found ${totalResults} ${totalResults === 1 ? 'recipe' : 'recipes'} for "${query}". Showing ${startItem} to ${endItem}.`
+          }
+          {!loading && totalResults === 0 && 
+            `No recipes found for "${query}".`
+          }
+        </StatusRegion>
+        
         <ResultsHeader
           title={`Search Results for "${query}"`}
           totalCount={totalResults}

@@ -7,6 +7,7 @@ import { IngredientExclusionPanel } from './IngredientExclusionPanel'
 import { ExcludedIngredientsList } from './ExcludedIngredientsList'
 import { useIngredientExclusion } from '@/hooks/useIngredientExclusion'
 import { excludeIngredients } from '@/services/apiClient'
+import { logger } from '@/utils/logger'
 
 /**
  * RecipeDetail component composing all recipe detail sub-components.
@@ -66,7 +67,7 @@ export function RecipeDetail({ recipe }) {
       setIsRecalculated(true)
       reset()
     } catch (err) {
-      console.error('Failed to apply exclusions:', err)
+      logger.error('Failed to apply exclusions', err, { recipeId: recipe.id })
       setApiError(err.message || 'Failed to exclude ingredients. Please try again.')
     } finally {
       setIsUpdating(false)
@@ -94,7 +95,7 @@ export function RecipeDetail({ recipe }) {
       setCurrentRecipe(updatedRecipe)
       setIsRecalculated(true)
     } catch (err) {
-      console.error('Failed to remove exclusion:', err)
+      logger.error('Failed to remove exclusion', err, { recipeId: recipe.id, ingredientId })
       setApiError(err.message || 'Failed to update recipe. Please try again.')
     } finally {
       setIsUpdating(false)

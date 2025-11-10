@@ -1,6 +1,9 @@
+import { memo } from 'react'
+
 /**
  * IngredientItem primitive component for displaying a single ingredient.
  * Presentational component with optional exclusion functionality.
+ * Memoized to prevent unnecessary re-renders when props haven't changed.
  * 
  * @param {Object} props
  * @param {Object} props.ingredient - Ingredient data
@@ -8,12 +11,13 @@
  * @param {boolean} [props.exclusionEnabled=false] - Whether exclusion UI should be shown
  * @param {Function} [props.onToggleExclude] - Handler for exclude toggle
  */
-export function IngredientItem({ 
-  ingredient, 
-  isExcluded = false, 
-  exclusionEnabled = false, 
-  onToggleExclude 
-}) {
+const IngredientItemComponent = (props) => {
+  const { 
+    ingredient, 
+    isExcluded = false, 
+    exclusionEnabled = false, 
+    onToggleExclude 
+  } = props
   return (
     <li
       className={`flex items-center justify-between gap-3 transition-all duration-150 ${
@@ -56,4 +60,6 @@ export function IngredientItem({
     </li>
   )
 }
+
+export const IngredientItem = memo(IngredientItemComponent)
 

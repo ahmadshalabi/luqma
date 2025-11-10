@@ -2,9 +2,9 @@ import { useParams, useLocation } from 'react-router-dom'
 import { useRecipeDetail } from '@/hooks/useRecipeDetail'
 import { RecipeDetail } from '@/features/recipe/RecipeDetail'
 import { BackLink } from '@/primitives/BackLink'
-import { LoadingState } from '@/primitives/LoadingState'
 import { MessageState } from '@/primitives/MessageState'
 import { MainLayout } from '@/features/layout/MainLayout'
+import { RecipeDetailSkeleton } from '@/components/ui/Skeleton'
 
 /**
  * RecipePage component displaying full recipe details.
@@ -22,12 +22,14 @@ export function RecipePage() {
 
   if (loading) {
     return (
-      <LoadingState
-        message="Loading recipe..."
-        size="lg"
-        wrapper="main"
-        wrapperClassName="flex-grow container mx-auto px-4 py-8"
-      />
+      <MainLayout>
+        <nav className="mb-6" aria-label="Breadcrumb">
+          <BackLink to={backLink}>Back to search</BackLink>
+        </nav>
+        <div aria-busy="true" aria-label="Loading recipe...">
+          <RecipeDetailSkeleton />
+        </div>
+      </MainLayout>
     )
   }
 

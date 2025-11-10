@@ -1,10 +1,12 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { NutritionHeader } from './NutritionHeader'
 import { NutritionContent } from './NutritionContent'
+import { StatusRegion } from '@/components/ui/LiveRegion'
 
 /**
  * CollapsibleNutrition component with expandable nutrition panel.
  * Pure functional component without side effects.
+ * Uses useMemo to optimize data validation check.
  *
  * @param {Object} props - Component props
  * @param {Object} props.nutrition - Nutrition data object
@@ -36,24 +38,38 @@ export function CollapsibleNutrition({ nutrition, defaultExpanded = false, isRec
     return () => window.removeEventListener('resize', updateHeight)
   }, [])
 
-  if (!nutrition) {
+  // Memoize validation check to avoid recalculating on every render
+  const hasData = useMemo(() => {
+    if (!nutrition) return false
+    const { calories = 0, protein = 0, fat = 0, carbohydrates = 0 } = nutrition
+    return calories > 0 || protein > 0 || fat > 0 || carbohydrates > 0
+  }, [nutrition])
+
+  // Memoize toggle handler to prevent unnecessary re-renders of child components
+  const handleToggle = useCallback(() => {
+    setIsExpanded(prev => !prev)
+  }, [])
+
+  if (!nutrition || !hasData) {
     return null
   }
 
-  const { calories = 0, protein = 0, fat = 0, carbohydrates = 0 } = nutrition
-  const hasData = calories > 0 || protein > 0 || fat > 0 || carbohydrates > 0
-
-  if (!hasData) {
-    return null
-  }
+  const { calories = 0 } = nutrition
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden transition-all duration-300 ease-in-out">
+      {/* Screen reader announcement for nutrition recalculation */}
+      {isRecalculated && (
+        <StatusRegion>
+          Nutrition information updated based on excluded ingredients. New calorie count: {calories.toFixed(0)} calories.
+        </StatusRegion>
+      )}
+      
       <NutritionHeader
         isExpanded={isExpanded}
         isRecalculated={isRecalculated}
         calories={calories}
-        onToggle={() => setIsExpanded(!isExpanded)}
+        onToggle={handleToggle}
       />
 
       <div
