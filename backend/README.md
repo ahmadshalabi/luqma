@@ -60,6 +60,13 @@ The application will be available at http://localhost:8080 (default port)
   - Returns: ingredients, nutrition, instructions
   - Currently using mock data
 
+**Ingredient Exclusion:**
+- `POST /api/v1/recipes/{id}/exclude-ingredients` - Exclude ingredients and recalculate nutrition
+  - Path parameter: `id` (recipe ID, positive integer)
+  - Request body: `{ "ingredientIds": [20409, 5006] }` (array of ingredient IDs to exclude)
+  - Returns: Updated recipe with recalculated nutrition based on remaining ingredients
+  - Validates all ingredient IDs exist in the recipe
+
 **Health & Monitoring:**
 - `GET /actuator/health` - Health check
 - `GET /actuator/health/liveness` - Liveness probe
