@@ -53,7 +53,7 @@ We use [MADR 4.0.0](https://adr.github.io/madr/) format for documenting architec
 3. **ADR-0003**: Development Workflow and Environment Management
 4. **ADR-0004**: Context API for State Management
 5. **ADR-0005**: Live Search with Debounce
-6. **ADR-0006**: Mock Data for Offline Development
+6. **ADR-0006**: Mock Data for Offline Development *(superseded - now uses live Spoonacular API)*
 7. **ADR-0007**: Feature-Based Component Organization
 8. **ADR-0008**: Custom Hooks for Business Logic
 9. **ADR-0009**: Layered Architecture in Backend
