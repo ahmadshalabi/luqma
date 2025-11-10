@@ -31,18 +31,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            // CSRF: Disabled for stateless REST API
             .csrf(AbstractHttpConfigurer::disable)
             
-            // CORS: Enable with custom configuration
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             
-            // Session: Stateless (no server-side sessions)
             .sessionManagement(session -> 
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             
-            // Authorization: Public endpoints for now
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/v1/recipes/**").permitAll()
                 .requestMatchers("/actuator/health/**", "/actuator/info").permitAll()
@@ -50,7 +46,6 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             )
             
-            // Security Headers: Best practices
             .headers(headers -> headers
                 .frameOptions(HeadersConfigurer.FrameOptionsConfig::deny)
                 .contentTypeOptions(Customizer.withDefaults())

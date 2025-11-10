@@ -1,6 +1,5 @@
-package app.luqma.backend.util;
+package app.luqma.backend.exception;
 
-import app.luqma.backend.exception.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
