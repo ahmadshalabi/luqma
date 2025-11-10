@@ -2,12 +2,24 @@
 
 ADRs for Luqma using [MADR 4.0.0](https://adr.github.io/madr/) format.
 
+## Table of Contents
+
+- [Status Legend](#status-legend)
+- [Records](#records)
+- [Superseded Decisions](#superseded-decisions)
+- [Creating New ADRs](#creating-new-adrs)
+- [Related Documentation](#related-documentation)
+
+---
+
 ## Status Legend
 
 - ✅ **Accepted** - Currently active decision
 - 🔄 **Superseded** - Replaced by newer approach
 - ❌ **Rejected** - Not chosen
 - 📝 **Proposed** - Under consideration
+
+---
 
 ## Records
 
@@ -24,6 +36,8 @@ ADRs for Luqma using [MADR 4.0.0](https://adr.github.io/madr/) format.
 | [ADR-0009](0009-implement-layered-architecture-in-backend.md) | Use Layered Architecture in Backend | ✅ Accepted | 2025-11-08 |
 | [ADR-0010](0010-use-proportional-estimation-for-nutrition-calculation.md) | Use Proportional Estimation for Nutrition Calculation with Ingredient Exclusion | ✅ Accepted | 2025-11-10 |
 
+---
+
 ## Superseded Decisions
 
 **ADR-0006** (Use Mock Data for Offline Development)
@@ -31,6 +45,8 @@ ADRs for Luqma using [MADR 4.0.0](https://adr.github.io/madr/) format.
 - **Date:** 2025-11-10
 - **Reason:** Application evolved from offline development to production-ready live API integration
 - **Current implementation:** See [Backend README - Spoonacular Integration](../../backend/README.md#spoonacular-api-integration)
+
+---
 
 ## Creating New ADRs
 
@@ -42,8 +58,14 @@ ADRs for Luqma using [MADR 4.0.0](https://adr.github.io/madr/) format.
 
 Or ask Cursor AI: "Create an ADR for..."
 
+---
+
 ## Related Documentation
 
 - [ADR Management Standards](../../.cursor/rules/adr-management.mdc) - How to create and manage ADRs
 - [Architecture Overview](../architecture/README.md) - Visual architecture documentation
 - [Documentation Index](../README.md) - All project documentation
+
+---
+
+**Navigation:** [Documentation Index](../README.md) | [Architecture Overview](../architecture/README.md)

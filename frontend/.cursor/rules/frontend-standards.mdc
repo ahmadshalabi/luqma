@@ -61,36 +61,15 @@ You must:
 ### Examples
 
 Good:
-```javascript
-// Importing from other directories - use @/
-import { Button } from '@/components/ui/Button'
-import { useSearch } from '@/hooks/useSearch'
-import { Container } from '@/components/layout/Container'
-
-// Same directory - relative is acceptable
-import { RecipeHeader } from './RecipeHeader'
-import { RecipeMetadataGroup } from './RecipeMetadataGroup'
-import { RecipeMetadataBadge } from './RecipeMetadataBadge'
-```
+- Import from other directories using `@/` alias: `@/components/ui/Button`, `@/hooks/useSearch`
+- Import from same directory using relative: `./RecipeHeader`, `./RecipeMetadataGroup`
 
 Bad:
-```javascript
-// Don't use parent directory navigation
-import { Button } from '../../../components/ui/Button'
-import { useSearch } from '../../hooks/useSearch'
-import { Container } from '../layout/Container'
-```
+- Never use parent directory navigation: `../../../components/ui/Button`, `../../hooks/useSearch`
 
 ### Configuration
 
-The `@/` alias is configured in `vite.config.js`:
-```javascript
-resolve: {
-  alias: {
-    '@': path.resolve(__dirname, './src'),
-  },
-}
-```
+The `@/` alias is configured in `vite.config.js` under the `resolve.alias` section, mapping `@` to the `src` directory.
 
 ## React 19 Features
 

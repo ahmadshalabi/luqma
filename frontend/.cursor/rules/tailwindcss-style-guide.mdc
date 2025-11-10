@@ -9,16 +9,12 @@ alwaysApply: false
 
 You must order classes: Layout → Box Model → Typography → Visual → Effects → Transitions
 
-Example:
-```jsx
-<div className="
-  flex items-center justify-between
-  w-full p-4 space-x-2
-  text-lg font-semibold text-gray-900
-  bg-white border border-gray-200 rounded-lg shadow-sm
-  hover:bg-gray-50 transition-colors
-">
-```
+Example order:
+1. Layout: flex, grid, items-center, justify-between
+2. Box Model: w-full, p-4, space-x-2
+3. Typography: text-lg, font-semibold, text-gray-900
+4. Visual: bg-white, border, border-gray-200, rounded-lg, shadow-sm
+5. Effects & Transitions: hover:bg-gray-50, transition-colors
 
 ## Responsive Modifiers
 
@@ -57,15 +53,8 @@ You should extract to React component when:
 You must always use complete class names (never string interpolation):
 
 Good:
-```jsx
-const colorClasses = {
-  blue: 'text-blue-600',
-  red: 'text-red-600',
-};
-<div className={colorClasses[color]}>Text</div>
-```
+- Create object mapping with complete class names: `colorClasses[color]`
+- Use safelist in tailwind.config.js for dynamic classes
 
 Bad:
-```jsx
-<div className={`text-${color}-600`}>Text</div>
-```
+- Never use template literals with variables: `text-${color}-600` (breaks PurgeCSS)

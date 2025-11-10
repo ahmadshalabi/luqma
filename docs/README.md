@@ -1,109 +1,60 @@
-# Luqma Documentation
+# Documentation Index
 
-Welcome to the Luqma project documentation. This directory contains all technical documentation, architectural decisions, and guides for developers.
+Complete documentation for Luqma.
 
-## Quick Links
+## Getting Started
 
-### Getting Started
-- [Project README](../README.md) - Project overview and setup
-- [Troubleshooting Guide](TROUBLESHOOTING.md) - Common issues and solutions
-- [API Documentation](api/README.md) - Backend API reference
+- **[Getting Started](guides/getting-started.md)** - Setup from zero to running
+- **[Configuration](guides/configuration.md)** - Environment variables, ports, settings
+- **[Development Workflow](guides/development-workflow.md)** - Local development guide
+- **[Deployment](guides/deployment.md)** - Production deployment
+- **[Troubleshooting](TROUBLESHOOTING.md)** - Common issues
 
-### Architecture
-- [Architecture Overview](architecture/README.md) - System architecture and data flow diagrams
-- [Backend Domain Models](../backend/docs/domain-models.md) - Domain model documentation
-- [Architecture Decision Records](decisions/README.md) - All ADRs (10 decisions)
+---
 
-### Standards & Guidelines
-- [Project Context](../.cursor/rules/luqma-project.mdc) - Project overview and tech stack
-- [Git Standards](../.cursor/rules/git-standards.mdc) - Commit, branch, and PR conventions
-- [Security Standards](../.cursor/rules/security-standards.mdc) - API key protection and security practices
-- [Accessibility Standards](../.cursor/rules/accessibility-standards.mdc) - WCAG 2.1 AA compliance
-- [Code Review Checklist](../.cursor/rules/code-review-checklist.mdc) - Review guidelines
+## API
 
-## Documentation Structure
+- **[API Overview](api/README.md)** - REST API reference
+- **[Recipe Search](api/endpoints-search.md)** - Search endpoint
+- **[Recipe Details](api/endpoints-details.md)** - Details endpoint
+- **[Ingredient Exclusion](api/endpoints-exclusion.md)** - Exclusion endpoint
+- **[Error Handling](api/error-handling.md)** - Error codes and handling
 
-```
-docs/
-├── README.md                      # This file
-├── TROUBLESHOOTING.md             # Common issues
-├── api/                           # API documentation
-│   └── README.md
-├── architecture/                  # Architecture documentation
-│   └── README.md                  # System diagrams and data flows
-├── testing/                       # Testing documentation
-│   └── README.md                  # Coverage requirements and testing guide
-└── decisions/                     # Architecture Decision Records
-    ├── README.md                  # ADR index
-    ├── adr-template.md            # MADR template
-    ├── 0001-use-markdown-architectural-decision-records.md
-    ├── 0002-use-monorepo-structure.md
-    ├── 0003-standardize-development-workflow-and-environment-management.md
-    ├── 0004-use-context-api-for-state-management.md
-    ├── 0005-implement-live-search-on-homepage.md
-    ├── 0006-use-mock-data-for-offline-development.md
-    ├── 0007-use-feature-based-component-organization.md
-    ├── 0008-use-custom-hooks-for-business-logic.md
-    ├── 0009-implement-layered-architecture-in-backend.md
-    └── 0010-use-proportional-estimation-for-nutrition-calculation.md
-```
+**Interactive:** http://localhost:8080/swagger-ui.html (when running)
 
-## Key Documentation
+---
 
-### Architecture Decision Records
+## Architecture
 
-We use [MADR 4.0.0](https://adr.github.io/madr/) format for documenting architectural decisions. See [decisions/README.md](decisions/README.md) for all ADRs and their details.
+- **[System Overview](architecture/system-overview.md)** - High-level architecture
+- **[Backend Architecture](architecture/backend-architecture.md)** - Layered design
+- **[Frontend Architecture](architecture/frontend-architecture.md)** - Component organization
+- **[Data Flows](architecture/data-flows.md)** - Request flows
+- **[Caching Strategy](architecture/caching-strategy.md)** - Performance optimization
 
-### Testing
+---
 
-Comprehensive testing guide with coverage requirements, testing strategies, and examples. See [testing/README.md](testing/README.md) for full documentation.
+## Testing
 
-## Development Guidelines
+- **[Testing Guide](testing/README.md)** - Overview
+- **[Backend Testing](testing/backend-testing.md)** - JUnit 5, Mockito
+- **[Frontend Testing](testing/frontend-testing.md)** - Vitest, React Testing Library
+- **[Coverage Requirements](testing/coverage-requirements.md)** - Standards
 
-All coding standards, workflows, and best practices are documented in `.cursor/rules/`:
+---
 
-- **Git Workflow:** [git-standards.mdc](../.cursor/rules/git-standards.mdc)
-- **Security:** [security-standards.mdc](../.cursor/rules/security-standards.mdc)
-- **Accessibility:** [accessibility-standards.mdc](../.cursor/rules/accessibility-standards.mdc)
-- **ADR Management:** [adr-management.mdc](../.cursor/rules/adr-management.mdc)
-- **Frontend Standards:** [frontend/.cursor/rules/frontend-standards.mdc](../frontend/.cursor/rules/frontend-standards.mdc)
-- **Backend Standards:** [backend/.cursor/rules/](../backend/.cursor/rules/)
+## Decisions
 
-For testing documentation, see [testing/README.md](testing/README.md).
+- **[ADRs](decisions/README.md)** - All Architecture Decision Records
 
-## Contributing
+**Key decisions:** Layered backend, Context API, Custom hooks, Caching, Nutrition calculation
 
-1. Read relevant documentation in `.cursor/rules/`
-2. Check ADRs for architectural patterns
-3. Follow code standards and conventions
-4. Write tests for new code
-5. Update documentation as needed
-6. Create PR following git standards
-7. Address review feedback
+---
 
-## Resources
+## Standards
 
-### External Documentation
-
-- [React 19 Documentation](https://react.dev/)
-- [Spring Boot Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/)
-- [TailwindCSS Documentation](https://tailwindcss.com/docs)
-- [Vite Documentation](https://vitejs.dev/)
-- [Vitest Documentation](https://vitest.dev/)
-- [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
-- [MADR Template](https://adr.github.io/madr/)
-
-## Questions?
-
-If you have questions or need clarification:
-
-1. Check this documentation
-2. Review relevant ADRs
-3. Search existing issues
-4. Ask in team discussion
-5. Create new issue if needed
-
-## License
-
-MIT License - see [LICENSE](../LICENSE) for details.
-
+Located in `.cursor/rules/`:
+- Git Standards - Commit conventions, branching
+- Security Standards - API key protection
+- Accessibility Standards - WCAG 2.1 AA
+- Backend/Frontend Standards - Code conventions

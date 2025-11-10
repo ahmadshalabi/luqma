@@ -4,11 +4,24 @@
 
 > Recipe search application with nutritional information and ingredient exclusion.
 
+## Table of Contents
+
+- [Tech Stack](#tech-stack)
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Quick Start](#quick-start)
+- [Documentation](#documentation)
+- [License](#license)
+
+---
+
 ## Tech Stack
 
 - **Backend:** Spring Boot 3.5.7, Java 25, Gradle, Swagger/OpenAPI, Spoonacular API
 - **Frontend:** React 19.2.0, Vite 7.2.2, TailwindCSS 4.1.17, React Router 7.9.5, Vitest
 - **External API:** Spoonacular API integration with caching and error handling
+
+---
 
 ## Features
 
@@ -37,6 +50,8 @@
 - ✅ Comprehensive component library
 - ✅ Spoonacular API integration with Spring Cache (Caffeine) and robust error handling
 
+---
+
 ## Prerequisites
 
 - **Java 25+** - [Download](https://adoptium.net/)
@@ -44,6 +59,8 @@
 - **npm 10+** (comes with Node.js)
 - **Gradle** (included via wrapper)
 - **Spoonacular API Key** - [Get free key](https://spoonacular.com/food-api/console#Dashboard) (150 requests/day free tier)
+
+---
 
 ## Quick Start
 
@@ -55,15 +72,15 @@ cd luqma
 # Install root dependencies
 npm install
 
-# Copy .env.example files and configure
+# Setup environment files
 cp backend/.env.example backend/.env
 cp frontend/.env.example frontend/.env
 # Edit backend/.env and add your SPOONACULAR_API_KEY
 
-# Setup backend and frontend (builds and installs dependencies)
+# Setup backend and frontend
 npm run setup
 
-# Run both services (backend starts first, frontend waits for backend to be ready)
+# Run both services (backend starts first, frontend waits for backend)
 npm run dev
 
 # Stop services (in separate terminal or use Ctrl+C)
@@ -71,101 +88,61 @@ npm run stop
 ```
 
 **Access the application:**
-- Backend: http://localhost:8080 (or your custom port)
-- Frontend: http://localhost:3000 (or your custom port)
+- Frontend: http://localhost:3000
+- Backend: http://localhost:8080
 - API Swagger: http://localhost:8080/swagger-ui.html
 
 **Note:** Backend starts first, frontend starts after 15 seconds to allow backend initialization.
 
-## Configuration
+**Next Steps:**
+- 📖 [Getting Started Guide](docs/guides/getting-started.md) - Complete setup walkthrough
+- ⚙️ [Configuration Guide](docs/guides/configuration.md) - Environment variables, ports, CORS
+- 💻 [Development Workflow](docs/guides/development-workflow.md) - Local development tips
 
-Luqma uses environment-specific configuration files for backend and frontend services.
-
-### Backend Configuration
-
-Create a `.env` file in the `backend/` directory:
-
-```bash
-cd backend
-cp .env.example .env
-# Edit backend/.env and add your Spoonacular API key
-```
-
-**Required variables:**
-- `SPOONACULAR_API_KEY` - Get your key from [Spoonacular](https://spoonacular.com/food-api/console#Dashboard)
-- `SPRING_PROFILES_ACTIVE` - Set to `dev` for development (optional, defaults to `dev`)
-
-### Frontend Configuration
-
-Create a `.env` file in the `frontend/` directory:
-
-```bash
-cd frontend
-cp .env.example .env
-# Edit frontend/.env to configure backend API URL if needed
-```
-
-**Default configuration:**
-- `LUQMA_API_URL` - Backend API endpoint (default: `http://localhost:8080/api/v1`)
-
-### Custom Ports
-
-To use different ports:
-
-**Backend:** Edit `backend/src/main/resources/application.yaml` and change the `server.port` value.
-
-**Frontend:** Edit `frontend/vite.config.js` and change the `server.port` value, then update `LUQMA_API_URL` in `frontend/.env` to match your backend port.
-
-## Building for Production
-
-```bash
-# Build both backend and frontend (runs backend first, then frontend)
-npm run build
-
-# Or build individually
-npm run build:backend   # Build backend JAR with Gradle
-npm run build:frontend  # Build frontend static assets with Vite
-```
-
-**Build outputs:**
-- Backend: `backend/build/libs/backend-0.1.0.jar`
-- Frontend: `frontend/dist/`
-
-## Testing
-
-```bash
-# Run all tests
-npm run test
-
-# Or run individually
-npm run test:backend   # Backend tests with Gradle
-npm run test:frontend  # Frontend tests with Vitest
-```
-
-**For detailed testing documentation including coverage requirements, strategies, and best practices, see [Testing Guide](docs/testing/README.md).**
-
+---
 
 ## Documentation
 
 ### Getting Started
-- [Backend README](backend/README.md) - Backend setup and API documentation
-- [Frontend README](frontend/README.md) - Frontend setup and development
+- [Getting Started Guide](docs/guides/getting-started.md) - Setup from zero to running
+- [Configuration Guide](docs/guides/configuration.md) - Environment variables and settings
+- [Development Workflow](docs/guides/development-workflow.md) - Local development guide
+- [Deployment Guide](docs/guides/deployment.md) - Production deployment
 - [Troubleshooting Guide](docs/TROUBLESHOOTING.md) - Common issues and solutions
 
 ### Technical Documentation
 - [Documentation Index](docs/README.md) - Complete documentation overview
-- [Architecture Overview](docs/architecture/README.md) - System architecture and data flow diagrams
-- [Architecture Decisions](docs/decisions/) - All 10 ADRs (MADR format)
-- [API Documentation](docs/api/README.md) - REST API reference with examples
-- [Testing Guide](docs/testing/README.md) - Testing strategies and coverage requirements
+- [Architecture Overview](docs/architecture/README.md) - System architecture and diagrams
+  - [System Overview](docs/architecture/system-overview.md) - High-level architecture
+  - [Backend Architecture](docs/architecture/backend-architecture.md) - Layered backend design
+  - [Frontend Architecture](docs/architecture/frontend-architecture.md) - Component organization
+  - [Data Flows](docs/architecture/data-flows.md) - Request flows
+  - [Caching Strategy](docs/architecture/caching-strategy.md) - Performance optimization
+- [API Documentation](docs/api/README.md) - REST API reference
+  - [Recipe Search Endpoint](docs/api/endpoints-search.md)
+  - [Recipe Details Endpoint](docs/api/endpoints-details.md)
+  - [Ingredient Exclusion Endpoint](docs/api/endpoints-exclusion.md)
+  - [Error Handling](docs/api/error-handling.md)
+- [Testing Guide](docs/testing/README.md) - Testing strategies and coverage
+  - [Backend Testing](docs/testing/backend-testing.md)
+  - [Frontend Testing](docs/testing/frontend-testing.md)
+  - [Coverage Requirements](docs/testing/coverage-requirements.md)
+- [Architecture Decisions](docs/decisions/README.md) - All ADRs (MADR format)
 - [Interactive API Docs](http://localhost:8080/swagger-ui.html) - Swagger UI (when running)
+
+### Component-Specific
+- [Backend README](backend/README.md) - Backend setup and commands
+- [Frontend README](frontend/README.md) - Frontend setup and commands
 
 ### Standards & Guidelines
 - [Git Standards](.cursor/rules/git-standards.mdc) - Commit, branch, and PR conventions
 - [Security Standards](.cursor/rules/security-standards.mdc) - API key protection and security
 - [Accessibility Standards](.cursor/rules/accessibility-standards.mdc) - WCAG 2.1 AA compliance
+- [Code Review Checklist](.cursor/rules/code-review-checklist.mdc) - PR review guidelines
 - [Frontend Standards](frontend/.cursor/rules/frontend-standards.mdc) - React and component guidelines
 - [Backend Standards](backend/.cursor/rules/backend-standards.mdc) - Spring Boot patterns and conventions
+
+---
 
 ## License
 

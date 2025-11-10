@@ -21,7 +21,7 @@ You must never:
 ## Formatting
 
 You must:
-- Use 2 spaces for block indentation
+- Use 2 spaces for block indentation (Google Java Style)
 - Use 4 spaces for line continuation
 - Set max line length to 100 characters
 - Place opening brace on same line (K&R style)
@@ -30,6 +30,8 @@ You must:
 - Add space around binary operators: a + b, x == y
 - No space inside parentheses: (condition) not ( condition )
 - No space inside brackets: array[0] not array[ 0 ]
+
+**Note:** Gradle build files (.gradle.kts) use 4-space indentation following Kotlin DSL conventions. See [Gradle Style Guide](./gradle-style-guide.mdc).
 
 ## Naming
 
