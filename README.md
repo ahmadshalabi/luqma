@@ -12,15 +12,29 @@
 
 ## Features
 
+### Core Functionality
 - ✅ Recipe search with pagination
-- ✅ Live search with debouncing
+- ✅ Live search with debouncing (300ms)
 - ✅ Recipe details page with full nutrition breakdown
 - ✅ Dynamic ingredient exclusion with automatic nutrition recalculation
 - ✅ Interactive nutrition facts (collapsible, with calorie indicators)
 - ✅ Comprehensive error handling and validation
 - ✅ Rate limiting and security controls
-- ✅ Responsive, accessible design (WCAG 2.1 AA)
+
+### Accessibility & UX
+- ✅ WCAG 2.1 AA compliant
+- ✅ Full keyboard navigation (arrow keys, shortcuts, focus management)
+- ✅ Screen reader support with live regions
+- ✅ Skeleton loading states for better perceived performance
+- ✅ Responsive design (mobile-first approach)
+- ✅ Touch-friendly targets (44x44px minimum)
+
+### Developer Experience
 - ✅ Clean OpenAPI documentation (domain models hidden)
+- ✅ Centralized constants management
+- ✅ Structured logging with environment-aware behavior
+- ✅ Custom hooks for reusable logic
+- ✅ Comprehensive component library
 - 🚧 Spoonacular API integration (search and details currently using mock data)
 
 ## Prerequisites
@@ -131,11 +145,21 @@ npm run test:frontend  # Frontend tests with Vitest
 
 ## Documentation
 
-- [Backend README](backend/README.md) - Setup, API docs
-- [Frontend README](frontend/README.md) - Setup, development
+### Getting Started
+- [Backend README](backend/README.md) - Backend setup and API documentation
+- [Frontend README](frontend/README.md) - Frontend setup and development
 - [Troubleshooting Guide](docs/TROUBLESHOOTING.md) - Common issues and solutions
-- [Architecture Decisions](docs/decisions/) - ADRs
-- Swagger UI: http://localhost:8080/swagger-ui.html - API docs (when running)
+
+### Technical Documentation
+- [Documentation Index](docs/README.md) - Complete documentation overview
+- [Architecture Decisions](docs/decisions/) - All 13 ADRs (MADR format)
+- [API Documentation](http://localhost:8080/swagger-ui.html) - Interactive API docs (when running)
+
+### Standards & Guidelines
+- [Git Standards](.cursor/rules/git-standards.mdc) - Commit, branch, and PR conventions
+- [Security Standards](.cursor/rules/security-standards.mdc) - API key protection and security
+- [Accessibility Standards](.cursor/rules/accessibility-standards.mdc) - WCAG 2.1 AA compliance
+- [Frontend Standards](frontend/.cursor/rules/frontend-standards.mdc) - React and component guidelines
 
 ## License
 

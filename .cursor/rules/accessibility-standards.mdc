@@ -56,9 +56,15 @@ You must implement for modals:
 You must support:
 - Enter/Space: Activate button
 - Escape: Close modal/dropdown
-- Arrow keys: Navigate menu/list
+- Arrow keys: Navigate menu/list/grid
 - Tab: Next element
 - Shift+Tab: Previous element
+- Home/End: First/Last element (in grids/lists)
+
+You should use keyboard navigation hooks from `@/hooks/useKeyboardNavigation`:
+- `useKeyboardNavigation()` for grid/list arrow key navigation
+- `useKeyboardShortcuts()` for global keyboard shortcuts (e.g., `/` for search)
+- `useFocusTrap()` for modal focus trapping
 
 ## Visual Accessibility
 
@@ -107,6 +113,11 @@ You must:
 - Use `aria-busy` attribute for loading states
 - Hide loading spinners from screen readers: `aria-hidden="true"`
 - Manage focus after updates (move to new content or announce with live regions)
+
+You should use the LiveRegion component from `@/components/ui/LiveRegion`:
+- `<StatusRegion>` for polite status updates (search results count, filter changes)
+- `<AlertRegion>` for assertive alerts (errors, warnings)
+- `<LiveRegion>` for custom live region configuration
 
 ## Common Patterns
 
