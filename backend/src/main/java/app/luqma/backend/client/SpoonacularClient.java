@@ -4,6 +4,7 @@ import app.luqma.backend.exception.ExternalApiException;
 import app.luqma.backend.model.domain.RecipeDetail;
 import app.luqma.backend.model.dto.spoonacular.SpoonacularSearchResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
@@ -30,11 +31,16 @@ import java.util.Objects;
  * <p><strong>Error Handling:</strong> All HTTP errors are wrapped in
  * {@link ExternalApiException} with appropriate status codes.
  * 
+ * <p><strong>Active Profile:</strong> Not active when "mock" profile is enabled.
+ * Use {@link MockSpoonacularClient} for mock mode.
+ * 
  * @see ExternalApiException
+ * @see MockSpoonacularClient
  */
 @Slf4j
 @Component
-public class SpoonacularClient {
+@Profile("!mock")
+public class SpoonacularClient implements RecipeApiClient {
     
     private static final String SERVICE_NAME = "Spoonacular API";
     private static final String SEARCH_ENDPOINT = "/recipes/complexSearch";
