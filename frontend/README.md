@@ -59,7 +59,7 @@ src/
 ├── pages/            # Route pages with co-located page-specific components
 │   ├── about/       # AboutPage, FeatureCard, FeaturesSection, MissionSection
 │   ├── recipe/      # RecipePage with page-specific components
-│   │   ├── detail/      # RecipeDetail, RecipeHeader, RecipeImage, RecipeMetadata
+│   │   ├── detail/      # RecipeDetail, RecipeHeader, RecipeImage, RecipeMetadataBadge, RecipeMetadataGroup
 │   │   ├── ingredients/ # Ingredient-related components for RecipePage
 │   │   ├── instructions/# Instruction-related components
 │   │   ├── nutrition/   # Nutrition-related components
@@ -73,7 +73,7 @@ src/
 │   ├── layout/      # Header (with mobile menu components), Footer, HeroSection, SkipLink, Container
 │   ├── recipe/
 │   │   ├── card/         # RecipeCard, RecipeCardContent, RecipeCardImage, RecipeGrid
-│   │   ├── detail/       # RecipeDetail, RecipeHeader, RecipeImage, RecipeMetadata
+│   │   ├── detail/       # (No shared detail components - all are page-specific in pages/recipe/detail/)
 │   │   ├── ingredients/  # IngredientList, IngredientItem, ExclusionPanels, etc.
 │   │   ├── instructions/ # InstructionList, InstructionStep
 │   │   └── nutrition/    # NutritionCard, CollapsibleNutrition, NutritionContent

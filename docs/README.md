@@ -73,7 +73,7 @@ We follow strict coding standards documented in `.cursor/rules/`:
 - Accessibility standards (WCAG 2.1 AA)
 - ADR management (MADR format)
 
-**Frontend Standards** (`.cursor/rules/frontend-standards.mdc`):
+**Frontend Standards** (`frontend/.cursor/rules/frontend-standards.mdc`):
 - Component architecture (under 200 lines, extract to hooks)
 - Import standards (use `@/` alias)
 - React 19 features
@@ -81,7 +81,7 @@ We follow strict coding standards documented in `.cursor/rules/`:
 - Performance optimization
 - TailwindCSS usage
 
-**Backend Standards** (`.cursor/rules/backend-standards.mdc`):
+**Backend Standards** (`backend/.cursor/rules/backend-standards.mdc`):
 - Layered architecture
 - Spring Boot conventions
 - Error handling
@@ -143,7 +143,6 @@ When creating new components:
    - Achieve 70%+ coverage
 
 4. Update documentation:
-   - Add to COMPONENTS.md if significant
    - Update relevant ADRs if architectural impact
 
 ## Testing
@@ -200,5 +199,5 @@ If you have questions or need clarification:
 
 ## License
 
-[Add license information here]
+MIT License - see [LICENSE](../LICENSE) for details.
 
