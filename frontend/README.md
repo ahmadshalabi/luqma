@@ -52,35 +52,60 @@ npm run lint:fix           # Auto-fix issues
 
 ## Project Structure
 
-Feature-based architecture with path aliasing (`@/`):
+Component-based architecture with path aliasing (`@/`):
 
 ```
 src/
-├── pages/         # Route pages (HomePage, AboutPage, RecipePage)
-├── features/      # Domain components (layout, recipe, search, about)
-│   ├── layout/   # Header, Footer, HeroSection, PageSection
-│   ├── recipe/   # RecipeCard, RecipeGrid, RecipeDetail
-│   ├── search/   # SearchBar, SearchResults, ResultsHeader
-│   └── about/    # FeatureCard
-├── primitives/    # UI primitives (Card, MessageState, LoadingSpinner, etc.)
-├── hooks/         # Custom hooks (useMobileMenu, useSearch, useSearchState, useRecipeDetail)
-├── services/      # API client (searchRecipes, getRecipeById)
-├── utils/         # Helpers
-└── mocks/         # Mock data
+├── pages/            # Route pages
+│   ├── about/       # AboutPage, FeatureCard, FeaturesSection, MissionSection
+│   ├── recipe/      # RecipePage with feature-based organization
+│   │   ├── features/
+│   │   │   ├── detail/      # RecipeDetail, RecipeHeader, RecipeImage, RecipeMetadata
+│   │   │   ├── exclusion/   # Ingredient exclusion panels (Desktop, Mobile)
+│   │   │   └── nutrition/   # CollapsibleNutrition, NutritionCard, NutritionContent
+│   │   ├── RecipeContent.jsx
+│   │   ├── RecipeErrorState.jsx
+│   │   ├── RecipeLoading.jsx
+│   │   └── RecipePage.jsx
+│   └── HomePage.jsx
+├── components/       # Shared components
+│   ├── layout/      # Header (with mobile menu components), Footer, HeroSection, SkipLink, Container
+│   ├── recipe-display/
+│   │   ├── card/         # RecipeCard, RecipeCardContent, RecipeCardImage, RecipeGrid
+│   │   ├── ingredients/  # IngredientItem, IngredientList
+│   │   └── instructions/ # InstructionList, InstructionStep
+│   ├── search/      # SearchBar, SearchResults, Pagination (with subcomponents), ResultsHeader
+│   └── ui/          # UI primitives (Card, Alert, Button, LoadingSpinner, Badge, Typography, etc.)
+├── contexts/         # React Context providers (RecipeExclusionContext)
+├── hooks/            # Custom hooks
+│   ├── useImageFallback.js
+│   ├── useMobileMenu.js
+│   ├── usePaginationLogic.js
+│   ├── useRecipeDetail.js
+│   ├── useSearch.js
+│   ├── useSearchRecipes.js
+│   └── useSearchState.js
+├── services/         # API client (searchRecipes, getRecipeById, excludeIngredients)
+├── utils/            # Helpers (httpClient, iconRegistry, colorUtils)
+└── test/             # Test files and mocks
 ```
 
 **Example imports:**
 ```javascript
-import { MessageState } from '@/primitives/MessageState'
+import { Alert } from '@/components/ui/Alert'
 import { useSearch } from '@/hooks/useSearch'
+import { searchRecipes } from '@/services/apiClient'
+import { RecipeCard } from '@/components/recipe-display/card/RecipeCard'
 ```
 
 ## Features
 
 - Live search with debouncing (300ms)
 - Recipe details page with full nutrition information
+- Dynamic ingredient exclusion with automatic nutrition recalculation
+- Interactive collapsible nutrition facts with calorie indicators
 - Pagination support
-- Responsive, mobile-first design
+- Responsive, mobile-first design (separate desktop/mobile exclusion panels)
 - WCAG 2.1 AA accessibility
 
 ## Configuration

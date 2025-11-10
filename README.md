@@ -15,6 +15,7 @@
 - ✅ Recipe search with pagination
 - ✅ Live search with debouncing
 - ✅ Recipe details page with full nutrition breakdown
+- ✅ Dynamic ingredient exclusion with automatic nutrition recalculation
 - ✅ Interactive nutrition facts (collapsible, with calorie indicators)
 - ✅ Comprehensive error handling and validation
 - ✅ Rate limiting and security controls
