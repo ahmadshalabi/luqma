@@ -6,19 +6,16 @@ package app.luqma.backend.constants;
  */
 public final class NutrientNames {
     
-    // Prevent instantiation
     private NutrientNames() {
         throw new UnsupportedOperationException("Utility class - do not instantiate");
     }
     
-    // Primary nutrients
     public static final String CALORIES = "Calories";
     public static final String PROTEIN = "Protein";
     public static final String FAT = "Fat";
     public static final String CARBOHYDRATES = "Carbohydrates";
     public static final String FIBER = "Fiber";
     
-    // Additional nutrients (for future use)
     public static final String SUGAR = "Sugar";
     public static final String SODIUM = "Sodium";
     public static final String CHOLESTEROL = "Cholesterol";

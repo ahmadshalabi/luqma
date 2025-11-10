@@ -3,7 +3,7 @@ package app.luqma.backend.service;
 import app.luqma.backend.mapper.RecipeMapper;
 import app.luqma.backend.model.domain.RecipeDetail;
 import app.luqma.backend.model.dto.RecipeDetailResponse;
-import app.luqma.backend.repository.MockRecipeRepository;
+import app.luqma.backend.repository.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +22,12 @@ import java.util.Set;
 @Service
 public class RecipeDetailService {
     
-    private final MockRecipeRepository recipeRepository;
+    private final RecipeRepository recipeRepository;
     private final NutritionCalculationService nutritionCalculationService;
     private final IngredientValidationService validationService;
     
     public RecipeDetailService(
-            MockRecipeRepository recipeRepository,
+            RecipeRepository recipeRepository,
             NutritionCalculationService nutritionCalculationService,
             IngredientValidationService validationService) {
         this.recipeRepository = recipeRepository;
@@ -79,13 +79,5 @@ public class RecipeDetailService {
         return RecipeMapper.toRecipeDetailResponse(updatedRecipe);
     }
     
-    /**
-     * Gets all recipe IDs available in the repository.
-     * 
-     * @return set of all recipe IDs
-     */
-    public Set<Long> getAllRecipeIds() {
-        return recipeRepository.getAllRecipeIds();
-    }
 }
 

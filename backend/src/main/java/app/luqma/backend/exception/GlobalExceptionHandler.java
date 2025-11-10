@@ -149,6 +149,43 @@ public class GlobalExceptionHandler {
     }
     
     /**
+     * Handles external API exceptions (503 Service Unavailable or 429 Too Many Requests).
+     * Maps different external API error types to appropriate HTTP status codes.
+     * 
+     * @param ex the external API exception
+     * @param request the HTTP servlet request
+     */
+    @ExceptionHandler(ExternalApiException.class)
+    public ResponseEntity<ErrorResponse> handleExternalApiException(
+            ExternalApiException ex, HttpServletRequest request) {
+        
+        HttpStatus status;
+        String message;
+        
+        if (ex.isRateLimitError()) {
+            status = HttpStatus.TOO_MANY_REQUESTS;
+            message = "Too many requests. Please try again later.";
+            log.warn("Rate limit exceeded for {} - Path: {}", ex.getServiceName(), request.getRequestURI());
+        } else if (ex.isNetworkError()) {
+            status = HttpStatus.SERVICE_UNAVAILABLE;
+            message = "External service temporarily unavailable. Please try again later.";
+            log.error("Network error calling {} - Path: {}", ex.getServiceName(), request.getRequestURI(), ex);
+        } else if (ex.isServerError()) {
+            status = HttpStatus.SERVICE_UNAVAILABLE;
+            message = "External service error. Please try again later.";
+            log.error("Server error from {} (status: {}) - Path: {}", 
+                    ex.getServiceName(), ex.getStatusCode(), request.getRequestURI(), ex);
+        } else {
+            status = HttpStatus.BAD_GATEWAY;
+            message = "Error communicating with external service. Please try again later.";
+            log.error("External API error from {} (status: {}) - Path: {}", 
+                    ex.getServiceName(), ex.getStatusCode(), request.getRequestURI(), ex);
+        }
+        
+        return ErrorResponseBuilder.build(status, message, request);
+    }
+    
+    /**
      * Handles all other unhandled exceptions (500 Internal Server Error).
      * 
      * @param ex the unhandled exception
