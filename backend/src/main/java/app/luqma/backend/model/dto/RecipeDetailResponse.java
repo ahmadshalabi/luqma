@@ -34,7 +34,6 @@ public record RecipeDetailResponse(
         List<String> instructions
 ) {
     public RecipeDetailResponse {
-        // Required fields
         if (id == null) {
             throw new IllegalArgumentException("Recipe ID cannot be null");
         }
@@ -42,7 +41,6 @@ public record RecipeDetailResponse(
             throw new IllegalArgumentException("Recipe title cannot be null or empty");
         }
         
-        // Optional fields with defaults
         image = DefaultValue.orElse(image, "");
         readyInMinutes = DefaultValue.orZeroInt(readyInMinutes);
         servings = DefaultValue.orZeroInt(servings);

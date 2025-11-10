@@ -1,11 +1,13 @@
 package app.luqma.backend.mapper;
 
 import app.luqma.backend.model.domain.ExtendedIngredient;
+import app.luqma.backend.model.domain.InstructionStep;
 import app.luqma.backend.model.domain.RecipeDetail;
 import app.luqma.backend.model.dto.IngredientDTO;
-import app.luqma.backend.model.dto.NutritionDTO;
 import app.luqma.backend.model.dto.RecipeDetailResponse;
-import app.luqma.backend.mapper.NutrientExtractor;
+import app.luqma.backend.model.dto.RecipeSearchResponse;
+import app.luqma.backend.model.dto.RecipeSummary;
+import app.luqma.backend.model.dto.spoonacular.SpoonacularSearchResponse;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
@@ -22,6 +24,48 @@ public final class RecipeMapper {
     
     private RecipeMapper() {
         throw new UnsupportedOperationException("Utility class - do not instantiate");
+    }
+    
+    /**
+     * Maps SpoonacularSearchResponse to RecipeSearchResponse DTO.
+     * Converts Spoonacular API response format to application response format.
+     * 
+     * @param spoonacularResponse Spoonacular API search response
+     * @param page current page number (1-indexed)
+     * @param pageSize number of results per page
+     * @return RecipeSearchResponse DTO
+     */
+    public static RecipeSearchResponse toRecipeSearchResponse(
+            SpoonacularSearchResponse spoonacularResponse, int page, int pageSize) {
+        
+        log.debug("Mapping Spoonacular search response: totalResults={}, resultsCount={}", 
+                spoonacularResponse.getTotalResults(), 
+                spoonacularResponse.getResults().size());
+        
+        List<RecipeSummary> recipes = Optional.ofNullable(spoonacularResponse.getResults())
+                .orElse(List.of())
+                .stream()
+                .map(RecipeMapper::toRecipeSummary)
+                .collect(Collectors.toList());
+        
+        int totalResults = Optional.ofNullable(spoonacularResponse.getTotalResults()).orElse(0);
+        
+        return new RecipeSearchResponse(recipes, page, pageSize, totalResults);
+    }
+    
+    /**
+     * Maps SpoonacularRecipeSummary to RecipeSummary DTO.
+     * 
+     * @param spoonacularRecipe Spoonacular recipe summary
+     * @return RecipeSummary DTO
+     */
+    private static RecipeSummary toRecipeSummary(
+            SpoonacularSearchResponse.SpoonacularRecipeSummary spoonacularRecipe) {
+        return new RecipeSummary(
+                spoonacularRecipe.getId(),
+                spoonacularRecipe.getTitle(),
+                spoonacularRecipe.getImage()
+        );
     }
     
     /**
@@ -82,7 +126,7 @@ public final class RecipeMapper {
         if (analyzedInstructions != null && !analyzedInstructions.isEmpty()) {
             return analyzedInstructions.stream()
                     .flatMap(ai -> ai.getSteps().stream())
-                    .map(step -> step.step())
+                    .map(InstructionStep::step)
                     .collect(Collectors.toList());
         }
         

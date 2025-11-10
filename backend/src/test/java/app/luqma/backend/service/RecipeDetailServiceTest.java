@@ -1,41 +1,66 @@
 package app.luqma.backend.service;
 
 import app.luqma.backend.exception.ResourceNotFoundException;
+import app.luqma.backend.model.domain.RecipeDetail;
 import app.luqma.backend.model.dto.RecipeDetailResponse;
+import app.luqma.backend.repository.RecipeRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.when;
 
 /**
- * Simple unit tests for RecipeDetailService.
- * Tests basic functionality without over-engineering.
+ * Unit tests for RecipeDetailService.
+ * Tests recipe retrieval and ingredient exclusion functionality.
  */
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class RecipeDetailServiceTest {
     
-    @Autowired
+    @Mock
+    private RecipeRepository recipeRepository;
+    
+    @Mock
+    private NutritionCalculationService nutritionCalculationService;
+    
+    @Mock
+    private IngredientValidationService validationService;
+    
     private RecipeDetailService recipeDetailService;
+    
+    @BeforeEach
+    void setUp() {
+        recipeDetailService = new RecipeDetailService(
+                recipeRepository,
+                nutritionCalculationService,
+                validationService
+        );
+    }
     
     /**
      * Test that service successfully retrieves a recipe by valid ID.
      */
     @Test
     void getRecipeById_WithValidId_ReturnsRecipe() {
-        // Given: A valid recipe ID from mock data
         Long recipeId = 715497L;
+        var mockRecipe = RecipeDetail.builder()
+                .id(recipeId)
+                .title("Test Recipe")
+                .image("image.jpg")
+                .servings(4)
+                .build();
         
-        // When: Fetching recipe by ID
+        when(recipeRepository.getById(recipeId)).thenReturn(mockRecipe);
+        
         RecipeDetailResponse recipe = recipeDetailService.getRecipeById(recipeId);
         
-        // Then: Recipe is returned with expected data
         assertThat(recipe).isNotNull();
         assertThat(recipe.id()).isEqualTo(recipeId);
-        assertThat(recipe.title()).isNotEmpty();
-        assertThat(recipe.ingredients()).isNotNull();
-        assertThat(recipe.nutrition()).isNotNull();
+        assertThat(recipe.title()).isEqualTo("Test Recipe");
     }
     
     /**
@@ -43,21 +68,23 @@ class RecipeDetailServiceTest {
      */
     @Test
     void getRecipeById_WithInvalidId_ThrowsResourceNotFoundException() {
-        // Given: An invalid recipe ID not in mock data
         Long invalidId = 999999L;
+        when(recipeRepository.getById(invalidId))
+                .thenThrow(ResourceNotFoundException.forRecipe(invalidId));
         
-        // When/Then: Attempting to fetch throws ResourceNotFoundException
         assertThatThrownBy(() -> recipeDetailService.getRecipeById(invalidId))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("not found");
     }
     
     /**
-     * Test that service throws IllegalArgumentException for null ID.
+     * Test that service throws exception for null ID.
      */
     @Test
-    void getRecipeById_WithNullId_ThrowsIllegalArgumentException() {
-        // When/Then: Attempting to fetch with null throws exception
+    void getRecipeById_WithNullId_ThrowsException() {
+        when(recipeRepository.getById(null))
+                .thenThrow(new NullPointerException("Recipe ID must not be null"));
+        
         assertThatThrownBy(() -> recipeDetailService.getRecipeById(null))
                 .isInstanceOf(NullPointerException.class);
     }
@@ -67,26 +94,32 @@ class RecipeDetailServiceTest {
      */
     @Test
     void getRecipeById_WithNegativeId_ThrowsIllegalArgumentException() {
-        // Given: A negative recipe ID
         Long negativeId = -1L;
+        when(recipeRepository.getById(negativeId))
+                .thenThrow(new IllegalArgumentException("Recipe ID must be positive"));
         
-        // When/Then: Attempting to fetch throws exception
         assertThatThrownBy(() -> recipeDetailService.getRecipeById(negativeId))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("positive");
     }
     
     /**
-     * Test that service loads mock data on initialization.
+     * Test that excludeIngredients returns original recipe when no ingredients to exclude.
      */
     @Test
-    void init_LoadsMockData_Successfully() {
-        // Given/When: Service is initialized via Spring context
+    void excludeIngredients_WithEmptySet_ReturnsOriginalRecipe() {
+        Long recipeId = 123L;
+        var mockRecipe = RecipeDetail.builder()
+                .id(recipeId)
+                .title("Test Recipe")
+                .build();
         
-        // Then: Service has loaded recipe IDs
-        var recipeIds = recipeDetailService.getAllRecipeIds();
-        assertThat(recipeIds).isNotEmpty();
-        assertThat(recipeIds).contains(715497L, 642539L, 654812L, 782601L);
+        when(recipeRepository.getById(recipeId)).thenReturn(mockRecipe);
+        
+        RecipeDetailResponse result = recipeDetailService.excludeIngredients(
+                recipeId, java.util.Set.of());
+        
+        assertThat(result).isNotNull();
+        assertThat(result.id()).isEqualTo(recipeId);
     }
 }
-

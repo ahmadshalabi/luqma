@@ -49,7 +49,6 @@ class RecipeControllerTest {
     
     @Test
     void searchRecipes_withValidParameters_returnsOk() throws Exception {
-        // Given
         RecipeSearchResponse mockResponse = new RecipeSearchResponse(
                 List.of(new RecipeSummary(
                         1L,
@@ -131,7 +130,6 @@ class RecipeControllerTest {
     
     @Test
     void searchRecipes_withDefaultPagination_usesDefaults() throws Exception {
-        // Given
         RecipeSearchResponse mockResponse = new RecipeSearchResponse(
                 List.of(),
                 1,
@@ -152,7 +150,6 @@ class RecipeControllerTest {
     
     @Test
     void searchRecipes_whenServiceThrowsInvalidPaginationException_returnsBadRequest() throws Exception {
-        // Given
         when(recipeSearchService.searchRecipes(anyString(), anyInt(), anyInt()))
                 .thenThrow(new InvalidPaginationException("Invalid pagination"));
         
@@ -165,7 +162,6 @@ class RecipeControllerTest {
     
     @Test
     void searchRecipes_whenServiceThrowsException_returnsInternalServerError() throws Exception {
-        // Given
         when(recipeSearchService.searchRecipes(anyString(), anyInt(), anyInt()))
                 .thenThrow(new RuntimeException("Unexpected error"));
         
@@ -178,7 +174,6 @@ class RecipeControllerTest {
     
     @Test
     void searchRecipes_trimsWhitespaceFromQuery() throws Exception {
-        // Given
         RecipeSearchResponse mockResponse = new RecipeSearchResponse(
                 List.of(),
                 1,
