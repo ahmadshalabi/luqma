@@ -1,5 +1,5 @@
 ---
-description: "Documentation standards for frontend code and JSDoc"
+description: "Documentation standards for frontend: JSDoc for React components, hooks, utils, self-documenting code"
 globs: ["frontend/src/**/*.{js,jsx,ts,tsx}"]
 alwaysApply: false
 ---

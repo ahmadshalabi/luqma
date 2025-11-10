@@ -1,5 +1,5 @@
 ---
-description: "Spring Boot backend development standards and patterns"
+description: "Spring Boot backend standards: dependency injection, layered architecture, Java 25 features, DTOs"
 globs: ["backend/**/*.java"]
 alwaysApply: false
 ---

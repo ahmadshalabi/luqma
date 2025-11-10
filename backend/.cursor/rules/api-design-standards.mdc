@@ -1,5 +1,5 @@
 ---
-description: "REST API design standards for consistent endpoint structure"
+description: "REST API design standards: URL structure, HTTP methods, status codes, versioning"
 globs: ["backend/**/*.java"]
 alwaysApply: false
 ---

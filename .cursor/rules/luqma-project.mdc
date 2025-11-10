@@ -19,7 +19,7 @@ For tech stack details, features, and setup, see [main README](../README.md).
 
 **Data Flow:** User → React UI → Backend API → Spoonacular
 
-**Backend Structure** (`backend/src/main/java/app/luqma/backend/`):
+**Backend Structure** (` backend/src/main/java/app/luqma/backend/`):
 - controller/: ✅ REST endpoints (RecipeController)
 - service/: ✅ Business logic (RecipeSearchService, RecipeDetailService, IngredientValidationService, NutritionCalculationService)
 - filter/: ✅ Servlet filters (RateLimitFilter)
@@ -59,7 +59,7 @@ For tech stack details, features, and setup, see [main README](../README.md).
 - test/: Test files and mocks/
 
 **Development Approach:**
-- Backend integrates with Spoonacular API (see [Backend README](../../backend/README.md#spoonacular-api-integration))
+- Backend integrates with Spoonacular API (see [Backend README](../backend/README.md#spoonacular-api-integration))
 - Frontend calls backend only, never external APIs directly
 - Comprehensive error handling for rate limits, network errors, and API failures
 
@@ -70,15 +70,15 @@ For tech stack details, features, and setup, see [main README](../README.md).
 - GET /api/v1/recipes/{id} - Get recipe details
 - POST /api/v1/recipes/{id}/exclude-ingredients - Exclude ingredients and recalculate nutrition
 
-For detailed API documentation, see [API Documentation](../../docs/api/README.md).
+For detailed API documentation, see [API Documentation](../docs/api/README.md).
 
 ## Environment Variables
 
-Backend requires `SPOONACULAR_API_KEY` in `backend/.env`. See [Backend README](../../backend/README.md#configuration) and [Frontend README](../../frontend/README.md#configuration) for full configuration details.
+Backend requires `SPOONACULAR_API_KEY` in `backend/.env`. See [Backend README](../backend/README.md#configuration) and [Frontend README](../frontend/README.md#configuration) for full configuration details.
 
 ## Commands
 
-For all commands, see [main README](../README.md), [Backend README](../../backend/README.md), and [Frontend README](../../frontend/README.md).
+For all commands, see [main README](../README.md), [Backend README](../backend/README.md), and [Frontend README](../frontend/README.md).
 
 ## Architectural Patterns
 
@@ -96,11 +96,11 @@ For all commands, see [main README](../README.md), [Backend README](../../backen
 - URL state for search (ADR-0005): shareable URLs, 300ms debounce
 
 **Spoonacular Integration:**
-See [Backend README](../../backend/README.md#spoonacular-api-integration) for implementation details.
+See [Backend README](../backend/README.md#spoonacular-api-integration) for implementation details.
 
 ## Documentation
 
-See [Documentation Index](../../docs/README.md) for all documentation.
+See [Documentation Index](../docs/README.md) for all documentation.
 
 **Key Principles:**
 - Separation of concerns

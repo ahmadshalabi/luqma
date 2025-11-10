@@ -39,12 +39,16 @@ The application will be available at http://localhost:8080 (default port)
 - Controllers: 70%+ (recommended)
 - Reports: `build/reports/jacoco/test/html/index.html`
 
+For comprehensive testing documentation, see [Testing Guide](../docs/testing/README.md).
+
 
 ## API Endpoints
 
 The backend exposes RESTful APIs for recipe search, details, and ingredient exclusion. For comprehensive API documentation including request/response schemas and examples, see [API Documentation](../docs/api/README.md).
 
 **Interactive API documentation:** http://localhost:8080/swagger-ui.html (when running)
+
+**Domain Models:** For detailed information about backend domain models (RecipeDetail, ExtendedIngredient, NutritionInfo, etc.), see [Domain Models Documentation](docs/domain-models.md).
 
 ## Configuration
 
@@ -115,4 +119,7 @@ The application includes built-in rate limiting to avoid exceeding Spoonacular A
 
 ## Documentation
 
-See the [Documentation Index](../docs/README.md) for all project documentation.
+- [Documentation Index](../docs/README.md) - All project documentation
+- [Domain Models](docs/domain-models.md) - Backend domain model reference
+- [Architecture Overview](../docs/architecture/README.md) - System architecture and diagrams
+- [Testing Guide](../docs/testing/README.md) - Testing strategies and coverage requirements

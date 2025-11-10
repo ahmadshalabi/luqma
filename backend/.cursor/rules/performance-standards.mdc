@@ -1,5 +1,5 @@
 ---
-description: "Performance budgets and optimization standards for backend"
+description: "Performance budgets for backend: API response times, throughput, caching strategies"
 globs: ["backend/**/*.java"]
 alwaysApply: false
 ---

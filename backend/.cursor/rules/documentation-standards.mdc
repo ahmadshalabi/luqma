@@ -1,5 +1,5 @@
 ---
-description: "Documentation standards for backend code, JavaDoc, and API documentation"
+description: "Documentation standards for backend: JavaDoc, Swagger/OpenAPI, public APIs, self-documenting code"
 globs: ["backend/**/*.java"]
 alwaysApply: false
 ---

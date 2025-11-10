@@ -1,5 +1,5 @@
 ---
-description: "Backend testing standards with JUnit 5 and Mockito"
+description: "Backend testing standards: JUnit 5, Mockito, 80%+ service coverage, integration tests"
 globs: ["backend/**/*.java"]
 alwaysApply: false
 ---

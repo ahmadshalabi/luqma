@@ -1,5 +1,5 @@
 ---
-description: "Security standards for backend development"
+description: "Security standards for backend: input validation, CORS, HTTPS, error handling, logging"
 globs: ["backend/**/*.java"]
 alwaysApply: false
 ---

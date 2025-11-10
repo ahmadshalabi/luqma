@@ -10,6 +10,8 @@ Welcome to the Luqma project documentation. This directory contains all technica
 - [API Documentation](api/README.md) - Backend API reference
 
 ### Architecture
+- [Architecture Overview](architecture/README.md) - System architecture and data flow diagrams
+- [Backend Domain Models](../backend/docs/domain-models.md) - Domain model documentation
 - [Architecture Decision Records](decisions/README.md) - All ADRs (10 decisions)
 
 ### Standards & Guidelines
@@ -27,6 +29,10 @@ docs/
 ├── TROUBLESHOOTING.md             # Common issues
 ├── api/                           # API documentation
 │   └── README.md
+├── architecture/                  # Architecture documentation
+│   └── README.md                  # System diagrams and data flows
+├── testing/                       # Testing documentation
+│   └── README.md                  # Coverage requirements and testing guide
 └── decisions/                     # Architecture Decision Records
     ├── README.md                  # ADR index
     ├── adr-template.md            # MADR template
@@ -48,6 +54,10 @@ docs/
 
 We use [MADR 4.0.0](https://adr.github.io/madr/) format for documenting architectural decisions. See [decisions/README.md](decisions/README.md) for all ADRs and their details.
 
+### Testing
+
+Comprehensive testing guide with coverage requirements, testing strategies, and examples. See [testing/README.md](testing/README.md) for full documentation.
+
 ## Development Guidelines
 
 All coding standards, workflows, and best practices are documented in `.cursor/rules/`:
@@ -59,7 +69,7 @@ All coding standards, workflows, and best practices are documented in `.cursor/r
 - **Frontend Standards:** [frontend/.cursor/rules/frontend-standards.mdc](../frontend/.cursor/rules/frontend-standards.mdc)
 - **Backend Standards:** [backend/.cursor/rules/](../backend/.cursor/rules/)
 
-For testing commands, see [main README](../README.md#testing).
+For testing documentation, see [testing/README.md](testing/README.md).
 
 ## Contributing
 

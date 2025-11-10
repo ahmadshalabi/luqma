@@ -1,5 +1,5 @@
 ---
-description: "Security standards for frontend development"
+description: "Security standards for frontend: input validation, XSS prevention, never trust client-side"
 globs: ["frontend/src/**/*.{js,jsx,ts,tsx}"]
 alwaysApply: false
 ---

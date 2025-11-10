@@ -2,6 +2,7 @@
 status: "superseded"
 date: 2025-11-10
 superseded-date: 2025-11-10
+superseded-by: "Live Spoonacular API integration with Spring Cache (implemented 2025-11-10)"
 ---
 
 # Use Mock Data for Offline Development
@@ -10,7 +11,15 @@ superseded-date: 2025-11-10
 
 **⚠️ This ADR has been SUPERSEDED**
 
+**Superseded by:** Live Spoonacular API integration with Spring Cache (Caffeine)  
+**Date superseded:** 2025-11-10  
+**Reason:** Application evolved from offline development with mocks to production-ready live API integration
+
 The application now uses **live Spoonacular API integration** via `SpoonacularClient` with `RestClient` (Spring 6.2). Mock data in `backend/src/main/resources/mocks/` is **retained only for unit and integration tests**, not for offline development or runtime use.
+
+For current Spoonacular API integration details, see:
+- [Backend README - Spoonacular Integration](../../backend/README.md#spoonacular-api-integration)
+- [Architecture - Caching Strategy](../architecture/README.md#caching-strategy)
 
 ### What Changed
 

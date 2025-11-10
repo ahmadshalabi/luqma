@@ -142,6 +142,8 @@ npm run test:backend   # Backend tests with Gradle
 npm run test:frontend  # Frontend tests with Vitest
 ```
 
+**For detailed testing documentation including coverage requirements, strategies, and best practices, see [Testing Guide](docs/testing/README.md).**
+
 
 ## Documentation
 
@@ -152,14 +154,18 @@ npm run test:frontend  # Frontend tests with Vitest
 
 ### Technical Documentation
 - [Documentation Index](docs/README.md) - Complete documentation overview
+- [Architecture Overview](docs/architecture/README.md) - System architecture and data flow diagrams
 - [Architecture Decisions](docs/decisions/) - All 10 ADRs (MADR format)
-- [API Documentation](http://localhost:8080/swagger-ui.html) - Interactive API docs (when running)
+- [API Documentation](docs/api/README.md) - REST API reference with examples
+- [Testing Guide](docs/testing/README.md) - Testing strategies and coverage requirements
+- [Interactive API Docs](http://localhost:8080/swagger-ui.html) - Swagger UI (when running)
 
 ### Standards & Guidelines
 - [Git Standards](.cursor/rules/git-standards.mdc) - Commit, branch, and PR conventions
 - [Security Standards](.cursor/rules/security-standards.mdc) - API key protection and security
 - [Accessibility Standards](.cursor/rules/accessibility-standards.mdc) - WCAG 2.1 AA compliance
 - [Frontend Standards](frontend/.cursor/rules/frontend-standards.mdc) - React and component guidelines
+- [Backend Standards](backend/.cursor/rules/backend-standards.mdc) - Spring Boot patterns and conventions
 
 ## License
 

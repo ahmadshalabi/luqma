@@ -44,9 +44,15 @@ npm run lint:fix           # Auto-fix issues
 - Custom hooks: 80%+ (recommended)
 - Reports: `coverage/index.html`
 
+For comprehensive testing documentation, see [Testing Guide](../docs/testing/README.md).
+
 ## Project Structure
 
-Feature-based component architecture with path aliasing (`@/`). For detailed project structure and architecture, see [Project Context](../.cursor/rules/luqma-project.mdc).
+Feature-based component architecture with path aliasing (`@/`). 
+
+**For detailed architecture documentation:**
+- [Architecture Overview](../docs/architecture/README.md) - System architecture and component hierarchy
+- [Project Context](../.cursor/rules/luqma-project.mdc) - Detailed project structure
 
 For features and capabilities, see the [main README](../README.md#features).
 
@@ -79,4 +85,7 @@ To change the frontend port, edit the `port` value in the `server` object in `fr
 
 ## Documentation
 
-See the [Documentation Index](../docs/README.md) for all project documentation.
+- [Documentation Index](../docs/README.md) - All project documentation
+- [Architecture Overview](../docs/architecture/README.md) - System architecture and component hierarchy
+- [Testing Guide](../docs/testing/README.md) - Testing strategies and coverage requirements
+- [API Documentation](../docs/api/README.md) - Backend API reference

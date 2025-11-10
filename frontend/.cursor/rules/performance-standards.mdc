@@ -1,5 +1,5 @@
 ---
-description: "Performance budgets and optimization standards for frontend"
+description: "Performance budgets for frontend: bundle size, FCP, LCP, memoization, code splitting"
 globs: ["frontend/src/**/*.{js,jsx,ts,tsx}"]
 alwaysApply: false
 ---

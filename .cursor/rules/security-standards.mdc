@@ -1,5 +1,5 @@
 ---
-description: "Critical security standards for API key protection"
+description: "Critical security standards for API key protection, input validation, CORS, and dependencies"
 alwaysApply: true
 ---
 # Security Standards
@@ -23,10 +23,87 @@ Ensure Git protection:
 - backend/.env.example and frontend/.env.example committed with placeholders only
 - Never commit root .env files or environment variables to version control
 
+## Input Validation
+
+You must validate all user input at multiple layers:
+
+**Backend:**
+- Use Jakarta Bean Validation annotations on DTOs (@NotBlank, @Size, @Min, @Max, @Pattern)
+- Validate business rules in service layer
+- Never execute user input as code or commands
+- Use parameterized queries only (JPA prevents SQL injection)
+
+**Frontend:**
+- Validate at input level (HTML5 validation, pattern attributes)
+- Validate before API calls (client-side validation for UX)
+- Never trust client-side validation alone (backend must validate)
+- Sanitize all display output to prevent XSS
+
+You must prevent:
+- SQL Injection: Use JPA/parameterized queries
+- XSS (Cross-Site Scripting): Escape HTML, sanitize input
+- Command Injection: Never execute user input
+- Path Traversal: Use typed IDs (Long, UUID), avoid file path manipulation
+
+## CORS (Cross-Origin Resource Sharing)
+
+You must configure CORS properly:
+
+**Backend Configuration:**
+- Whitelist specific frontend origins explicitly in `backend/src/main/resources/application.yaml`
+- Never use wildcards (`*`) in production
+- Use profile-based configuration (dev vs. prod)
+- Allow only necessary HTTP methods
+- Limit exposed headers
+
+**Default configuration:**
+- Development: `http://localhost:3000` (frontend dev server)
+- Production: Specific production domain only
+
+See [Backend Security Standards](../backend/.cursor/rules/security-standards.mdc) for detailed CORS implementation.
+
+## HTTPS & Transport Security
+
+You must (production only):
+- Use HTTPS exclusively (TLS 1.2+ minimum)
+- Set HSTS (HTTP Strict Transport Security) header
+- Use secure cookies (Secure, HttpOnly, SameSite attributes)
+- Redirect HTTP to HTTPS automatically
+
+## Error Handling
+
+You must NEVER expose in error messages:
+- Stack traces
+- Database errors
+- Internal file paths
+- Library versions
+- API keys or secrets
+- Implementation details
+
+You must return:
+- Generic error messages to clients
+- Appropriate HTTP status codes (400, 401, 403, 404, 500)
+- Request ID for debugging/tracking
+- Log full details server-side only
+
 ## Dependencies
 
 You must:
 - Enable automated scanning (Dependabot)
 - Check for updates weekly
 - Apply security patches immediately
-- Run: ./gradlew dependencyCheckAnalyze (backend), npm audit (frontend)
+- Run security audits: `./gradlew dependencyCheckAnalyze` (backend), `npm audit` (frontend)
+- Review dependency licenses
+- Monitor security advisories
+
+## Layer-Specific Security
+
+For detailed security standards:
+- **Backend:** See [backend/.cursor/rules/security-standards.mdc](../backend/.cursor/rules/security-standards.mdc)
+- **Frontend:** See [frontend/.cursor/rules/security-standards.mdc](../frontend/.cursor/rules/security-standards.mdc)
+
+These layer-specific rules include:
+- Technology-specific security patterns
+- Framework-specific best practices
+- Layer-appropriate validation strategies
+- Security testing requirements

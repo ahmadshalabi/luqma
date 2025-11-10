@@ -1,5 +1,5 @@
 ---
-description: "Frontend testing standards with React Testing Library"
+description: "Frontend testing standards: React Testing Library, Vitest, 70%+ coverage, accessibility testing"
 globs: ["frontend/src/**/*.{test,spec}.{js,jsx,ts,tsx}"]
 alwaysApply: false
 ---

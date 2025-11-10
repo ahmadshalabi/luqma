@@ -1,5 +1,5 @@
 ---
-description: "React frontend development standards with Context API and hooks"
+description: "React frontend standards: React 19, custom hooks, Context API, component organization, @/ imports"
 globs: ["frontend/src/**/*.{js,jsx,ts,tsx}"]
 alwaysApply: false
 ---
