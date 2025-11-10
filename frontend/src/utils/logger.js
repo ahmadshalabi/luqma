@@ -116,5 +116,3 @@ export const logger = {
   debug
 }
 
-export default logger
-

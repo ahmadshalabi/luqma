@@ -1,4 +1,4 @@
-import { useRecipeExclusion } from '@/contexts/RecipeExclusionContext'
+import { useRecipeExclusion } from '@/hooks/useRecipeExclusion'
 import { RecipeHeader } from './RecipeHeader'
 import { IngredientList } from '../ingredients/IngredientList'
 import { CollapsibleNutrition } from '../nutrition/CollapsibleNutrition'
