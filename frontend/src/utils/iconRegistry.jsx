@@ -63,38 +63,3 @@ export function Icon({ name, className, ...props }) {
   return <IconComponent className={className} {...props} />
 }
 
-/**
- * Get an icon component by name.
- * Returns LightBulbIcon as fallback if icon name not found.
- * 
- * @deprecated Use the Icon component instead
- * @param {string} iconName - Name of the icon
- * @returns {React.Component} Heroicon component
- */
-export function getIcon(iconName) {
-  return ICON_REGISTRY[iconName] || LightBulbIcon
-}
-
-/**
- * Check if an icon name exists in the registry.
- * 
- * @param {string} iconName - Name of the icon to check
- * @returns {boolean} True if icon exists in registry
- * 
- * @example
- * hasIcon('search') // Returns true
- * hasIcon('invalid') // Returns false
- */
-export function hasIcon(iconName) {
-  return iconName in ICON_REGISTRY
-}
-
-/**
- * Get all available icon names.
- * 
- * @returns {string[]} Array of icon names
- */
-export function getAvailableIcons() {
-  return Object.keys(ICON_REGISTRY)
-}
-

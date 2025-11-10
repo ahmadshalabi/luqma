@@ -1,10 +1,10 @@
 import { useCallback } from 'react'
-import { SearchBar } from '@/features/search/SearchBar'
-import { SearchResults } from '@/features/search/SearchResults'
-import { HeroSection } from '@/features/layout/HeroSection'
+import { SearchBar } from '@/components/search/SearchBar'
+import { SearchResults } from '@/components/search/SearchResults'
+import { HeroSection } from '@/components/layout/HeroSection'
 import { useSearchState } from '@/hooks/useSearchState'
 
-export const HomePage = () => {
+export function HomePage() {
   const { query, updateSearch } = useSearchState()
 
   const handleSearch = useCallback((searchQuery) => {
@@ -12,7 +12,7 @@ export const HomePage = () => {
   }, [updateSearch])
 
   return (
-    <main id="main-content" className="flex-grow">
+    <>
       <HeroSection
         title="Welcome to Luqma"
         description="Discover delicious recipes with nutritional information"
@@ -25,6 +25,6 @@ export const HomePage = () => {
       </HeroSection>
 
       <SearchResults query={query} />
-    </main>
+    </>
   )
 }

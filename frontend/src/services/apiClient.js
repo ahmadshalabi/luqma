@@ -16,6 +16,8 @@
  * - API keys are protected on backend
  */
 
+import { get, post } from '@/utils/httpClient'
+
 const API_BASE_URL = import.meta.env.LUQMA_API_URL || 'http://localhost:8080/api/v1'
 
 /**
@@ -43,28 +45,7 @@ export async function searchRecipes({ query, page = 1, pageSize = 9 }) {
     pageSize: String(pageSize)
   })
 
-  try {
-    const response = await fetch(`${API_BASE_URL}/recipes/search?${params}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    })
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}))
-      const errorMessage = errorData.message || `API error: ${response.status} ${response.statusText}`
-      throw new Error(errorMessage)
-    }
-
-    return await response.json()
-  } catch (error) {
-    if (error.name === 'TypeError' && error.message.includes('fetch')) {
-      throw new Error('Unable to connect to the server. Please check your connection.')
-    }
-    throw error
-  }
+  return get(`${API_BASE_URL}/recipes/search?${params}`)
 }
 
 /**
@@ -84,31 +65,7 @@ export async function getRecipeById(id) {
     throw new Error('Invalid recipe ID')
   }
 
-  try {
-    const response = await fetch(`${API_BASE_URL}/recipes/${numId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    })
-
-    if (!response.ok) {
-      if (response.status === 404) {
-        throw new Error('Recipe not found. Please try another recipe.')
-      }
-      const errorData = await response.json().catch(() => ({}))
-      const errorMessage = errorData.message || 'Failed to load recipe. Please try again.'
-      throw new Error(errorMessage)
-    }
-
-    return await response.json()
-  } catch (error) {
-    if (error instanceof TypeError) {
-      throw new Error('Unable to connect to the server. Please check your connection.')
-    }
-    throw error
-  }
+  return get(`${API_BASE_URL}/recipes/${numId}`)
 }
 
 /**
@@ -133,37 +90,6 @@ export async function excludeIngredients(recipeId, ingredientIds) {
     throw new Error('At least one ingredient ID must be provided')
   }
 
-  try {
-    const response = await fetch(`${API_BASE_URL}/recipes/${numId}/exclude-ingredients`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({ ingredientIds })
-    })
-
-    if (!response.ok) {
-      if (response.status === 404) {
-        throw new Error('Recipe not found. Please try another recipe.')
-      }
-      const errorData = await response.json().catch(() => ({}))
-      const errorMessage = errorData.message || 'Failed to exclude ingredients. Please try again.'
-      throw new Error(errorMessage)
-    }
-
-    return await response.json()
-  } catch (error) {
-    if (error instanceof TypeError) {
-      throw new Error('Unable to connect to the server. Please check your connection.')
-    }
-    throw error
-  }
-}
-
-export default {
-  searchRecipes,
-  getRecipeById,
-  excludeIngredients
+  return post(`${API_BASE_URL}/recipes/${numId}/exclude-ingredients`, { ingredientIds })
 }
 
