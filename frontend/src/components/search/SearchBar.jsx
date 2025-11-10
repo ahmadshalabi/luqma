@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import { Icon } from '@/utils/iconRegistry'
 import { useSearch } from '@/hooks/useSearch'
 
@@ -10,8 +11,9 @@ import { useSearch } from '@/hooks/useSearch'
  * @param {Function} props.onChange - Callback function called with search query on input change (debounced)
  * @param {string} props.initialQuery - Initial search query value
  * @param {number} props.debounceMs - Debounce delay in milliseconds (default: 300)
+ * @param {React.Ref} ref - Ref forwarded to input element
  */
-export function SearchBar({ onSearch, onChange, initialQuery = '', debounceMs = 300 }) {
+export const SearchBar = forwardRef(function SearchBar({ onSearch, onChange, initialQuery = '', debounceMs = 300 }, ref) {
   const { query, handleChange, handleSubmit } = useSearch({
     initialQuery,
     onSubmit: onSearch,
@@ -29,6 +31,7 @@ export function SearchBar({ onSearch, onChange, initialQuery = '', debounceMs = 
           <Icon name="search" className="w-5 h-5 text-gray-400" />
         </div>
         <input
+          ref={ref}
           id="recipe-search"
           type="search"
           name="search"
@@ -43,5 +46,5 @@ export function SearchBar({ onSearch, onChange, initialQuery = '', debounceMs = 
       </p>
     </form>
   )
-}
+})
 

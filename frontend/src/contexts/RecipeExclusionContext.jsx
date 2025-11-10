@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react'
 import { excludeIngredients } from '@/services/apiClient'
+import { logger } from '@/utils/logger'
 
 const RecipeExclusionContext = createContext(null)
 
@@ -93,7 +94,7 @@ export function RecipeExclusionProvider({ initialRecipe, children }) {
       // Clear current selection
       setExcludedIds(new Set())
     } catch (err) {
-      console.error('Failed to apply exclusions:', err)
+      logger.error('Failed to apply exclusions', err, { recipeId: initialRecipe.id })
       setError(err.message || 'Failed to exclude ingredients. Please try again.')
     } finally {
       setIsUpdating(false)
@@ -139,7 +140,7 @@ export function RecipeExclusionProvider({ initialRecipe, children }) {
       setCurrentRecipe(updatedRecipe)
       setIsRecalculated(true)
     } catch (err) {
-      console.error('Failed to remove exclusion:', err)
+      logger.error('Failed to remove exclusion', err, { recipeId: initialRecipe.id, ingredientId })
       setError(err.message || 'Failed to update recipe. Please try again.')
     } finally {
       setIsUpdating(false)

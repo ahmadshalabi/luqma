@@ -138,19 +138,30 @@ describe('useIngredientExclusion', () => {
     expect(result.current.isUpdating).toBe(false)
   })
 
-  it('should reset exclusions and clear errors', () => {
-    // Given: Hook with exclusions and error
+  it('should reset exclusions and clear errors', async () => {
+    // Given: Mock API error to create error state
+    vi.mocked(apiClient.excludeIngredients).mockRejectedValue(new Error('Test error'))
+
     const { result } = renderHook(() => useIngredientExclusion(mockRecipeId))
 
+    // Add exclusions
     act(() => {
       result.current.toggleIngredient(123)
       result.current.toggleIngredient(456)
     })
 
-    // Set error manually for testing
-    act(() => {
-      result.current.applyExclusions() // Will set error due to no exclusions
+    // Create error state by calling applyExclusions
+    await act(async () => {
+      try {
+        await result.current.applyExclusions()
+      } catch {
+        // Expected to throw
+      }
     })
+
+    // Verify we have exclusions and error
+    expect(result.current.excludedIds.size).toBe(2)
+    expect(result.current.error).not.toBe(null)
 
     // When: Reset is called
     act(() => {
@@ -162,11 +173,11 @@ describe('useIngredientExclusion', () => {
     expect(result.current.error).toBe(null)
   })
 
-  it('should clear error when toggling ingredient after error', () => {
+  it('should clear error when toggling ingredient after error', async () => {
     // Given: Hook with error
     const { result } = renderHook(() => useIngredientExclusion(mockRecipeId))
 
-    act(async () => {
+    await act(async () => {
       await result.current.applyExclusions() // Will set error
     })
 
@@ -194,17 +205,20 @@ describe('useIngredientExclusion', () => {
     })
 
     // When: Apply exclusions is called
+    let promise
     act(() => {
-      result.current.applyExclusions()
+      promise = result.current.applyExclusions()
     })
 
     // Then: isUpdating is true during call
     expect(result.current.isUpdating).toBe(true)
 
     // Wait for completion
-    await waitFor(() => {
-      expect(result.current.isUpdating).toBe(false)
+    await act(async () => {
+      await promise
     })
+
+    expect(result.current.isUpdating).toBe(false)
   })
 })
 

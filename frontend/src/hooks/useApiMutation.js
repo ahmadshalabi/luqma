@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { logger } from '@/utils/logger'
 
 /**
  * Custom hook for handling async API mutations with loading and error states.
@@ -25,7 +26,7 @@ export function useApiMutation(mutationFn) {
     } catch (err) {
       const errorMessage = err.message || 'An error occurred. Please try again.'
       setError(errorMessage)
-      console.error('API mutation error:', err)
+      logger.error('API mutation error', err)
       return null
     } finally {
       setIsLoading(false)

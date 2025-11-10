@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import { logger } from '@/utils/logger'
 
 /**
  * Checkbox Component
@@ -24,7 +25,7 @@ const CheckboxComponent = ({
   ...rest
 }) => {
   if (!id) {
-    console.warn('Checkbox: id prop is required for accessibility')
+    logger.warn('Checkbox: id prop is required for accessibility', { label })
   }
 
   const baseClasses = 'h-5 w-5 md:h-4 md:w-4 text-blue-600 border-gray-300 rounded focus:ring-2 focus:ring-blue-500'

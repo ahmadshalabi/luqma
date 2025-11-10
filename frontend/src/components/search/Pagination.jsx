@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { memo, useCallback } from 'react'
 import { Icon } from '@/utils/iconRegistry'
 import { usePaginationLogic } from '@/hooks/usePaginationLogic'
 import { PaginationButton } from './PaginationButton'
@@ -9,6 +9,7 @@ import { PaginationEllipsis } from './PaginationEllipsis'
  * 
  * Displays page navigation with Previous/Next buttons and page numbers.
  * Implements WCAG 2.1 AA accessibility standards.
+ * Memoized to prevent unnecessary re-renders when props haven't changed.
  * 
  * @param {Object} props
  * @param {number} props.currentPage - Current active page (1-indexed)
@@ -16,12 +17,12 @@ import { PaginationEllipsis } from './PaginationEllipsis'
  * @param {Function} props.onPageChange - Callback when page changes (receives new page number)
  * @param {string} props.className - Additional CSS classes
  */
-export function Pagination({
+const PaginationComponent = ({
   currentPage = 1,
   totalPages = 1,
   onPageChange,
   className = ''
-}) {
+}) => {
   const handlePageChange = useCallback((page) => {
     if (page !== currentPage && page >= 1 && page <= totalPages) {
       onPageChange?.(page)
@@ -99,4 +100,6 @@ export function Pagination({
     </nav>
   )
 }
+
+export const Pagination = memo(PaginationComponent)
 

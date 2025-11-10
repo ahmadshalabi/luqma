@@ -1,12 +1,15 @@
+import { memo } from 'react'
+
 /**
  * InstructionStep primitive component for displaying a single instruction step.
  * Presentational component.
+ * Memoized to prevent unnecessary re-renders when props haven't changed.
  * 
  * @param {Object} props
  * @param {string} props.instruction - Instruction text
  * @param {number} props.stepNumber - Step number (1-indexed)
  */
-export function InstructionStep({ instruction, stepNumber }) {
+const InstructionStepComponent = ({ instruction, stepNumber }) => {
   return (
     <li className="flex gap-4">
       <span
@@ -21,4 +24,6 @@ export function InstructionStep({ instruction, stepNumber }) {
     </li>
   )
 }
+
+export const InstructionStep = memo(InstructionStepComponent)
 

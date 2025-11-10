@@ -34,22 +34,26 @@ describe('apiClient - searchRecipes', () => {
   })
 
   it('should throw error on HTTP error response', async () => {
-    global.fetch.mockResolvedValueOnce({
+    // Mock needs to fail for all retry attempts (initial + 3 retries = 4 total)
+    const errorResponse = {
       ok: false,
       status: 500,
       statusText: 'Internal Server Error',
       json: async () => ({ message: 'Server error' })
-    })
+    }
+    
+    global.fetch.mockResolvedValue(errorResponse)
 
     await expect(searchRecipes({ query: 'test' })).rejects.toThrow('Server error')
-  })
+  }, 10000) // Increase timeout due to retry delays
 
   it('should throw user-friendly message on network failure', async () => {
-    global.fetch.mockRejectedValueOnce(new TypeError('Failed to fetch'))
+    // Mock needs to fail for all retry attempts (initial + 3 retries = 4 total)
+    global.fetch.mockRejectedValue(new TypeError('Failed to fetch'))
 
     await expect(searchRecipes({ query: 'test' })).rejects.toThrow(
       'Unable to connect to the server. Please check your connection.'
     )
-  })
+  }, 10000) // Increase timeout due to retry delays
 })
 

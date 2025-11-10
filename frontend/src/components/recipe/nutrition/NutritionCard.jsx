@@ -1,7 +1,9 @@
+import { memo, useMemo } from 'react'
 import { getColorClasses } from '@/utils/colorUtils'
 
 /**
  * NutritionCard component for displaying a single nutrition metric.
+ * Memoized to prevent unnecessary re-renders when props haven't changed.
  * 
  * @param {Object} props
  * @param {string} props.label - Nutrient label
@@ -10,14 +12,15 @@ import { getColorClasses } from '@/utils/colorUtils'
  * @param {string} [props.percentageLabel='Daily Value'] - Percentage label text
  * @param {'green'|'orange'|'blue'|'purple'} [props.color='blue'] - Color theme
  */
-export function NutritionCard({
+const NutritionCardComponent = ({
   label,
   value,
   percentage,
   percentageLabel = 'Daily Value',
   color = 'blue'
-}) {
-  const { bgFrom, bgTo, border, textPrimary, textSecondary } = getColorClasses(color)
+}) => {
+  const colorClasses = useMemo(() => getColorClasses(color), [color])
+  const { bgFrom, bgTo, border, textPrimary, textSecondary } = colorClasses
 
   return (
     <div className={`bg-gradient-to-br ${bgFrom} ${bgTo} p-3 md:p-4 rounded-lg border ${border}`}>
@@ -40,4 +43,6 @@ export function NutritionCard({
     </div>
   )
 }
+
+export const NutritionCard = memo(NutritionCardComponent)
 
