@@ -24,7 +24,6 @@ import recipe715497 from './recipe-715497.json'
 import recipe782601 from './recipe-782601.json'
 import recipe642539 from './recipe-642539.json'
 
-// Map of all recipes indexed by ID
 const recipesById = {
   654812: recipe654812,
   715497: recipe715497,
@@ -51,11 +50,5 @@ export function getRecipeSearchResults() {
  */
 export function getRecipeById(recipeId) {
   return recipesById[recipeId] || null
-}
-
-// Default export with all functions
-export default {
-  getRecipeSearchResults,
-  getRecipeById
 }
 
