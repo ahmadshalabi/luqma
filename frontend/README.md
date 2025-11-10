@@ -16,7 +16,7 @@ React 19.2.0 • Vite 7.2.2 • TailwindCSS 4.1.17 • React Router 7.9.5 • Vi
 cd frontend
 
 # Install dependencies
-npm install
+npm install --ignore-scripts
 
 # IMPORTANT: Configure URLs in root .env file first
 # See Configuration section below
