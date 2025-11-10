@@ -1,5 +1,5 @@
 import { RecipeExclusionProvider } from '@/contexts/RecipeExclusionContext'
-import { RecipeDetail } from './features/detail/RecipeDetail'
+import { RecipeDetail } from './detail/RecipeDetail'
 import { Container } from '@/components/layout/Container'
 import { BackLink } from '@/components/ui/BackLink'
 
