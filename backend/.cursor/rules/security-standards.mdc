@@ -67,8 +67,4 @@ You must:
 
 ## Dependencies
 
-You must:
-- Enable automated scanning (Dependabot)
-- Check for updates weekly
-- Apply security patches immediately
-- Run: ./gradlew dependencyCheckAnalyze
+See [root security standards](../../.cursor/rules/security-standards.mdc#dependencies) for dependency management requirements.

@@ -18,7 +18,7 @@ The Swagger UI provides:
 
 **Endpoint:** `GET /api/v1/recipes/search`
 
-Search for recipes with pagination support. See [Backend README](../../backend/README.md) for detailed parameters and examples.
+Search for recipes with pagination support.
 
 **Quick Example:**
 ```bash
@@ -27,8 +27,8 @@ curl "http://localhost:8080/api/v1/recipes/search?query=pasta&page=1&pageSize=9"
 
 **Implementation Notes:**
 - Query parameter is required (1-200 characters)
-- Searches recipes via Spoonacular API using `complexSearch` endpoint with `titleMatch` parameter
-- Results are cached using Spring Cache (Caffeine) for improved performance
+- Powered by Spoonacular API (see [Backend README](../../backend/README.md#spoonacular-api-integration) for integration details)
+- Results are cached for improved performance
 - Rate limiting applied to protect API quotas
 
 ### Recipe Details API
@@ -45,7 +45,7 @@ curl "http://localhost:8080/api/v1/recipes/715497"
 **Implementation Notes:**
 - Returns 404 if recipe not found
 - Recipe ID must be a positive integer
-- Fetches data from Spoonacular API and caches for 1 hour (max 500 recipes, LRU eviction)
+- Powered by Spoonacular API with caching (see [Backend README](../../backend/README.md#spoonacular-api-integration) for details)
 - Includes comprehensive nutrition information with caloric breakdown
 - Provides step-by-step cooking instructions
 
@@ -83,8 +83,8 @@ curl -X POST "http://localhost:8080/api/v1/recipes/715497/exclude-ingredients" \
 - Validates all ingredient IDs exist in the recipe
 - Returns 404 if recipe not found
 - Returns 400 if any ingredient ID is invalid or doesn't exist in the recipe
-- Recalculates nutrition proportionally based on excluded ingredients using ADR-0010 approach
-- Uses cached recipe data from Spoonacular API
+- Recalculates nutrition proportionally based on excluded ingredients (see [ADR-0010](../decisions/0010-use-proportional-estimation-for-nutrition-calculation.md))
+- Uses cached recipe data
 
 **Response Structure:**
 - Same as Recipe Details API, but with:
@@ -106,7 +106,4 @@ curl -X POST "http://localhost:8080/api/v1/recipes/715497/exclude-ingredients" \
 
 ## Related Documentation
 
-- [Backend README](../../backend/README.md) - Complete API documentation and setup guide
-- [Troubleshooting Guide](../TROUBLESHOOTING.md) - Common issues and solutions
-- [Architecture Decisions](../decisions/) - ADRs documenting technical decisions
-- [Main README](../../README.md) - Project overview and setup
+See the [Documentation Index](../README.md) for all project documentation.

@@ -2,14 +2,7 @@
 
 Spring Boot backend service for Luqma - a recipe search application with nutritional information.
 
-## Tech Stack
-
-Spring Boot 3.5.7 • Java 25 • Gradle • JaCoCo • Swagger/OpenAPI • Spoonacular API
-
-## Prerequisites
-
-- **Java 25+** - [Download](https://adoptium.net/)
-- **[Spoonacular API Key](https://spoonacular.com/food-api)** - [Get free key](https://spoonacular.com/food-api/console#Dashboard)
+See the [main README](../README.md) for tech stack, prerequisites, and project overview.
 
 ## Quick Start
 
@@ -49,32 +42,9 @@ The application will be available at http://localhost:8080 (default port)
 
 ## API Endpoints
 
-**Recipe Search:**
-- `GET /api/v1/recipes/search` - Search recipes with pagination
-  - Parameters: `query` (required), `page`, `pageSize`
-  - Powered by Spoonacular API
+The backend exposes RESTful APIs for recipe search, details, and ingredient exclusion. For comprehensive API documentation including request/response schemas and examples, see [API Documentation](../docs/api/README.md).
 
-**Recipe Details:**
-- `GET /api/v1/recipes/{id}` - Get complete recipe information
-  - Path parameter: `id` (recipe ID, positive integer)
-  - Returns: ingredients, nutrition, instructions
-  - Powered by Spoonacular API with caching
-
-**Ingredient Exclusion:**
-- `POST /api/v1/recipes/{id}/exclude-ingredients` - Exclude ingredients and recalculate nutrition
-  - Path parameter: `id` (recipe ID, positive integer)
-  - Request body: `{ "ingredientIds": [20409, 5006] }` (array of ingredient IDs to exclude)
-  - Returns: Updated recipe with recalculated nutrition based on remaining ingredients
-  - Validates all ingredient IDs exist in the recipe
-
-**Health & Monitoring:**
-- `GET /actuator/health` - Health check
-- `GET /actuator/health/liveness` - Liveness probe
-- `GET /actuator/health/readiness` - Readiness probe
-- `GET /actuator/info` - Application info
-
-**Full API documentation:** http://localhost:8080/swagger-ui.html  
-*(Only exposes public REST API models - internal domain models are hidden)*
+**Interactive API documentation:** http://localhost:8080/swagger-ui.html (when running)
 
 ## Configuration
 
@@ -145,7 +115,4 @@ The application includes built-in rate limiting to avoid exceeding Spoonacular A
 
 ## Documentation
 
-- [Main README](../README.md) - Project overview and setup
-- [Frontend README](../frontend/README.md) - Frontend setup
-- [Troubleshooting Guide](../docs/TROUBLESHOOTING.md) - Common issues
-- [Architecture Decisions](../docs/decisions/) - ADRs
+See the [Documentation Index](../docs/README.md) for all project documentation.
