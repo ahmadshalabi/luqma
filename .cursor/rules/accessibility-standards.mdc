@@ -7,6 +7,19 @@ alwaysApply: false
 
 You must target WCAG 2.1 Level AA compliance.
 
+## Table of Contents
+
+- [Semantic HTML](#semantic-html)
+- [ARIA (Use Sparingly)](#aria-use-sparingly)
+- [Keyboard Navigation](#keyboard-navigation)
+- [Visual Accessibility](#visual-accessibility)
+- [Forms](#forms)
+- [Images and Media](#images-and-media)
+- [Dynamic Content](#dynamic-content)
+- [Common Patterns](#common-patterns)
+
+---
+
 ## Semantic HTML
 
 You must use:

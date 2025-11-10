@@ -2,18 +2,28 @@
 
 React frontend for Luqma - a recipe search application with nutritional information.
 
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [Development Commands](#development-commands)
+- [Project Structure](#project-structure)
+- [Configuration](#configuration)
+- [Documentation](#documentation)
+
+---
+
 See the [main README](../README.md) for tech stack, prerequisites, and project overview.
+
+---
 
 ## Quick Start
 
 ```bash
 cd frontend
 
-# Install dependencies
-npm install --ignore-scripts
-
-# IMPORTANT: Configure URLs in root .env file first
-# See Configuration section below
+# Copy .env.example and configure (optional)
+cp .env.example .env
+# Edit .env if using custom backend URL
 
 # Run the application
 npm run dev
@@ -21,71 +31,135 @@ npm run dev
 
 The application will be available at http://localhost:3000 (default port)
 
+---
+
 ## Development Commands
 
 ```bash
-# Development
-npm run dev                # Start dev server
-npm run build              # Production build
-npm run preview            # Preview production build
-
-# Testing
-npm test                   # Run tests (watch mode)
-npm run test:ui            # Tests with UI
-npm run test:coverage      # Generate coverage report
+# Development server
+npm run dev
 
 # Linting
-npm run lint               # Run ESLint
-npm run lint:fix           # Auto-fix issues
+npm run lint          # Check for linting errors
+npm run lint:fix      # Auto-fix linting errors
+
+# Testing
+npm test              # Run tests in watch mode
+npm run test:run      # Run tests once (CI mode)
+npm run test:ui       # Run tests with UI
+npm run test:coverage # Run tests with coverage
+
+# Building
+npm run build         # Build for production (output: dist/)
+npm run preview       # Preview production build locally
 ```
 
-**Test Coverage:**
+**Test Coverage Goals:**
+- Custom hooks: 80%+ (strongly recommended)
 - Components: 70%+ (recommended)
-- Custom hooks: 80%+ (recommended)
 - Reports: `coverage/index.html`
 
 For comprehensive testing documentation, see [Testing Guide](../docs/testing/README.md).
 
+---
+
 ## Project Structure
 
-Feature-based component architecture with path aliasing (`@/`). 
+```
+frontend/src/
+├── pages/                          # Route-level components
+│   ├── HomePage.jsx                # Route: /
+│   ├── about/                      # Route: /about
+│   │   ├── AboutPage.jsx
+│   │   ├── FeaturesSection.jsx    # Page-specific
+│   │   ├── MissionSection.jsx     # Page-specific
+│   │   └── FeatureCard.jsx        # Page-specific
+│   └── recipe/                     # Route: /recipe/:id
+│       ├── RecipePage.jsx          # Main page component
+│       ├── RecipeContent.jsx       # Content wrapper
+│       ├── detail/                 # Page-specific components
+│       ├── ingredients/            # Page-specific components
+│       ├── instructions/           # Page-specific components
+│       └── nutrition/              # Page-specific components
+│
+├── components/                     # Shared components (2+ pages)
+│   ├── layout/                     # Layout components (Header, Footer, Container)
+│   ├── search/                     # Search functionality (SearchBar, Pagination)
+│   ├── recipe/                     # Shared recipe components
+│   └── ui/                         # UI primitives (Button, Card, Alert, etc.)
+│
+├── hooks/                          # Custom hooks (see ADR-0008)
+│   ├── useSearch.js                # Search state management
+│   ├── useSearchRecipes.js         # Recipe search API calls
+│   ├── useRecipeDetail.js          # Recipe detail fetching
+│   ├── useRecipeExclusion.js       # Ingredient exclusion logic
+│   ├── useKeyboardNavigation.js    # Keyboard shortcuts/navigation
+│   └── ...                         # Other custom hooks
+│
+├── contexts/                       # React Context providers
+│   └── RecipeExclusionContext.jsx  # Ingredient exclusion state
+│
+├── services/                       # API clients
+│   └── apiClient.js                # Backend API communication
+│
+├── utils/                          # Utility functions
+│   ├── httpClient.js               # HTTP request wrapper
+│   ├── logger.js                   # Logging utility
+│   └── ...                         # Other utilities
+│
+└── constants/                      # Application constants
+    ├── api.js                      # API configuration
+    ├── ui.js                       # UI constants
+    └── validation.js               # Validation rules
+```
 
-**For detailed architecture documentation:**
-- [Architecture Overview](../docs/architecture/README.md) - System architecture and component hierarchy
-- [Project Context](../.cursor/rules/luqma-project.mdc) - Detailed project structure
+**Organization Principles:**
+- **Feature-Based:** Page-specific components co-located with pages (see [ADR-0007](../docs/decisions/0007-use-feature-based-component-organization.md))
+- **Shared Components:** Used by 2+ pages in `components/`
+- **Custom Hooks:** Reusable logic extracted to hooks (see [ADR-0008](../docs/decisions/0008-use-custom-hooks-for-business-logic.md))
+- **Import Alias:** Use `@/` for all imports (not relative paths `../`)
 
-For features and capabilities, see the [main README](../README.md#features).
+---
 
 ## Configuration
 
-The frontend requires a `.env` file in the `frontend/` directory for API configuration:
+The frontend optionally uses a `.env` file in the `frontend/` directory:
 
 ```bash
 cd frontend
 cp .env.example .env
-# Edit frontend/.env to configure backend API URL if needed
+# Edit if using custom backend URL
 ```
 
 ### Configuration Variables
 
-Set these variables in `frontend/.env`:
+**Available variables:**
 
-- **`LUQMA_API_URL`**: Backend API endpoint (default: `http://localhost:8080/api/v1`)
+- **`LUQMA_API_URL`**: Backend API endpoint URL (optional)
+  - Default: `http://localhost:8080/api/v1`
+  - Only change if backend runs on different port/host
 
-### Custom Configuration
-
-If your backend runs on a different port, update `LUQMA_API_URL` in `frontend/.env`:
-
+**Example** (custom backend port):
 ```bash
 # frontend/.env
 LUQMA_API_URL=http://localhost:9090/api/v1
 ```
 
-To change the frontend port, edit the `port` value in the `server` object in `frontend/vite.config.js`.
+**Note:** Vite requires environment variables to be prefixed with `VITE_`, but `LUQMA_API_URL` is handled specially in the build configuration.
+
+**For complete configuration reference:** See [Configuration Guide](../docs/guides/configuration.md)
+
+---
 
 ## Documentation
 
 - [Documentation Index](../docs/README.md) - All project documentation
-- [Architecture Overview](../docs/architecture/README.md) - System architecture and component hierarchy
-- [Testing Guide](../docs/testing/README.md) - Testing strategies and coverage requirements
+- [Architecture Overview](../docs/architecture/README.md) - System architecture and diagrams
+- [Frontend Architecture](../docs/architecture/frontend-architecture.md) - Component hierarchy and patterns
 - [API Documentation](../docs/api/README.md) - Backend API reference
+- [Testing Guide](../docs/testing/README.md) - Testing strategies and coverage requirements
+- [Configuration Guide](../docs/guides/configuration.md) - Environment configuration
+
+---
+
+**Navigation:** [Main README](../README.md) | [Documentation Index](../docs/README.md)

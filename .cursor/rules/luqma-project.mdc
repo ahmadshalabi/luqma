@@ -1,110 +1,206 @@
 ---
-description: "Luqma project context: Recipe search application with Spring Boot backend and React frontend"
+description: "Essential Luqma project context for AI assistance: tech stack, architecture patterns, file locations, and quick references"
 alwaysApply: true
 ---
 # Luqma Project Context
 
+Essential project context for AI assistance.
+
 ## Overview
 
-Recipe search application with nutritional information and dynamic ingredient exclusion.
+Luqma: Recipe search application with nutritional information and dynamic ingredient exclusion.
 
-For tech stack details, features, and setup, see [main README](../README.md).
+**Tech Stack:**
+- Backend: Spring Boot 3.5.7, Java 25, Gradle
+- Frontend: React 19.2.0, Vite 7.2.2, TailwindCSS 4.1.17
+- External API: Spoonacular (cached with Spring Cache/Caffeine)
 
-## Architecture
+---
 
-**Security (Critical):**
+## Security (Critical)
+
+You must NEVER:
+- Expose API keys in frontend code
+- Commit API keys to version control
+- Log API keys
+- Include API keys in HTTP responses/errors
+
+**Architecture:**
 - Backend proxies all Spoonacular API calls
-- Frontend calls backend only, never external APIs
-- API keys never in frontend or version control
-
-**Data Flow:** User → React UI → Backend API → Spoonacular
-
-**Backend Structure** (` backend/src/main/java/app/luqma/backend/`):
-- controller/: ✅ REST endpoints (RecipeController)
-- service/: ✅ Business logic (RecipeSearchService, RecipeDetailService, IngredientValidationService, NutritionCalculationService)
-- filter/: ✅ Servlet filters (RateLimitFilter)
-- client/: ✅ Spoonacular API client (SpoonacularClient with RestClient)
-- repository/: ✅ Data access (RecipeRepository with Spring Cache)
-- mapper/: ✅ Object mapping (RecipeMapper, NutrientExtractor)
-- model/dto/: ✅ API request/response DTOs (RecipeSearchResponse, RecipeSummary, RecipeDetailResponse, IngredientDTO, NutritionDTO, ExcludeIngredientsRequest) + Spoonacular DTOs
-- model/domain/: ✅ Internal domain models (RecipeDetail, ExtendedIngredient, NutritionInfo, Nutrient, AnalyzedInstruction, InstructionStep)
-- config/: ✅ Spring configuration (CORS, Security, Rate Limiting, RecipeSearch properties, Spoonacular, Cache)
-- exception/: ✅ Custom exceptions + GlobalExceptionHandler with comprehensive error handling (including ExternalApiException)
-- constants/: ✅ Application constants (ErrorMessages, NutrientNames)
-- util/: ✅ Utility classes (StringSanitizer, MockDataLoader, CollectionUtils, DefaultValue)
-
-**Frontend Structure** (`frontend/src/`):
-- pages/: Route pages with co-located page-specific components
-  - about/: AboutPage, FeatureCard, FeaturesSection, MissionSection
-  - recipe/: RecipePage with page-specific components
-    - detail/: RecipeDetail, RecipeHeader, RecipeImage, RecipeMetadataBadge, RecipeMetadataGroup
-    - ingredients/: Page-specific ingredient components
-    - instructions/: Page-specific instruction components
-    - nutrition/: Page-specific nutrition components
-    - RecipeContent, RecipeErrorState, RecipeLoading, RecipePage
-  - HomePage.jsx
-- components/: Shared components used across multiple pages
-  - about/: Shared about components (FeatureCard)
-  - layout/: Header (with mobile menu components), Footer, HeroSection, SkipLink, Container
-  - recipe/: card/ (RecipeCard, RecipeGrid), detail/, ingredients/, instructions/, nutrition/
-  - search/: SearchBar, SearchResults, Pagination (with subcomponents), ResultsHeader
-  - ui/: UI primitives (Button, Card, Alert, LoadingSpinner, Badge, Typography, Collapsible, LiveRegion, Skeleton, etc.)
-- contexts/: React Context providers (RecipeExclusionContext)
-- hooks/: Custom hooks
-  - State & Data: useImageFallback, useIngredientExclusion, useMobileMenu, usePaginationLogic, useRecipeDetail, useRecipeExclusion, useSearch, useSearchRecipes, useSearchState, useApiMutation
-  - Accessibility: useKeyboardNavigation (grid navigation, shortcuts, focus trap)
-- services/: ✅ API client (apiClient.js with searchRecipes, getRecipeById, excludeIngredients)
-- utils/: Helper functions (httpClient, iconRegistry, colorUtils, logger)
-- constants/: ✅ Application constants (api, ui, validation)
-- test/: Test files and mocks/
-
-**Development Approach:**
-- Backend integrates with Spoonacular API (see [Backend README](../backend/README.md#spoonacular-api-integration))
 - Frontend calls backend only, never external APIs directly
-- Comprehensive error handling for rate limits, network errors, and API failures
+- API keys stored in `backend/.env` only (${SPOONACULAR_API_KEY})
+- CORS configured per environment (never `*` in production)
 
-## API Endpoints
+**Detailed:** [Security Standards](security-standards.mdc)
 
-**Backend REST API:**
-- GET /api/v1/recipes/search - Search recipes with pagination
-- GET /api/v1/recipes/{id} - Get recipe details
-- POST /api/v1/recipes/{id}/exclude-ingredients - Exclude ingredients and recalculate nutrition
+---
 
-For detailed API documentation, see [API Documentation](../docs/api/README.md).
+## Quick Patterns
 
-## Environment Variables
+### Backend (Layered Architecture)
 
-Backend requires `SPOONACULAR_API_KEY` in `backend/.env`. See [Backend README](../backend/README.md#configuration) and [Frontend README](../frontend/README.md#configuration) for full configuration details.
+**Layer flow:** Controller → Service → Repository → Client
 
-## Commands
+- **Controller:** HTTP concerns only (thin layer)
+- **Service:** Business logic (core functionality)
+- **Repository:** Data access with `@Cacheable`
+- **Client:** External API integration (SpoonacularClient)
 
-For all commands, see [main README](../README.md), [Backend README](../backend/README.md), and [Frontend README](../frontend/README.md).
+**Location:** `backend/src/main/java/app/luqma/backend/`
 
-## Architectural Patterns
+**Detailed:** [Backend Architecture](../../docs/architecture/backend-architecture.md)
 
-**Backend (ADR-0009):**
-- Layered: Controller → Service → Repository → Client
-- Controllers: HTTP concerns only
-- Services: Business logic
-- Repositories: Data access with caching
-- Clients: External API integration (SpoonacularClient)
+### Frontend (Feature-Based)
+
+**Organization:**
+- Page-specific components: `pages/{page}/`
+- Shared components (2+ pages): `components/`
+- Custom hooks: `hooks/`
+- State: Context API (`RecipeExclusionContext`)
+- URL state: Search query/page (shareable links)
+
+**Location:** `frontend/src/`
+
+**Detailed:** [Frontend Architecture](../../docs/architecture/frontend-architecture.md)
+
+---
+
+## Essential File Locations
+
+**Configuration:**
+- Backend env: `backend/.env`
+- Backend config: `backend/src/main/resources/application*.yaml`
+- Frontend env: `frontend/.env`
+
+**API Client:**
+- Backend: `backend/src/main/java/app/luqma/backend/client/SpoonacularClient.java`
+- Frontend: `frontend/src/services/apiClient.js`
+
+**Domain Models:**
+- DTOs: `backend/src/main/java/app/luqma/backend/model/dto/`
+- Domain: `backend/src/main/java/app/luqma/backend/model/domain/`
+
+---
+
+## Key Features
+
+**Recipe Search:**
+- Live search with 300ms debounce
+- Pagination (default: 9 per page)
+- URL state synchronization
+
+**Recipe Details:**
+- Full nutrition breakdown
+- Cached for 1 hour (Caffeine)
+- Ingredient list with measurements
+
+**Ingredient Exclusion:**
+- Dynamic nutrition recalculation
+- Hybrid calculation (ingredient-level or proportional)
+- No caching (computed in-memory)
+
+---
+
+## Development Commands
+
+```bash
+# Root
+npm run dev          # Start both services
+npm run stop         # Stop both services
+
+# Backend only
+cd backend
+./gradlew bootRun
+./gradlew test
+
+# Frontend only
+cd frontend
+npm run dev
+npm test
+```
+
+---
+
+## Coverage Requirements
+
+**Backend:**
+- Services: 80%+ (enforced by JaCoCo)
+- Controllers: 70%+ (recommended)
 
 **Frontend:**
-- Feature-based organization (ADR-0007): Co-located page-specific components in pages/{page}/, shared components in components/
-- Custom hooks for logic (ADR-0008): useRecipeDetail, useSearch, useIngredientExclusion, useKeyboardNavigation, etc.
-- Context API for cross-component state (ADR-0004): RecipeExclusionContext
-- URL state for search (ADR-0005): shareable URLs, 300ms debounce
+- Custom hooks: 80%+ (recommended)
+- Components: 70%+ (recommended)
 
-**Spoonacular Integration:**
-See [Backend README](../backend/README.md#spoonacular-api-integration) for implementation details.
+---
 
-## Documentation
+## Documentation (When You Need Details)
 
-See [Documentation Index](../docs/README.md) for all documentation.
+**For AI:** Read these when working on specific areas:
 
-**Key Principles:**
-- Separation of concerns
-- Simplicity over complexity
-- Security first (API keys never in frontend)
-- Independent testability
-- Accessibility first (WCAG 2.1 AA)
+**Getting Started:**
+- [Getting Started Guide](../../docs/guides/getting-started.md) - Setup walkthrough
+- [Configuration Guide](../../docs/guides/configuration.md) - All config options
+
+**Architecture:**
+- [System Overview](../../docs/architecture/system-overview.md) - High-level design
+- [Backend Architecture](../../docs/architecture/backend-architecture.md) - Layer details
+- [Frontend Architecture](../../docs/architecture/frontend-architecture.md) - Component organization
+- [Data Flows](../../docs/architecture/data-flows.md) - Request flow diagrams
+- [Caching Strategy](../../docs/architecture/caching-strategy.md) - Cache implementation
+
+**API:**
+- [API Documentation](../../docs/api/README.md) - Endpoint reference
+- [Error Handling](../../docs/api/error-handling.md) - Error codes
+
+**Testing:**
+- [Backend Testing](../../docs/testing/backend-testing.md) - JUnit conventions
+- [Frontend Testing](../../docs/testing/frontend-testing.md) - Vitest conventions
+
+**Decisions:**
+- [Architecture Decision Records](../../docs/decisions/README.md) - All ADRs
+
+---
+
+## Standards (Always Follow)
+
+**Project-wide:**
+- [Git Standards](git-standards.mdc) - Commit, branch, PR conventions
+- [Security Standards](security-standards.mdc) - API key protection, validation
+- [Accessibility Standards](accessibility-standards.mdc) - WCAG 2.1 AA compliance
+
+**Backend:**
+- [Backend Standards](../../backend/.cursor/rules/backend-standards.mdc)
+- [API Design Standards](../../backend/.cursor/rules/api-design-standards.mdc)
+
+**Frontend:**
+- [Frontend Standards](../../frontend/.cursor/rules/frontend-standards.mdc)
+- [JavaScript/React Style Guide](../../frontend/.cursor/rules/javascript-react-style-guide.mdc)
+
+---
+
+## Quick Decision Tree
+
+**Adding a new API endpoint?**
+1. Create DTO in `model/dto/`
+2. Add service method
+3. Add controller endpoint
+4. Write tests (80%+ coverage)
+5. Update Swagger docs (auto-generated)
+6. Update [API Documentation](../../docs/api/)
+
+**Adding a new React component?**
+1. Page-specific? → Put in `pages/{page}/`
+2. Shared (2+ pages)? → Put in `components/`
+3. Reusable logic? → Extract to custom hook
+4. Cross-component state? → Use Context or URL state
+5. Write tests (70%+ coverage)
+
+**Need to change configuration?**
+→ See [Configuration Guide](../../docs/guides/configuration.md)
+
+**Encountering an error?**
+→ See [Troubleshooting](../../docs/TROUBLESHOOTING.md)
+
+---
+
+**For comprehensive documentation:** [Documentation Index](../../docs/README.md)

@@ -2,7 +2,20 @@
 
 Spring Boot backend service for Luqma - a recipe search application with nutritional information.
 
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [Development Commands](#development-commands)
+- [API Endpoints](#api-endpoints)
+- [Configuration](#configuration)
+- [Spoonacular API Integration](#spoonacular-api-integration)
+- [Documentation](#documentation)
+
+---
+
 See the [main README](../README.md) for tech stack, prerequisites, and project overview.
+
+---
 
 ## Quick Start
 
@@ -18,6 +31,8 @@ cp .env.example .env
 ```
 
 The application will be available at http://localhost:8080 (default port)
+
+---
 
 ## Development Commands
 
@@ -41,6 +56,7 @@ The application will be available at http://localhost:8080 (default port)
 
 For comprehensive testing documentation, see [Testing Guide](../docs/testing/README.md).
 
+---
 
 ## API Endpoints
 
@@ -49,6 +65,8 @@ The backend exposes RESTful APIs for recipe search, details, and ingredient excl
 **Interactive API documentation:** http://localhost:8080/swagger-ui.html (when running)
 
 **Domain Models:** For detailed information about backend domain models (RecipeDetail, ExtendedIngredient, NutritionInfo, etc.), see [Domain Models Documentation](docs/domain-models.md).
+
+---
 
 ## Configuration
 
@@ -75,6 +93,10 @@ Application-specific settings are in `backend/src/main/resources/application*.ya
 - `application-prod.yaml` - Production profile (optimized for performance)
 
 To change the port, edit `server.port` in the appropriate YAML file.
+
+**For complete configuration reference:** See [Configuration Guide](../docs/guides/configuration.md)
+
+---
 
 ## Spoonacular API Integration
 
@@ -111,15 +133,26 @@ Recipe details are cached using Spring Cache with Caffeine:
 - Applied to `RecipeRepository.findById()` method using `@Cacheable("recipes")`
 - No separate `CacheConfig` class - caching is integrated into `SpoonacularConfig`
 
+**See:** [Caching Strategy](../docs/architecture/caching-strategy.md) for detailed documentation.
+
 ### Rate Limiting
 The application includes built-in rate limiting to avoid exceeding Spoonacular API quotas:
 - **Max Requests:** 100 per minute (configurable)
 - **Scope:** Per IP address
 - **Response:** HTTP 429 when limit exceeded
 
+---
+
 ## Documentation
 
 - [Documentation Index](../docs/README.md) - All project documentation
 - [Domain Models](docs/domain-models.md) - Backend domain model reference
 - [Architecture Overview](../docs/architecture/README.md) - System architecture and diagrams
+- [Backend Architecture](../docs/architecture/backend-architecture.md) - Layered architecture details
+- [API Documentation](../docs/api/README.md) - REST API reference
 - [Testing Guide](../docs/testing/README.md) - Testing strategies and coverage requirements
+- [Configuration Guide](../docs/guides/configuration.md) - Environment configuration
+
+---
+
+**Navigation:** [Main README](../README.md) | [Documentation Index](../docs/README.md)

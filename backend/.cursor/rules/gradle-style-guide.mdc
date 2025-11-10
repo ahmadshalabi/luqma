@@ -41,65 +41,40 @@ You must use naming:
 ## Plugins
 
 You must:
-```kotlin
-plugins {
-    java  // Built-in plugins
-    alias(libs.plugins.spring.boot)  // External with versions
-}
-```
+- Use `java` keyword for built-in plugins
+- Use `alias(libs.plugins.name)` for external plugins with version catalog references
+- Keep plugins block at the top of build.gradle.kts
 
 ## Dependencies
 
 You must:
-```kotlin
-dependencies {
-    // Always use version catalog
-    implementation(libs.spring.boot.starter.web)
-    
-    // Group by purpose with comments
-    // Testing
-    testImplementation(libs.bundles.testing)
-}
-```
+- Always use version catalog references (`libs.library.name`)
+- Use `implementation()`, `testImplementation()`, etc. with parentheses
+- Group dependencies by purpose with comments
+- Use bundles (`libs.bundles.name`) for related dependencies
 
 ## Tasks
 
 You must:
-```kotlin
-// Use typed task configuration
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
-
-// Named tasks for existing
-tasks.named("check") {
-    dependsOn("spotlessCheck")
-}
-```
+- Use `tasks.withType<TaskType>` for typed task configuration
+- Use `tasks.named("taskName")` for configuring existing tasks
+- Place task configuration after dependencies section
 
 ## Properties
 
 You must:
-```kotlin
-// Direct assignment for simple properties
-group = "app.luqma"
-version = "0.0.1-SNAPSHOT"
-
-// .set() for Gradle properties
-reports {
-    xml.required.set(true)
-}
-
-// .get() for version catalog access
-toolVersion = libs.versions.jacoco.get()
-```
+- Use direct assignment for simple string properties (group, version)
+- Use `.set()` for Gradle Property types
+- Use `.get()` when accessing version catalog values
 
 ## Formatting
 
 You must:
-- Use 4 spaces for indentation
+- Use 4 spaces for indentation (Kotlin DSL convention)
 - Set max line length to 120 characters
 - Add blank lines between major sections
 - Add comments above non-obvious configurations
 - Use version catalog for all dependency versions
 - Never hardcode version strings in build files
+
+**Note:** Java source files (.java) use 2-space indentation following Google Java Style. See [Java Style Guide](./java-style-guide.mdc).

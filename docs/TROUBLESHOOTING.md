@@ -1,52 +1,21 @@
-# Troubleshooting Guide
+# Troubleshooting
 
-Common issues and solutions for Luqma development.
-
-## Table of Contents
-
-- [Setup Issues](#setup-issues)
-  - [Backend .env File Missing](#backend-env-file-missing)
-  - [Permission Denied Errors](#permission-denied-errors)
-- [Runtime Issues](#runtime-issues)
-  - [Port Already in Use](#port-already-in-use)
-  - [Frontend Can't Connect to Backend](#frontend-cant-connect-to-backend)
-  - [Hot Reload Not Working](#hot-reload-not-working)
-- [Build Issues](#build-issues)
-  - [Gradle Build Fails](#gradle-build-fails)
-  - [Frontend Dependencies Issues](#frontend-dependencies-issues)
-- [API Issues](#api-issues)
-  - [Spoonacular API Connection](#spoonacular-api-connection)
-- [Configuration Issues](#configuration-issues)
-  - [URLs Not Working After Changing Ports](#urls-not-working-after-changing-ports)
-- [Getting More Help](#getting-more-help)
-
----
+Common issues and solutions.
 
 ## Setup Issues
 
-### Backend .env File Missing
-
-**Error:** `.env file not found`
-
-**Solution:**
+### Missing .env File
 
 ```bash
-# Copy .env.example files and configure
 cp backend/.env.example backend/.env
 cp frontend/.env.example frontend/.env
-# Edit backend/.env and add your SPOONACULAR_API_KEY
-
-# Then run setup
-npm run setup
+# Add SPOONACULAR_API_KEY to backend/.env
 ```
 
-### Permission Denied Errors
-
-**Solution:**
+### Permission Denied
 
 ```bash
-chmod +x backend/gradlew           # Gradle wrapper
-chmod +x backend/scripts/*.sh      # Setup scripts
+chmod +x backend/gradlew
 ```
 
 ---
@@ -55,194 +24,155 @@ chmod +x backend/scripts/*.sh      # Setup scripts
 
 ### Port Already in Use
 
-**Error:** "Port 8080/3000 is already in use"
-
-**Solution:**
-
 ```bash
-npm run stop                     # Stop services
-
-# If that fails, manually kill processes
-lsof -ti:8080 | xargs kill -9    # Backend (default port)
-lsof -ti:3000 | xargs kill -9    # Frontend (default port)
+lsof -ti:8080 | xargs kill -9  # Backend
+lsof -ti:3000 | xargs kill -9  # Frontend
 ```
 
-**Alternative:** Use custom ports:
+### Backend Won't Start
 
-**Backend:** Edit `backend/src/main/resources/application.yaml` and change `server.port`
+**Check:**
+1. Java version: `java -version` (need 25+)
+2. Port available: `lsof -i:8080`
+3. `.env` file exists and has `SPOONACULAR_API_KEY`
 
-**Frontend:** Edit `frontend/vite.config.js` and change `server.port`, then update `LUQMA_API_URL` in `frontend/.env`
-
-### Frontend Can't Connect to Backend
-
-**Error:** "Failed to fetch" or CORS errors in browser console
-
-**Solution:**
-
+**Logs:**
 ```bash
-curl http://localhost:8080/actuator/health  # Check backend
-npm run dev                                  # Ensure both running
+tail -f backend/logs/application.log
 ```
 
-**Check configuration:**
+### Frontend Won't Start
 
-1. **Verify backend is running:**
-   ```bash
-   curl http://localhost:8080/actuator/health
-   ```
+**Check:**
+1. Node version: `node -v` (need 24+)
+2. Port available: `lsof -i:3000`
+3. Dependencies installed: `npm install`
 
-2. **Verify frontend API URL:**
-   ```bash
-   # Check frontend/.env
-   cat frontend/.env | grep LUQMA_API_URL
-   ```
-   
-   Should be: `LUQMA_API_URL=http://localhost:8080/api/v1` (or your custom backend URL)
-
-3. **Check CORS configuration:**
-   - Backend CORS is configured in `backend/src/main/resources/application.yaml`
-   - Default allows `http://localhost:3000`
-   - If using custom frontend port, update CORS origins in the YAML file
-
-**Custom Configuration:**
-
-If using custom ports, update both configurations:
-
+**Clear and retry:**
 ```bash
-# 1. Backend port - edit backend/src/main/resources/application.yaml
-server:
-  port: 9090
-
-# 2. Frontend API URL - edit frontend/.env
-LUQMA_API_URL=http://localhost:9090/api/v1
-
-# 3. Frontend port - edit frontend/vite.config.js
-server: {
-  port: 4000
-}
+rm -rf node_modules package-lock.json
+npm install
 ```
-
-### Hot Reload Not Working
-
-**Backend:**
-- Restart: `npm run stop:backend && npm run dev:backend`
-- Gradle bootRun doesn't support hot reload (Spring Boot DevTools configured)
-
-**Frontend:**
-- Should work automatically with Vite
-- Check browser console for errors
-- Hard refresh: `Ctrl+Shift+R` (Linux/Windows) or `Cmd+Shift+R` (Mac)
 
 ---
 
 ## Build Issues
 
-### Gradle Build Fails
-
-**Solution:**
+### Backend Build Fails
 
 ```bash
-cd backend
-./gradlew clean build
-java -version  # Verify Java 25+
-
-# If still failing, clear cache
-rm -rf ~/.gradle/caches/
 ./gradlew clean build --refresh-dependencies
 ```
 
-### Frontend Dependencies Issues
-
-**Error:** `sh: 1: patch-package: not found` or `npm error code 127`
-
-**Solution:**
-
+**If tests fail:**
 ```bash
-cd frontend
-rm -rf node_modules package-lock.json
-npm install --ignore-scripts
-node -v  # Verify Node.js 24+
-
-# If still failing, clear cache
-npm cache clean --force
-npm install --ignore-scripts
+./gradlew build -x test
 ```
 
-**Note:** The `--ignore-scripts` flag bypasses problematic postinstall scripts from some dependencies (like rollup) that expect `patch-package` to be available.
+### Frontend Build Fails
+
+```bash
+rm -rf node_modules package-lock.json
+npm install
+npm run build
+```
 
 ---
 
-
 ## API Issues
 
-### Spoonacular API Connection
+### 401 Unauthorized
 
-**Solution:**
+**Cause:** Invalid Spoonacular API key
 
+**Fix:**
+1. Check `backend/.env` has valid `SPOONACULAR_API_KEY`
+2. Verify key at: https://spoonacular.com/food-api/console#Dashboard
+3. Restart backend
+
+### 429 Too Many Requests
+
+**Cause:** Rate limit exceeded
+
+**Fix:**
+- Wait 60 seconds (backend limit)
+- Wait 24 hours (Spoonacular free tier limit)
+- Check usage: https://spoonacular.com/food-api/console#Dashboard
+
+### 500 Internal Server Error
+
+**Check logs:**
 ```bash
-cat backend/.env | grep SPOONACULAR_API_KEY  # Verify key
+tail -f backend/logs/application.log
 ```
 
-**Check rate limits:**
-- Free tier: 150 requests/day
-- Usage dashboard: https://spoonacular.com/food-api/console#Dashboard
+**Common causes:**
+- Spoonacular API down
+- Network connectivity
+- Invalid data format
 
-**Note:** The application is fully integrated with Spoonacular API via `SpoonacularClient`. Mock data in `backend/src/main/resources/mocks/` is retained for testing purposes only.
+### CORS Errors
+
+**Fix:** Update `backend/src/main/resources/application.yaml`
+```yaml
+cors:
+  allowed-origins: http://localhost:3000  # Match frontend URL
+```
 
 ---
 
 ## Configuration Issues
 
-### URLs Not Working After Changing Ports
+### Backend Can't Connect to Spoonacular
 
-**Solution:**
+**Check:**
+1. API key is valid
+2. Network connectivity: `curl https://api.spoonacular.com`
+3. Not over quota
 
-1. **Update backend port:**
-   - Edit `backend/src/main/resources/application.yaml`
-   - Change `server.port` value
+### Cache Not Working
 
-2. **Update frontend configuration:**
-   - Edit `frontend/.env` and update `LUQMA_API_URL` to match backend
-   - Edit `frontend/vite.config.js` to change frontend port if needed
+**Verify:**
+1. `@EnableCaching` in configuration
+2. Caffeine dependency present
+3. Check logs for cache hits/misses
 
-3. **Restart all services:**
+---
+
+## Performance Issues
+
+### Slow API Responses
+
+**Check:**
+- Spoonacular API response time
+- Cache is working
+- Network latency
+
+**Monitor:**
+```bash
+time curl "http://localhost:8080/api/v1/recipes/715497"
+```
+
+### Frontend Slow Loading
+
+**Check:**
+- Bundle size: `npm run build`
+- Network tab in browser DevTools
+- Disable extensions
+
+---
+
+## Getting Help
+
+1. **Check logs:**
+   - Backend: `backend/logs/application.log`
+   - Frontend: Browser console
+   
+2. **Test endpoints:**
    ```bash
-   npm run stop
-   npm run dev
+   curl http://localhost:8080/actuator/health
    ```
 
-## Getting More Help
+3. **Verify configuration:** [Configuration Guide](guides/configuration.md)
 
-### Check Logs
-
-- **Backend:** Console output from `npm run dev`
-- **Frontend:** Browser console (F12) and terminal
-
-### Verify Configuration
-
-```bash
-# Check backend configuration
-cat backend/.env
-
-# Check frontend configuration
-cat frontend/.env
-```
-
-### Verify Prerequisites
-
-Java 25+ • Node.js 24+ • npm 10+
-
-### Try a Clean Restart
-
-```bash
-npm run stop
-cd backend && ./gradlew clean && cd ..
-cd frontend && rm -rf node_modules && npm install --ignore-scripts && cd ..
-npm run dev
-```
-
-### Community Support
-
-- [GitHub Issues](https://github.com/ahmadshalabi/luqma/issues)
-- When creating an issue, include: error messages, environment (OS, Java/Node versions), reproduction steps
-
+4. **Review documentation:** [Documentation Index](README.md)
