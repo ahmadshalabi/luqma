@@ -9,6 +9,12 @@ spring:
   # Default profile if none specified
   profiles:
     default: dev
+  
+  # Cache Configuration
+  cache:
+    cache-names: recipes
+    caffeine:
+      spec: maximumSize=500,expireAfterWrite=3600s
 
 # Server Configuration
 server:
