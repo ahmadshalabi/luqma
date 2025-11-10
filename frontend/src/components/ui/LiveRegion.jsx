@@ -59,19 +59,3 @@ export function StatusRegion({ children, visible = false, className = '' }) {
   )
 }
 
-/**
- * AlertRegion - For important alerts (assertive announcements)
- */
-export function AlertRegion({ children, visible = true, className = '' }) {
-  return (
-    <LiveRegion
-      priority="assertive"
-      role="alert"
-      visible={visible}
-      className={className}
-    >
-      {children}
-    </LiveRegion>
-  )
-}
-

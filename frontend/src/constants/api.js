@@ -40,9 +40,3 @@ export const RETRYABLE_STATUS_CODES = [408, 429, 500, 502, 503, 504]
  */
 export const SEARCH_DEBOUNCE_DELAY = 300
 
-/**
- * Cache TTL for search results in milliseconds
- * @constant {number}
- */
-export const SEARCH_CACHE_TTL = 300000 // 5 minutes
-
