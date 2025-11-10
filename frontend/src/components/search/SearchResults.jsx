@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react'
-import { RecipeGrid } from '../recipe-display/card/RecipeGrid'
+import { RecipeGrid } from '../recipe/card/RecipeGrid'
 import { Container } from '../layout/Container'
 import { Pagination } from './Pagination'
 import { ResultsHeader } from './ResultsHeader'

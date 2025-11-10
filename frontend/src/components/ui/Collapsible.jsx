@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Icon } from '@/utils/iconRegistry'
-import { IconBox } from './IconBox'
+import { getColorClasses } from '@/utils/colorUtils'
 
 /**
  * Collapsible component for expandable/collapsible content sections.
@@ -117,10 +117,14 @@ export function Collapsible({
  * CollapsibleTrigger - Helper component for consistent trigger styling
  */
 export function CollapsibleTrigger({ icon, title, subtitle, badge, iconColor = 'blue' }) {
+  const { textPrimary } = getColorClasses(iconColor)
+  
   return (
     <div className="flex items-center gap-3">
       {icon && (
-        <IconBox icon={icon} color={iconColor} size="md" />
+        <div className={`flex-shrink-0 w-10 h-10 rounded-lg bg-${iconColor}-100 flex items-center justify-center`}>
+          <Icon name={icon} className={`w-5 h-5 ${textPrimary}`} />
+        </div>
       )}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
