@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
-import { RecipeGrid } from '@/features/recipe/RecipeGrid'
+import { RecipeGrid } from '@/components/recipe-display/card/RecipeGrid'
 
 describe('RecipeGrid', () => {
   const mockRecipes = [
