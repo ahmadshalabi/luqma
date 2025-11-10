@@ -1,9 +1,36 @@
 ---
-status: "accepted"
+status: "superseded"
 date: 2025-11-10
+superseded-date: 2025-11-10
 ---
 
 # Use Mock Data for Offline Development
+
+## Current Status
+
+**⚠️ This ADR has been SUPERSEDED**
+
+The application now uses **live Spoonacular API integration** via `SpoonacularClient` with `RestClient` (Spring 6.2). Mock data in `backend/src/main/resources/mocks/` is **retained only for unit and integration tests**, not for offline development or runtime use.
+
+### What Changed
+
+- **Before**: Mock data loaded at startup for offline development
+- **After**: Live API integration with Spring Cache (Caffeine) for performance
+- **Mock data now**: Used exclusively in test classes, not loaded at application startup
+- **Implementation**: `app.luqma.backend.client.SpoonacularClient` handles all API communication
+
+### Related Components
+
+- `SpoonacularClient` - HTTP client for Spoonacular API integration
+- `SpoonacularConfig` - RestClient configuration with API key authentication
+- `RecipeRepository` - Spring Cache implementation (1 hour TTL, max 500 recipes)
+- `MockDataLoader` - Utility retained for test data loading only
+
+---
+
+## Historical Context
+
+*The content below documents the original decision for historical reference.*
 
 ## Context and Problem Statement
 
@@ -18,17 +45,17 @@ Backend integrates with Spoonacular API which requires API key and has rate limi
 
 ## Considered Options
 
-1. Mock data from JSON files (chosen)
+1. Mock data from JSON files (chosen at the time)
 2. In-memory hardcoded data
 3. Local database with seeded data
 
-## Decision Outcome
+## Decision Outcome (Original)
 
 Chosen option: **Mock data from JSON files**
 
 Store JSON files in `backend/src/main/resources/mocks/` that replicate Spoonacular API responses. Load at startup via `MockDataLoader` utility.
 
-### Consequences
+### Consequences (As Originally Envisioned)
 
 - Good: No API calls during development
 - Good: Fast, predictable tests

@@ -9,7 +9,7 @@ ADRs for Luqma using [MADR 4.0.0](https://adr.github.io/madr/) format.
 - [ADR-0003](0003-standardize-development-workflow-and-environment-management.md) - Standardize Development Workflow and Environment Management
 - [ADR-0004](0004-use-context-api-for-state-management.md) - Use Context API for Cross-Component State
 - [ADR-0005](0005-implement-live-search-on-homepage.md) - Implement Live Search with Debounce on Homepage
-- [ADR-0006](0006-use-mock-data-for-offline-development.md) - Use Mock Data for Offline Development
+- [ADR-0006](0006-use-mock-data-for-offline-development.md) - Use Mock Data for Offline Development *(superseded)*
 - [ADR-0007](0007-use-feature-based-component-organization.md) - Use Feature-Based Component Organization
 - [ADR-0008](0008-use-custom-hooks-for-business-logic.md) - Use Custom Hooks for Business Logic
 - [ADR-0009](0009-implement-layered-architecture-in-backend.md) - Use Layered Architecture in Backend

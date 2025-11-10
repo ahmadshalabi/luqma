@@ -29,7 +29,7 @@ Chosen option: **Layered architecture (Controller → Service → Repository)**
 Three layers with clear responsibilities:
 - **Controller**: REST endpoints, validation, HTTP concerns
 - **Service**: Business logic, orchestration
-- **Repository**: Data access (currently mock data)
+- **Repository**: Data access with Spoonacular API integration and caching
 
 ### Consequences
 
