@@ -1,75 +1,54 @@
 ---
 status: "accepted"
 date: 2025-11-06
-decision-makers: Ahmad Shalabi
 ---
 
 # Use Monorepo Structure
 
 ## Context and Problem Statement
 
-The Luqma application is a full-stack project consisting of a Spring Boot backend (Java with Gradle), a React frontend (with Vite), and comprehensive documentation including ADRs. How should we organize these components in version control to optimize development workflow and collaboration?
-
-The key challenge is that the frontend and backend are tightly coupled through an API contract, requiring frequent coordinated changes across both components.
+Should the Spring Boot backend and React frontend be in separate repositories or one monorepo? Frontend and backend are tightly coupled through API contracts.
 
 ## Decision Drivers
 
-- Need for atomic commits when API contracts change across frontend and backend
-- Team size is small (portfolio project scale)
-- Tightly coupled components require frequent coordination
-- Development workflow simplicity and contributor onboarding
-- AI tool effectiveness when referencing codebase
-- Repository size and clone performance
+- Atomic commits when API contracts change
+- Small team (portfolio project)
+- Tightly coupled components
+- Simple development workflow
 
 ## Considered Options
 
-- Monorepo (Single Repository)
-- Multi-Repo (Separate Repositories)
-- Monorepo with Git Submodules
+1. Monorepo (chosen)
+2. Multi-repo (separate repositories)
+3. Monorepo with Git submodules
 
 ## Decision Outcome
 
-Chosen option: "Monorepo (Single Repository)", because it enables atomic commits across the stack, simplifies coordination for a small team, and provides better support for AI-assisted development.
+Chosen option: **Monorepo (single repository)**
 
-Repository structure:
-```
-luqma/
-├── backend/
-├── frontend/
-└── docs/
-```
+Structure: `luqma/backend/`, `luqma/frontend/`, `luqma/docs/`
+
+Enables atomic commits across the stack and simplifies coordination.
 
 ### Consequences
 
-- Good, because single clone operation, atomic commits, and unified versioning
-- Good, because AI tools can reference entire codebase in single context
-- Good, because easier onboarding and centralized documentation
-- Bad, because mixed technology stacks in one repository
-- Bad, because larger repository size and all git operations include both components
-
-### Mitigation Strategies
-
-- Strict directory separation (no cross-imports between backend/frontend)
-- Independent build systems for each component
-- Proper .gitignore configuration
+- Good: Atomic commits, unified versioning
+- Good: Single clone, easier onboarding
+- Bad: Larger repository size
 
 ## Pros and Cons of the Options
 
-### Monorepo (Single Repository)
+### Monorepo
 
-- Good, because atomic commits and simplified API contract changes
-- Good, because single source of truth and better for small teams
-- Bad, because mixed tech stacks and larger repo size
+- Good: Atomic commits, simpler coordination
+- Bad: Mixed tech stacks in one repo
 
-### Multi-Repo (Separate Repositories)
+### Multi-repo
 
-- Good, because independent versioning and tech stack isolation
-- Bad, because synchronization complexity and harder API contract management
-- Bad, because requires multiple PRs for cross-cutting features
+- Good: Independent versioning
+- Bad: Synchronization complexity, multiple PRs
 
-### Monorepo with Git Submodules
+### Monorepo with Git submodules
 
-- Good, because component separation and selective cloning
-- Bad, because Git submodule complexity and learning curve
-- Bad, because coordination overhead and complicates atomic changes
-
+- Good: Component separation
+- Bad: Submodule complexity, coordination overhead
