@@ -8,11 +8,7 @@ alwaysApply: true
 
 Recipe search application with nutritional information and dynamic ingredient exclusion.
 
-## Tech Stack
-
-**Backend:** Spring Boot 3.5.7, Java 25, Gradle, Spoonacular API, JaCoCo
-
-**Frontend:** React 19.2.0, Vite 7.2.2, TailwindCSS 4.1.17, React Router 7.9.5, Context API, Vitest
+For tech stack details, features, and setup, see [main README](../README.md).
 
 ## Architecture
 
@@ -63,57 +59,26 @@ Recipe search application with nutritional information and dynamic ingredient ex
 - test/: Test files and mocks/
 
 **Development Approach:**
-- Backend integrates with Spoonacular API via SpoonacularClient for live data
-- Spring Cache (Caffeine) caches recipe details for 1 hour (max 500 recipes, LRU eviction)
-- Mock data in `backend/src/main/resources/mocks/` used only for unit and integration tests
-- Comprehensive error handling for rate limits (429), network errors, and API failures
-- Frontend connects to backend API for all data
-- Spoonacular API key secured in backend environment variables only
+- Backend integrates with Spoonacular API (see [Backend README](../../backend/README.md#spoonacular-api-integration))
+- Frontend calls backend only, never external APIs directly
+- Comprehensive error handling for rate limits, network errors, and API failures
 
 ## API Endpoints
 
 **Backend REST API:**
-- ✅ GET /api/v1/recipes/search - Search recipes with pagination (query, page, pageSize params)
-- ✅ GET /api/v1/recipes/{id} - Get recipe details with ingredients, nutrition, and instructions
-- ✅ POST /api/v1/recipes/{id}/exclude-ingredients - Exclude ingredients and recalculate nutrition
+- GET /api/v1/recipes/search - Search recipes with pagination
+- GET /api/v1/recipes/{id} - Get recipe details
+- POST /api/v1/recipes/{id}/exclude-ingredients - Exclude ingredients and recalculate nutrition
 
-**Health & Monitoring:**
-- GET /actuator/health - Health check
-- GET /actuator/health/liveness - Liveness probe
-- GET /actuator/health/readiness - Readiness probe
-- GET /actuator/info - Application info
-
-**API Documentation:**
-- Swagger UI: ${BACKEND_URL}/swagger-ui.html (when running)
-
-**Spoonacular API (external API used in backend only):**
-- GET /recipes/complexSearch
-- GET /recipes/{id}/information
-- GET /food/ingredients/{id}/information
+For detailed API documentation, see [API Documentation](../../docs/api/README.md).
 
 ## Environment Variables
 
-**Backend (`backend/.env`):**
-- SPOONACULAR_API_KEY (required)
-- SPRING_PROFILES_ACTIVE (optional, defaults to `dev`)
-
-**Frontend (`frontend/.env`):**
-- LUQMA_API_URL (Backend API endpoint, default: `http://localhost:8080/api/v1`)
+Backend requires `SPOONACULAR_API_KEY` in `backend/.env`. See [Backend README](../../backend/README.md#configuration) and [Frontend README](../../frontend/README.md#configuration) for full configuration details.
 
 ## Commands
 
-**Backend:**
-- ./gradlew bootRun (run with dev profile)
-- npm run dev:backend (from root)
-- ./gradlew test
-
-**Frontend:**
-- npm run dev (from root, starts at http://localhost:3000)
-- npm run dev:frontend (from root)
-- cd frontend && npm run dev
-- npm run build
-- npm test
-- npm run lint:fix
+For all commands, see [main README](../README.md), [Backend README](../../backend/README.md), and [Frontend README](../../frontend/README.md).
 
 ## Architectural Patterns
 
@@ -131,21 +96,15 @@ Recipe search application with nutritional information and dynamic ingredient ex
 - URL state for search (ADR-0005): shareable URLs, 300ms debounce
 
 **Spoonacular Integration:**
-- SpoonacularClient implemented with RestClient (Spring 6.2)
-- Recipe search via complexSearch endpoint with titleMatch parameter
-- Recipe details with nutrition via information endpoint
-- Spring Cache (Caffeine) for performance optimization
-- Mock data retained for testing purposes
+See [Backend README](../../backend/README.md#spoonacular-api-integration) for implementation details.
 
 ## Documentation
 
-**ADRs:** docs/decisions/ (MADR format) - 10 architectural decisions
-
-**Standards:** .cursor/rules/ (root), backend/.cursor/rules/, frontend/.cursor/rules/
+See [Documentation Index](../../docs/README.md) for all documentation.
 
 **Key Principles:**
 - Separation of concerns
 - Simplicity over complexity
-- Security first (API keys, WCAG 2.1 AA)
+- Security first (API keys never in frontend)
 - Independent testability
-- Accessibility first (WCAG 2.1 AA, keyboard navigation, screen readers)
+- Accessibility first (WCAG 2.1 AA)

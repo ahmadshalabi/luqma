@@ -2,13 +2,7 @@
 
 React frontend for Luqma - a recipe search application with nutritional information.
 
-## Tech Stack
-
-React 19.2.0 • Vite 7.2.2 • TailwindCSS 4.1.17 • React Router 7.9.5 • Vitest
-
-## Prerequisites
-
-- **Node.js 24+** - [Download](https://nodejs.org/)
+See the [main README](../README.md) for tech stack, prerequisites, and project overview.
 
 ## Quick Start
 
@@ -52,68 +46,9 @@ npm run lint:fix           # Auto-fix issues
 
 ## Project Structure
 
-Component-based architecture with path aliasing (`@/`):
+Feature-based component architecture with path aliasing (`@/`). For detailed project structure and architecture, see [Project Context](../.cursor/rules/luqma-project.mdc).
 
-```
-src/
-├── pages/            # Route pages with co-located page-specific components
-│   ├── about/       # AboutPage, FeatureCard, FeaturesSection, MissionSection
-│   ├── recipe/      # RecipePage with page-specific components
-│   │   ├── detail/      # RecipeDetail, RecipeHeader, RecipeImage, RecipeMetadataBadge, RecipeMetadataGroup
-│   │   ├── ingredients/ # Ingredient-related components for RecipePage
-│   │   ├── instructions/# Instruction-related components
-│   │   ├── nutrition/   # Nutrition-related components
-│   │   ├── RecipeContent.jsx
-│   │   ├── RecipeErrorState.jsx
-│   │   ├── RecipeLoading.jsx
-│   │   └── RecipePage.jsx
-│   └── HomePage.jsx
-├── components/       # Shared components used across multiple pages
-│   ├── about/       # FeatureCard (shared about components)
-│   ├── layout/      # Header (with mobile menu components), Footer, HeroSection, SkipLink, Container
-│   ├── recipe/
-│   │   ├── card/         # RecipeCard, RecipeCardContent, RecipeCardImage, RecipeGrid
-│   │   ├── detail/       # (No shared detail components - all are page-specific in pages/recipe/detail/)
-│   │   ├── ingredients/  # IngredientList, IngredientItem, ExclusionPanels, etc.
-│   │   ├── instructions/ # InstructionList, InstructionStep
-│   │   └── nutrition/    # NutritionCard, CollapsibleNutrition, NutritionContent
-│   ├── search/      # SearchBar, SearchResults, Pagination (with subcomponents), ResultsHeader
-│   └── ui/          # UI primitives (Button, Card, Alert, Badge, LoadingSpinner, Typography, etc.)
-├── contexts/         # React Context providers (RecipeExclusionContext)
-├── hooks/            # Custom hooks for reusable logic
-│   ├── useApiMutation.js
-│   ├── useImageFallback.js
-│   ├── useIngredientExclusion.js
-│   ├── useKeyboardNavigation.js
-│   ├── useMobileMenu.js
-│   ├── usePaginationLogic.js
-│   ├── useRecipeDetail.js
-│   ├── useSearch.js
-│   ├── useSearchRecipes.js
-│   └── useSearchState.js
-├── services/         # API client (searchRecipes, getRecipeById, excludeIngredients)
-├── utils/            # Helpers (httpClient, iconRegistry, colorUtils, logger)
-└── test/             # Test files and mocks
-```
-
-**Example imports:**
-```javascript
-import { Alert } from '@/components/ui/Alert'
-import { useSearch } from '@/hooks/useSearch'
-import { searchRecipes } from '@/services/apiClient'
-import { RecipeCard } from '@/components/recipe/card/RecipeCard'
-import { Button } from '@/components/ui/Button'
-```
-
-## Features
-
-- Live search with debouncing (300ms)
-- Recipe details page with full nutrition information
-- Dynamic ingredient exclusion with automatic nutrition recalculation
-- Interactive collapsible nutrition facts with calorie indicators
-- Pagination support
-- Responsive, mobile-first design (separate desktop/mobile exclusion panels)
-- WCAG 2.1 AA accessibility
+For features and capabilities, see the [main README](../README.md#features).
 
 ## Configuration
 
@@ -140,11 +75,8 @@ If your backend runs on a different port, update `LUQMA_API_URL` in `frontend/.e
 LUQMA_API_URL=http://localhost:9090/api/v1
 ```
 
-To change the frontend port, edit `server.port` in `frontend/vite.config.js`.
+To change the frontend port, edit the `port` value in the `server` object in `frontend/vite.config.js`.
 
 ## Documentation
 
-- [Main README](../README.md) - Project overview
-- [Backend README](../backend/README.md) - Backend setup
-- [Troubleshooting Guide](../docs/TROUBLESHOOTING.md) - Common issues
-- [Architecture Decisions](../docs/decisions/) - ADRs
+See the [Documentation Index](../docs/README.md) for all project documentation.
