@@ -67,12 +67,12 @@ The frontend now uses the API client (`frontend/src/services/apiClient.js`) to c
 ## When to Remove
 
 These mocks should be kept for testing purposes but are no longer used in production code:
-- ✅ Backend API endpoints are fully implemented (using backend mock data)
+- ✅ Backend API endpoints are fully implemented (using Spoonacular API)
 - ✅ Frontend is integrated with backend services via API client
 - ✅ All components use the API client instead of direct mock imports
 
 ## Related
 
-- Backend mocks: `backend/src/main/resources/mocks/` (provides data to backend API)
+- Backend mocks: `backend/src/main/resources/mocks/` (used for backend testing only)
 - API client: `frontend/src/services/apiClient.js` (✅ implemented)
 

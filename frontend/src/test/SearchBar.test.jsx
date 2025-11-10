@@ -40,5 +40,30 @@ describe('SearchBar', () => {
     rerender(<SearchBar initialQuery="chicken" />)
     expect(input).toHaveValue('chicken')
   })
+
+  it('has proper accessibility attributes', () => {
+    render(<SearchBar />)
+    
+    const input = screen.getByLabelText(/search for recipes/i)
+    
+    // Check for proper input attributes
+    expect(input).toHaveAttribute('type', 'search')
+    expect(input).toHaveAttribute('id', 'recipe-search')
+    expect(input).toHaveAttribute('aria-describedby', 'search-hint')
+    
+    // Check that hint text exists and has correct id
+    const hint = screen.getByText(/try searching for/i)
+    expect(hint).toHaveAttribute('id', 'search-hint')
+  })
+
+  it('has visible focus ring for keyboard navigation', () => {
+    render(<SearchBar />)
+    
+    const input = screen.getByLabelText(/search for recipes/i)
+    
+    // Check for focus ring classes
+    expect(input.className).toContain('focus:ring-2')
+    expect(input.className).toContain('focus:ring-blue-500')
+  })
 })
 
