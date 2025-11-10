@@ -16,8 +16,8 @@ You must:
 ### Component Organization
 
 You must organize by:
-- **Primitives** (`primitives/`): Generic, reusable UI components (Button, Card, etc.)
-- **Features** (`features/`): Domain-specific components organized by feature area
+- **Primitives/UI** (`components/ui/`): Generic, reusable UI components (Button, Card, Alert, Badge, etc.)
+- **Components** (`components/`): Domain-specific shared components (layout, search, recipe cards)
 - **Pages** (`pages/`): Route-level components that compose features
 - **Hooks** (`hooks/`): Custom reusable hooks for stateful logic
 - **Utils** (`utils/`): Pure utility functions
