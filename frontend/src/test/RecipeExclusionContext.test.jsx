@@ -1,7 +1,8 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { RecipeExclusionProvider, useRecipeExclusion } from '@/contexts/RecipeExclusionContext'
+import { RecipeExclusionProvider } from '@/contexts/RecipeExclusionContext'
+import { useRecipeExclusion } from '@/hooks/useRecipeExclusion'
 
 // Mock the API client
 vi.mock('@/services/apiClient', () => ({

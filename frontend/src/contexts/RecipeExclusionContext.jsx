@@ -1,8 +1,8 @@
-import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react'
+import { createContext, useState, useEffect, useCallback, useMemo } from 'react'
 import { excludeIngredients } from '@/services/apiClient'
 import { logger } from '@/utils/logger'
 
-const RecipeExclusionContext = createContext(null)
+export const RecipeExclusionContext = createContext(null)
 
 /**
  * Provider for recipe exclusion state management.
@@ -188,19 +188,5 @@ export function RecipeExclusionProvider({ initialRecipe, children }) {
       {children}
     </RecipeExclusionContext.Provider>
   )
-}
-
-/**
- * Hook to use the recipe exclusion context.
- * Must be used within a RecipeExclusionProvider.
- */
-export function useRecipeExclusion() {
-  const context = useContext(RecipeExclusionContext)
-  
-  if (!context) {
-    throw new Error('useRecipeExclusion must be used within a RecipeExclusionProvider')
-  }
-  
-  return context
 }
 

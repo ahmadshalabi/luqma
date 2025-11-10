@@ -1,6 +1,6 @@
 import { Section } from '@/components/ui/Section'
 import { Alert } from '@/components/ui/Alert'
-import { IngredientItem } from '@/components/recipe/ingredients/IngredientItem'
+import { IngredientItem } from './IngredientItem'
 
 /**
  * IngredientList component displaying recipe ingredients with measurements.
