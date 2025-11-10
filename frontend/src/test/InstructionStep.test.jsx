@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { InstructionStep } from '@/components/recipe-display/instructions/InstructionStep'
+import { InstructionStep } from '@/pages/recipe/instructions/InstructionStep'
 
 describe('InstructionStep', () => {
   it('renders instruction with step number', () => {

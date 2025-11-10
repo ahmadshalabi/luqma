@@ -43,6 +43,53 @@ You should NOT extract when:
 - Abstraction adds complexity without benefit
 - Pattern is still evolving
 
+## Import Standards
+
+You must:
+- Use `@/` alias for all imports from src/ directory
+- Use relative imports (`./`) ONLY for files in the same directory
+- Never use parent directory imports (`../`, `../../`, etc.)
+
+### Rationale
+
+- **Refactoring**: Moving files doesn't break imports
+- **Clarity**: Absolute path shows exact location
+- **Consistency**: Single import style across codebase
+- **Readability**: Easier to understand component hierarchy
+
+### Examples
+
+Good:
+```javascript
+// Importing from other directories - use @/
+import { Button } from '@/components/ui/Button'
+import { useSearch } from '@/hooks/useSearch'
+import { Container } from '@/components/layout/Container'
+
+// Same directory - relative is acceptable
+import { RecipeHeader } from './RecipeHeader'
+import { RecipeMetadata } from './RecipeMetadata'
+```
+
+Bad:
+```javascript
+// Don't use parent directory navigation
+import { Button } from '../../../components/ui/Button'
+import { useSearch } from '../../hooks/useSearch'
+import { Container } from '../layout/Container'
+```
+
+### Configuration
+
+The `@/` alias is configured in `vite.config.js`:
+```javascript
+resolve: {
+  alias: {
+    '@': path.resolve(__dirname, './src'),
+  },
+}
+```
+
 ## React 19 Features
 
 You should use:
@@ -79,7 +126,7 @@ You must:
 
 You must:
 - Prefix client-side env vars with VITE_
-- Use @/ alias for src/
+- Use @/ alias for src/ (see Import Standards section above)
 - Access env vars via import.meta.env
 
 ## TailwindCSS

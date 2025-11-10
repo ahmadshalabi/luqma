@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import userEvent from '@testing-library/user-event'
-import { HomePage } from '../pages/HomePage'
+import { HomePage } from '@/pages/HomePage'
 
 vi.mock('@/services/apiClient', () => ({
   searchRecipes: vi.fn(() => Promise.resolve({
