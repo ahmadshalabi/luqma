@@ -1,6 +1,6 @@
 package app.luqma.backend.repository;
 
-import app.luqma.backend.client.SpoonacularClient;
+import app.luqma.backend.client.RecipeApiClient;
 import app.luqma.backend.constants.ErrorMessages;
 import app.luqma.backend.exception.ResourceNotFoundException;
 import app.luqma.backend.model.domain.RecipeDetail;
@@ -14,25 +14,25 @@ import java.util.Optional;
 /**
  * Repository for managing recipe data access.
  * 
- * <p>Delegates to {@link SpoonacularClient} for fetching recipe data from the API.
+ * <p>Delegates to {@link RecipeApiClient} for fetching recipe data from the API.
  * Uses Spring Cache to minimize redundant API calls.
  * 
  * <p><strong>Caching Strategy:</strong>
  * Recipe details are cached by ID to avoid repeated API calls for the same recipe.
  * Cache is managed by Spring's caching abstraction.
  * 
- * @see SpoonacularClient
+ * @see RecipeApiClient
  */
 @Slf4j
 @Repository
 public class RecipeRepository {
     
-    private final SpoonacularClient spoonacularClient;
+    private final RecipeApiClient recipeApiClient;
     
-    public RecipeRepository(SpoonacularClient spoonacularClient) {
-        this.spoonacularClient = Objects.requireNonNull(spoonacularClient, 
-                "SpoonacularClient cannot be null");
-        log.info("RecipeRepository initialized with Spoonacular API integration");
+    public RecipeRepository(RecipeApiClient recipeApiClient) {
+        this.recipeApiClient = Objects.requireNonNull(recipeApiClient, 
+                "RecipeApiClient cannot be null");
+        log.info("RecipeRepository initialized with recipe API integration");
     }
     
     /**
@@ -54,18 +54,18 @@ public class RecipeRepository {
             throw new IllegalArgumentException(ErrorMessages.RECIPE_ID_POSITIVE);
         }
         
-        log.debug("Fetching recipe from Spoonacular API: id={}", id);
+        log.debug("Fetching recipe from API: id={}", id);
         
         try {
-            RecipeDetail recipe = spoonacularClient.getRecipeInformation(id);
+            RecipeDetail recipe = recipeApiClient.getRecipeInformation(id);
             log.debug("Recipe fetched successfully: id={}, title='{}'", id, recipe.getTitle());
             return Optional.of(recipe);
         } catch (app.luqma.backend.exception.ExternalApiException e) {
             if (e.getStatusCode() == 404) {
-                log.debug("Recipe not found in Spoonacular API: id={}", id);
+                log.debug("Recipe not found in API: id={}", id);
                 return Optional.empty();
             }
-            log.error("Failed to fetch recipe from Spoonacular API: id={}", id, e);
+            log.error("Failed to fetch recipe from API: id={}", id, e);
             throw e;
         }
     }

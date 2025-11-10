@@ -5,6 +5,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.web.client.RestClient;
 
@@ -20,12 +21,16 @@ import org.springframework.web.client.RestClient;
  * 
  * <p>Also enables Spring Cache for recipe data caching.
  * 
+ * <p><strong>Active Profile:</strong> Not active when "mock" profile is enabled.
+ * This prevents API key validation errors in mock mode.
+ * 
  * @see SpoonacularProperties
  */
 @Slf4j
 @Configuration
 @EnableCaching
 @EnableConfigurationProperties(SpoonacularProperties.class)
+@Profile("!mock")
 public class SpoonacularConfig {
     
     private final SpoonacularProperties properties;

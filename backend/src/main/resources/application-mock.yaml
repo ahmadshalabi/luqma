@@ -1,0 +1,82 @@
+# Mock Profile Configuration
+# This profile is used for offline development and testing with mock data
+# Activate with: ./gradlew bootRun --args='--spring.profiles.active=mock'
+
+# SpringDoc/OpenAPI Configuration - Mock Mode
+# Enable Swagger UI for testing mock endpoints
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+  show-actuator: false  # Hide actuator endpoints from main API docs
+
+# Actuator Configuration - Mock Mode
+management:
+  endpoint:
+    health:
+      show-details: always  # Show full health details in mock mode
+
+# Mock-specific server configuration
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: always  # Show full stack traces in mock mode
+    include-exception: true
+
+# Mock Mode Logging - More verbose
+logging:
+  level:
+    root: INFO
+    app.luqma: DEBUG
+    app.luqma.backend.client.MockSpoonacularClient: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.boot: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] [MOCK] %-5level %logger{36} - %msg%n"
+
+# CORS Configuration - Mock Mode
+# Allow frontend development server
+cors:
+  allowed-origins:
+    - http://localhost:3000
+    - http://localhost:5173
+  allowed-methods:
+    - GET
+    - POST
+    - PUT
+    - PATCH
+    - DELETE
+    - OPTIONS
+  allowed-headers:
+    - "*"
+  allow-credentials: true
+  max-age: 3600
+
+# Spoonacular API Configuration - Mock Mode
+# API key not needed in mock mode, but we set a placeholder to avoid validation errors
+spoonacular:
+  api-url: ${SPOONACULAR_API_URL:https://api.spoonacular.com}
+  api-key: ${SPOONACULAR_API_KEY:mock-api-key-not-used}
+  connection-timeout: ${SPOONACULAR_CONNECTION_TIMEOUT:10000}
+  read-timeout: ${SPOONACULAR_READ_TIMEOUT:30000}
+
+# Mock Mode Configuration
+# Configure mock behavior for realistic testing
+mock:
+  # Latency simulation - mimics real API response times
+  latency:
+    enabled: true           # Enable latency simulation
+    min-millis: 100         # Minimum latency in milliseconds
+    max-millis: 500         # Maximum latency in milliseconds
+  
+  # Error simulation - test error handling
+  errors:
+    enabled: false          # Disable by default (enable for testing error scenarios)
+    rate: 0.0               # Error rate (0.0 = no errors, 0.1 = 10% error rate, 1.0 = 100% errors)
+

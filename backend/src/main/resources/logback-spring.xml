@@ -64,6 +64,20 @@
         <logger name="app.luqma.backend" level="DEBUG"/>
     </springProfile>
     
+    <!-- Mock profile configuration -->
+    <springProfile name="mock">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="APPLICATION_FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
+        </root>
+        
+        <!-- Set specific package log levels -->
+        <logger name="app.luqma.backend" level="DEBUG"/>
+        <logger name="app.luqma.backend.client.MockSpoonacularClient" level="DEBUG"/>
+        <logger name="org.springframework.web" level="DEBUG"/>
+    </springProfile>
+    
     <!-- Production profile configuration -->
     <springProfile name="prod">
         <root level="INFO">

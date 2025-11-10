@@ -1,6 +1,6 @@
 package app.luqma.backend.service;
 
-import app.luqma.backend.client.SpoonacularClient;
+import app.luqma.backend.client.RecipeApiClient;
 import app.luqma.backend.config.RecipeSearchProperties;
 import app.luqma.backend.mapper.RecipeMapper;
 import app.luqma.backend.model.dto.RecipeSearchResponse;
@@ -10,22 +10,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
- * Service for recipe search operations using Spoonacular API.
+ * Service for recipe search operations using recipe API.
  * 
  * <p>Handles recipe search with pagination and query sanitization.
- * Delegates to {@link SpoonacularClient} for external API calls.
+ * Delegates to {@link RecipeApiClient} for external API calls.
  */
 @Slf4j
 @Service
 public class RecipeSearchService {
     
-    private final SpoonacularClient spoonacularClient;
+    private final RecipeApiClient recipeApiClient;
     private final RecipeSearchProperties recipeSearchProperties;
     
     public RecipeSearchService(
-            SpoonacularClient spoonacularClient,
+            RecipeApiClient recipeApiClient,
             RecipeSearchProperties recipeSearchProperties) {
-        this.spoonacularClient = spoonacularClient;
+        this.recipeApiClient = recipeApiClient;
         this.recipeSearchProperties = recipeSearchProperties;
     }
     
@@ -67,7 +67,7 @@ public class RecipeSearchService {
         log.debug("Search query: '{}', Page: {}, PageSize: {}, Offset: {}", 
                 sanitizedQuery, page, effectivePageSize, offset);
         
-        SpoonacularSearchResponse spoonacularResponse = spoonacularClient.searchRecipes(
+        SpoonacularSearchResponse spoonacularResponse = recipeApiClient.searchRecipes(
                 sanitizedQuery, effectivePageSize, offset);
         
         RecipeSearchResponse response = RecipeMapper.toRecipeSearchResponse(
