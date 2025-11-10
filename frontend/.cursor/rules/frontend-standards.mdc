@@ -16,11 +16,12 @@ You must:
 ### Component Organization
 
 You must organize by:
-- **Primitives/UI** (`components/ui/`): Generic, reusable UI components (Button, Card, Alert, Badge, etc.)
+- **Primitives/UI** (`components/ui/`): Generic, reusable UI components (Button, Card, Alert, Badge, Skeleton, LiveRegion, etc.)
 - **Components** (`components/`): Domain-specific shared components (layout, search, recipe cards)
 - **Pages** (`pages/`): Route-level components that compose features
 - **Hooks** (`hooks/`): Custom reusable hooks for stateful logic
-- **Utils** (`utils/`): Pure utility functions
+- **Utils** (`utils/`): Pure utility functions (httpClient, logger, iconRegistry, etc.)
+- **Constants** (`constants/`): Application-wide constants (api, ui, validation)
 
 ### Icons
 
@@ -117,10 +118,19 @@ You must:
 ## Performance
 
 You must:
-- Debounce search inputs (300ms)
+- Debounce search inputs (use SEARCH_DEBOUNCE_DELAY from constants)
 - Use React.lazy() for code splitting
 - Use virtual scrolling for long lists (100+ items)
 - Use stable keys for lists (not index)
+- Show skeleton loaders for better perceived performance (use Skeleton components from `@/components/ui/Skeleton`)
+
+## Constants
+
+You must:
+- Import constants from `@/constants` instead of hardcoding values
+- Use API constants for HTTP configuration (timeouts, retries, delays)
+- Use UI constants for pagination, animation timings, breakpoints
+- Use validation constants for form validation rules
 
 ## Vite
 
@@ -160,6 +170,8 @@ You must:
 - Never call external APIs (through backend only)
 - Handle loading/error/empty states
 - Use native Fetch API (no axios)
+- Use logger utility for error logging (`@/utils/logger`)
+- Show skeleton loaders during data fetching
 
 ## Testing
 

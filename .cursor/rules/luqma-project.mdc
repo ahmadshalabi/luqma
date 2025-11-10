@@ -44,16 +44,20 @@ Recipe search application with nutritional information and dynamic ingredient ex
     - features/detail/: RecipeDetail, RecipeHeader, RecipeImage, RecipeMetadata components
     - features/exclusion/: IngredientExclusionPanel (Desktop/Mobile variants), ExcludedIngredientsList
     - features/nutrition/: CollapsibleNutrition, NutritionCard, NutritionContent
+    - ingredients/: IngredientList
   - HomePage.jsx
 - components/: Shared components
   - layout/: Header (with mobile menu components), Footer, HeroSection, SkipLink, Container
-  - recipe-display/: card/ (RecipeCard, RecipeGrid), ingredients/, instructions/
+  - recipe/: card/ (RecipeCard, RecipeGrid), ingredients/ (IngredientItem), instructions/ (InstructionStep), nutrition/
   - search/: SearchBar, SearchResults, Pagination (with subcomponents), ResultsHeader
-  - ui/: UI primitives (Button, Card, Alert, LoadingSpinner, Badge, Typography, Collapsible, etc.)
+  - ui/: UI primitives (Button, Card, Alert, LoadingSpinner, Badge, Typography, Collapsible, LiveRegion, Skeleton, Checkbox)
 - contexts/: React Context providers (RecipeExclusionContext)
-- hooks/: Custom hooks (useImageFallback, useMobileMenu, usePaginationLogic, useRecipeDetail, useSearch, useSearchRecipes, useSearchState)
+- hooks/: Custom hooks
+  - State & Data: useImageFallback, useMobileMenu, usePaginationLogic, useRecipeDetail, useSearch, useSearchRecipes, useSearchState, useApiMutation
+  - Accessibility: useKeyboardNavigation (grid navigation, shortcuts, focus trap)
 - services/: ✅ API client (apiClient.js with searchRecipes, getRecipeById, excludeIngredients)
-- utils/: Helper functions (httpClient, iconRegistry, colorUtils)
+- utils/: Helper functions (httpClient, iconRegistry, colorUtils, logger)
+- constants/: ✅ Application constants (api, ui, validation)
 - test/: Test files and mocks/
 
 **Development Approach:**
@@ -138,3 +142,4 @@ Recipe search application with nutritional information and dynamic ingredient ex
 - Simplicity over complexity
 - Security first (API keys, WCAG 2.1 AA)
 - Independent testability
+- Accessibility first (WCAG 2.1 AA, keyboard navigation, screen readers)
