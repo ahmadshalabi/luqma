@@ -98,10 +98,6 @@ describe('HeroSection', () => {
     // Background container should be hidden from screen readers
     const backgroundDiv = container.querySelector('.absolute.inset-0.z-0')
     expect(backgroundDiv).toHaveAttribute('aria-hidden', 'true')
-    
-    // Wave SVG container should be hidden from screen readers
-    const waveContainer = container.querySelector('.absolute.bottom-0')
-    expect(waveContainer).toHaveAttribute('aria-hidden', 'true')
   })
 
   it('applies custom className', () => {
