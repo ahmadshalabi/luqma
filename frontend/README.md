@@ -56,29 +56,35 @@ Component-based architecture with path aliasing (`@/`):
 
 ```
 src/
-├── pages/            # Route pages
+├── pages/            # Route pages with co-located page-specific components
 │   ├── about/       # AboutPage, FeatureCard, FeaturesSection, MissionSection
-│   ├── recipe/      # RecipePage with feature-based organization
-│   │   ├── features/
-│   │   │   ├── detail/      # RecipeDetail, RecipeHeader, RecipeImage, RecipeMetadata
-│   │   │   ├── exclusion/   # Ingredient exclusion panels (Desktop, Mobile)
-│   │   │   └── nutrition/   # CollapsibleNutrition, NutritionCard, NutritionContent
+│   ├── recipe/      # RecipePage with page-specific components
+│   │   ├── detail/      # RecipeDetail, RecipeHeader, RecipeImage, RecipeMetadata
+│   │   ├── ingredients/ # Ingredient-related components for RecipePage
+│   │   ├── instructions/# Instruction-related components
+│   │   ├── nutrition/   # Nutrition-related components
 │   │   ├── RecipeContent.jsx
 │   │   ├── RecipeErrorState.jsx
 │   │   ├── RecipeLoading.jsx
 │   │   └── RecipePage.jsx
 │   └── HomePage.jsx
-├── components/       # Shared components
+├── components/       # Shared components used across multiple pages
+│   ├── about/       # FeatureCard (shared about components)
 │   ├── layout/      # Header (with mobile menu components), Footer, HeroSection, SkipLink, Container
-│   ├── recipe-display/
+│   ├── recipe/
 │   │   ├── card/         # RecipeCard, RecipeCardContent, RecipeCardImage, RecipeGrid
-│   │   ├── ingredients/  # IngredientItem, IngredientList
-│   │   └── instructions/ # InstructionList, InstructionStep
+│   │   ├── detail/       # RecipeDetail, RecipeHeader, RecipeImage, RecipeMetadata
+│   │   ├── ingredients/  # IngredientList, IngredientItem, ExclusionPanels, etc.
+│   │   ├── instructions/ # InstructionList, InstructionStep
+│   │   └── nutrition/    # NutritionCard, CollapsibleNutrition, NutritionContent
 │   ├── search/      # SearchBar, SearchResults, Pagination (with subcomponents), ResultsHeader
-│   └── ui/          # UI primitives (Card, Alert, Button, LoadingSpinner, Badge, Typography, etc.)
+│   └── ui/          # UI primitives (Button, Card, Alert, Badge, LoadingSpinner, Typography, etc.)
 ├── contexts/         # React Context providers (RecipeExclusionContext)
-├── hooks/            # Custom hooks
+├── hooks/            # Custom hooks for reusable logic
+│   ├── useApiMutation.js
 │   ├── useImageFallback.js
+│   ├── useIngredientExclusion.js
+│   ├── useKeyboardNavigation.js
 │   ├── useMobileMenu.js
 │   ├── usePaginationLogic.js
 │   ├── useRecipeDetail.js
@@ -86,7 +92,7 @@ src/
 │   ├── useSearchRecipes.js
 │   └── useSearchState.js
 ├── services/         # API client (searchRecipes, getRecipeById, excludeIngredients)
-├── utils/            # Helpers (httpClient, iconRegistry, colorUtils)
+├── utils/            # Helpers (httpClient, iconRegistry, colorUtils, logger)
 └── test/             # Test files and mocks
 ```
 
@@ -95,7 +101,8 @@ src/
 import { Alert } from '@/components/ui/Alert'
 import { useSearch } from '@/hooks/useSearch'
 import { searchRecipes } from '@/services/apiClient'
-import { RecipeCard } from '@/components/recipe-display/card/RecipeCard'
+import { RecipeCard } from '@/components/recipe/card/RecipeCard'
+import { Button } from '@/components/ui/Button'
 ```
 
 ## Features

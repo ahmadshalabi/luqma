@@ -27,9 +27,9 @@ curl "http://localhost:8080/api/v1/recipes/search?query=pasta&page=1&pageSize=9"
 
 **Implementation Notes:**
 - Query parameter is required (1-200 characters)
-- Case-insensitive substring match on recipe titles
-- Currently using mock data (Spoonacular integration pending)
-- Rate limiting applied
+- Searches recipes via Spoonacular API using `complexSearch` endpoint with `titleMatch` parameter
+- Results are cached using Spring Cache (Caffeine) for improved performance
+- Rate limiting applied to protect API quotas
 
 ### Recipe Details API
 
@@ -45,7 +45,7 @@ curl "http://localhost:8080/api/v1/recipes/715497"
 **Implementation Notes:**
 - Returns 404 if recipe not found
 - Recipe ID must be a positive integer
-- Currently using mock data (Spoonacular integration pending)
+- Fetches data from Spoonacular API and caches for 1 hour (max 500 recipes, LRU eviction)
 - Includes comprehensive nutrition information with caloric breakdown
 - Provides step-by-step cooking instructions
 
@@ -83,8 +83,8 @@ curl -X POST "http://localhost:8080/api/v1/recipes/715497/exclude-ingredients" \
 - Validates all ingredient IDs exist in the recipe
 - Returns 404 if recipe not found
 - Returns 400 if any ingredient ID is invalid or doesn't exist in the recipe
-- Recalculates nutrition proportionally based on excluded ingredients
-- Currently using mock data (Spoonacular integration pending)
+- Recalculates nutrition proportionally based on excluded ingredients using ADR-0010 approach
+- Uses cached recipe data from Spoonacular API
 
 **Response Structure:**
 - Same as Recipe Details API, but with:

@@ -10,14 +10,14 @@ Welcome to the Luqma project documentation. This directory contains all technica
 - [API Documentation](api/README.md) - Backend API reference
 
 ### Architecture
-- [Architecture Decision Records](decisions/README.md) - All ADRs (13 decisions)
+- [Architecture Decision Records](decisions/README.md) - All ADRs (10 decisions)
 
 ### Standards & Guidelines
-- [Project Context](.cursor/rules/luqma-project.mdc) - Project overview and tech stack
-- [Git Standards](.cursor/rules/git-standards.mdc) - Commit, branch, and PR conventions
-- [Security Standards](.cursor/rules/security-standards.mdc) - API key protection and security practices
-- [Accessibility Standards](.cursor/rules/accessibility-standards.mdc) - WCAG 2.1 AA compliance
-- [Code Review Checklist](.cursor/rules/code-review-checklist.mdc) - Review guidelines
+- [Project Context](../.cursor/rules/luqma-project.mdc) - Project overview and tech stack
+- [Git Standards](../.cursor/rules/git-standards.mdc) - Commit, branch, and PR conventions
+- [Security Standards](../.cursor/rules/security-standards.mdc) - API key protection and security practices
+- [Accessibility Standards](../.cursor/rules/accessibility-standards.mdc) - WCAG 2.1 AA compliance
+- [Code Review Checklist](../.cursor/rules/code-review-checklist.mdc) - Review guidelines
 
 ## Documentation Structure
 
@@ -39,13 +39,14 @@ docs/
     ├── 0007-use-feature-based-component-organization.md
     ├── 0008-use-custom-hooks-for-business-logic.md
     ├── 0009-implement-layered-architecture-in-backend.md
+    └── 0010-use-proportional-estimation-for-nutrition-calculation.md
 ```
 
 ## Key Documentation
 
 ### Architecture Decision Records
 
-We use [MADR 4.0.0](https://adr.github.io/madr/) format for documenting architectural decisions. Currently we have 13 ADRs covering:
+We use [MADR 4.0.0](https://adr.github.io/madr/) format for documenting architectural decisions. Currently we have 10 ADRs covering:
 
 1. **ADR-0001**: Markdown Architectural Decision Records
 2. **ADR-0002**: Monorepo Structure
@@ -56,6 +57,7 @@ We use [MADR 4.0.0](https://adr.github.io/madr/) format for documenting architec
 7. **ADR-0007**: Feature-Based Component Organization
 8. **ADR-0008**: Custom Hooks for Business Logic
 9. **ADR-0009**: Layered Architecture in Backend
+10. **ADR-0010**: Proportional Estimation for Nutrition Calculation with Ingredient Exclusion
 
 See [decisions/README.md](decisions/README.md) for the complete list.
 
@@ -105,7 +107,7 @@ We use Conventional Commits and a strict branching model:
 
 **Types:** feat, fix, docs, style, refactor, perf, test, build, ci, chore
 
-See [git-standards.mdc](.cursor/rules/git-standards.mdc) for complete guidelines.
+See [git-standards.mdc](../.cursor/rules/git-standards.mdc) for complete guidelines.
 
 ### Creating ADRs
 
@@ -124,9 +126,9 @@ Or ask Cursor AI: "Create an ADR for..."
 When creating new components:
 
 1. Choose appropriate location:
-   - `components/ui/` for generic primitives
-   - `components/{domain}/` for shared domain components
-   - `pages/{page}/features/{feature}/` for page-specific components
+   - `components/ui/` for generic UI primitives (Button, Card, etc.)
+   - `components/{domain}/` for shared domain components (e.g., `components/recipe/`, `components/search/`)
+   - `pages/{page}/` for page-specific components co-located with their pages
 
 2. Follow component standards:
    - Under 200 lines

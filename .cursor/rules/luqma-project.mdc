@@ -38,19 +38,21 @@ Recipe search application with nutritional information and dynamic ingredient ex
 - util/: ✅ Utility classes (StringSanitizer, MockDataLoader, CollectionUtils, DefaultValue)
 
 **Frontend Structure** (`frontend/src/`):
-- pages/: Route pages with feature-based organization
-  - about/: AboutPage.jsx, FeatureCard, FeaturesSection, MissionSection
-  - recipe/: RecipePage with features subdirectory
-    - features/detail/: RecipeDetail, RecipeHeader, RecipeImage, RecipeMetadata components
-    - features/exclusion/: IngredientExclusionPanel (Desktop/Mobile variants), ExcludedIngredientsList
-    - features/nutrition/: CollapsibleNutrition, NutritionCard, NutritionContent
-    - ingredients/: IngredientList
+- pages/: Route pages with co-located page-specific components
+  - about/: AboutPage, FeatureCard, FeaturesSection, MissionSection
+  - recipe/: RecipePage with page-specific components
+    - detail/: RecipeDetail, RecipeHeader, RecipeImage, RecipeMetadata
+    - ingredients/: Page-specific ingredient components
+    - instructions/: Page-specific instruction components
+    - nutrition/: Page-specific nutrition components
+    - RecipeContent, RecipeErrorState, RecipeLoading, RecipePage
   - HomePage.jsx
-- components/: Shared components
+- components/: Shared components used across multiple pages
+  - about/: Shared about components (FeatureCard)
   - layout/: Header (with mobile menu components), Footer, HeroSection, SkipLink, Container
-  - recipe/: card/ (RecipeCard, RecipeGrid), ingredients/ (IngredientItem), instructions/ (InstructionStep), nutrition/
+  - recipe/: card/ (RecipeCard, RecipeGrid), detail/, ingredients/, instructions/, nutrition/
   - search/: SearchBar, SearchResults, Pagination (with subcomponents), ResultsHeader
-  - ui/: UI primitives (Button, Card, Alert, LoadingSpinner, Badge, Typography, Collapsible, LiveRegion, Skeleton, Checkbox)
+  - ui/: UI primitives (Button, Card, Alert, LoadingSpinner, Badge, Typography, Collapsible, LiveRegion, Skeleton, etc.)
 - contexts/: React Context providers (RecipeExclusionContext)
 - hooks/: Custom hooks
   - State & Data: useImageFallback, useMobileMenu, usePaginationLogic, useRecipeDetail, useSearch, useSearchRecipes, useSearchState, useApiMutation
@@ -123,8 +125,8 @@ Recipe search application with nutritional information and dynamic ingredient ex
 - Clients: External API integration (SpoonacularClient)
 
 **Frontend:**
-- Feature-based organization (ADR-0007): pages/{page}/features/{feature}/
-- Custom hooks for logic (ADR-0008): useRecipeDetail, useSearch, etc.
+- Feature-based organization (ADR-0007): Co-located page-specific components in pages/{page}/, shared components in components/
+- Custom hooks for logic (ADR-0008): useRecipeDetail, useSearch, useIngredientExclusion, useKeyboardNavigation, etc.
 - Context API for cross-component state (ADR-0004): RecipeExclusionContext
 - URL state for search (ADR-0005): shareable URLs, 300ms debounce
 
