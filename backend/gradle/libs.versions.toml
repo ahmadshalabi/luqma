@@ -14,7 +14,7 @@ spring-boot = "3.5.7"
 spring-dependency-management = "1.1.7"
 
 # Documentation
-springdoc-openapi = "2.8.14"
+springdoc-openapi = "3.0.0"
 
 # Code Quality & Testing
 jacoco = "0.8.13"
