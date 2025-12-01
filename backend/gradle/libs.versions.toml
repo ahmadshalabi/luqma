@@ -10,7 +10,7 @@
 java = "25"
 
 # Spring Framework
-spring-boot = "3.5.7"
+spring-boot = "4.0.0"
 spring-dependency-management = "1.1.7"
 
 # Documentation
